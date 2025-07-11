@@ -1,0 +1,69 @@
+import React from 'react';
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+
+const devotions = [
+  { id: '1', title: "God's Battle Axe", author: 'Apos Joshua Selman' },
+  { id: '2', title: 'Worship Devotion 01', author: 'Pas Sunny Prasad' },
+  { id: '3', title: 'Jehovah Jireh', author: 'Apos Joshua Selman' },
+];
+
+export default function Explore() {
+  const renderItem = ({ item }: any) => (
+    <View style={styles.card}>
+      <Image
+        source={{ uri: 'https://via.placeholder.com/50' }}
+        style={styles.avatar}
+      />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.author}>by {item.author}</Text>
+      </View>
+      <Icon name="bookmark" size={20} />
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      {/* <Text style={styles.heading}>FYI - For Your Inner Man</Text> */}
+
+      <View style={styles.searchBar}>
+        <Text> Search</Text>
+        <Icon name="sliders" size={16} />
+      </View>
+
+      <FlatList
+        data={devotions}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  heading: { fontSize: 16, fontWeight: 'bold', marginBottom: 12 },
+  searchBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 10,
+    elevation: 1,
+    gap: 12,
+  },
+  avatar: { width: 50, height: 50, borderRadius: 25 },
+  title: { fontWeight: 'bold' },
+  author: { color: '#555', fontSize: 12 },
+});
