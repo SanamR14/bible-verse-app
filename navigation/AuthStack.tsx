@@ -6,6 +6,7 @@ import SignupScreen from '../screens/Signup';
 import MainTabs from './MainTabs';
 import LandingPage from './LandingPage';
 import Menu from '../screens/Menu';
+import MenuStack from '../Stack/MenuStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +16,7 @@ export default function AuthStack() {
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
       <Stack.Screen name="LandingPage" component={LandingPage} options={{ headerShown: false }} />
-      <Stack.Screen name="Menu" component={Menu}  />
+      <Stack.Screen name="MenuStack" component={MenuStack} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

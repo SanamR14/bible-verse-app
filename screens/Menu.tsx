@@ -4,15 +4,18 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser, faHandsPraying, faBookmark, faPeopleGroup, faPersonPraying, faLinkSlash, faQuestion, faLanguage, faShareFromSquare, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { MenuStackParamList } from '../Stack/MenuStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
 export default function Menu() {
-  const navigation = useNavigation();
+
+  const navigation = useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
 
   return (
     <View style={styles.container}>
       {/* Header */}
-      {/* <View style={styles.header}>
+      <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
@@ -22,51 +25,51 @@ export default function Menu() {
         <TouchableOpacity>
           <Icon name="menu" size={24} color="#000" />
         </TouchableOpacity>
-      </View> */}
+      </View>
 
       {/* Content Box */}
       <View style={styles.contentBox}>
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Profile', { topic: "" })}>
           <FontAwesomeIcon icon={faUser} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>My Profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Saved', { topic: "" })}>
          <FontAwesomeIcon icon={faBookmark} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Saved Items</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PrayerRequest',{})}>
           <FontAwesomeIcon icon={faHandsPraying} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Prayer Request</Text>
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.item}>
+         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Fellowship',{})} >
           <FontAwesomeIcon icon={faPeopleGroup}  size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Fellowship</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PrayerWarrior',{})}>
           <FontAwesomeIcon icon={faPersonPraying} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Prayer Warrier?</Text>
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.item}>
+         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ForYou',{})}>
           <FontAwesomeIcon icon={faLinkSlash} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Do you feel disconnected?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ChristCommunity',{})}>
            <FontAwesomeIcon icon={faPeopleGroup} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Christ Community</Text>
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.item}>
+         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Help',{})}>
           <FontAwesomeIcon icon={faQuestion}  size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Help</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity style={styles.item} >
           <FontAwesomeIcon icon={faLanguage}  size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Language</Text>
         </TouchableOpacity>

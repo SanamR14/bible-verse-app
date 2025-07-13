@@ -5,16 +5,17 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { StackParamList } from '../navigation/LandingStack';
+import { MenuStackParamList } from '../Stack/MenuStack';
 
 export default function Header (){
-  const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
   return (
     <View style={styles.container}>
       <Icon name="users" size={22} />
       <Text style={styles.title}>FYI - For Your Inner Man</Text>
       <View style={styles.rightIcons}>
         <Icon name="bell" size={22} style={styles.icon} />
-        <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MenuStack')}>
         <Icon name="menu" size={22} />
         </TouchableOpacity>
       </View>
