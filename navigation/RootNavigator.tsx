@@ -9,25 +9,31 @@ import LandingPage from './LandingPage';
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
-  const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
+  // const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('userToken');
-      setIsSignedIn(!!token);
-    };
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     const token = await AsyncStorage.getItem('userToken');
+  //     setIsSignedIn(!!token);
+  //   };
+  //   checkAuth();
+  // }, []);
 
-  if (isSignedIn === null) return null; // or a Splash Screen
+  // if (isSignedIn === null) return null; // or a Splash Screen
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isSignedIn ? (
-        <Stack.Screen name="LandingPage" component={LandingPage} />
-      ) : (
+    // <Stack.Navigator screenOptions={{ headerShown: false }}>
+    //   {isSignedIn ? (
+    //     <Stack.Screen name="LandingPage" component={LandingPage} />
+    //   ) : (
+    //     <Stack.Screen name="Auth" component={AuthStack} />
+    //   )}
+    // </Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      
         <Stack.Screen name="Auth" component={AuthStack} />
-      )}
+        <Stack.Screen name="LandingPage" component={LandingPage} />  
+   
     </Stack.Navigator>
   );
 }

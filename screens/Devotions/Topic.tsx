@@ -5,7 +5,8 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { DevotionStackParamList } from '../Stack/DevotionsStack';
+import { DevotionStackParamList } from '../../Stack/DevotionsStack';
+
 
 const days = Array.from({ length: 7 }, (_, i) => i + 1);
 

@@ -4,16 +4,16 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }: any) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    // Normally validate credentials via API, here we just store a token
-    if (email && password) {
-      await AsyncStorage.setItem('userToken', 'dummy-auth-token');
-      navigation.navigate('MainApp');
-    }
-  };
+  // const handleLogin = async () => {
+  //   // Normally validate credentials via API, here we just store a token
+  //   if (email && password) {
+  //     await AsyncStorage.setItem('userToken', 'dummy-auth-token');
+  //     navigation.navigate('MainApp');
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -21,17 +21,17 @@ export default function LoginScreen({ navigation }: any) {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        // value={email}
+        // onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        // value={password}
+        // onChangeText={setPassword}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={() => navigation.navigate('LandingPage')} />
       <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.link}>Don't have an account? Sign up</Text>
       </TouchableOpacity>

@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Devotions from '../screens/Devotions';
-import Topic from '../screens/Topic';
-import Day from '../screens/Day';
+import Devotions from '../screens/Devotions/Devotions';
+import Topic from '../screens/Devotions/Topic';
+import Day from '../screens/Devotions/Day';
 
 export type DevotionStackParamList = {
   Devotions: undefined;

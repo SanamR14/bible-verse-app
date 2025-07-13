@@ -1,20 +1,20 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '../screens/Login';
-import SignupScreen from '../screens/Signup';
-import LandingPage from './LandingPage';
 import Menu from '../screens/Menu';
 import MainTabs from './MainTabs';
 
+export type StackParamList = {
+  MainTabs: undefined;
+  Menu: undefined;
+};
 
-
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function LandingPageStack() {
   return (
-    <Stack.Navigator>
-            <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-            <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="MainTabs" component={MainTabs}  />
+            {/* <Stack.Screen name="Menu" component={Menu}  /> */}
     </Stack.Navigator>
   );
 }

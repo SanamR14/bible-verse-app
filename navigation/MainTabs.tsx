@@ -3,7 +3,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Feather';
 import About from '../screens/About';
-import Devotions from '../screens/Devotions';
 import Plans from '../screens/Plans';
 import Explore from '../screens/Explore';
 import Home from '../screens/Home';

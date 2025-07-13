@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { DevotionStackParamList } from '../Stack/DevotionsStack';
+import { DevotionStackParamList } from '../../Stack/DevotionsStack';
 
 
 const topics = Array.from({ length: 18 }, (_, i) => `Topic ${i + 1}`);

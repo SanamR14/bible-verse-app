@@ -1,9 +1,13 @@
-// components/Header.tsx
+
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { StackParamList } from '../navigation/LandingStack';
 
-export default function Header ({ navigation }: any){
+export default function Header (){
+  const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
   return (
     <View style={styles.container}>
       <Icon name="users" size={22} />

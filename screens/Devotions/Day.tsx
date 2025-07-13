@@ -2,7 +2,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { DevotionStackParamList } from '../Stack/DevotionsStack';
+import { DevotionStackParamList } from '../../Stack/DevotionsStack';
+
 
 
 export default function DayScreen() {
