@@ -1,35 +1,64 @@
 // src/screens/PlansScreen.tsx
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, Dimensions } from 'react-native';
-
-const data = [
-  { id: '1', title: 'PAIN', by: 'FYI Ministries', image: 'https://via.placeholder.com/150' },
-  { id: '2', title: 'Are you worried?', by: 'FYI Ministries', image: 'https://via.placeholder.com/150' },
-  { id: '3', title: 'What are you searching?', by: 'FYI Ministries', image: 'https://via.placeholder.com/150' },
-  { id: '4', title: 'Want to be a leader?', by: 'FYI Ministries', image: 'https://via.placeholder.com/150' },
-];
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, Dimensions, ActivityIndicator } from 'react-native';
 
 export default function Plans() {
+
+  type Plan = {
+  id: number;
+  title: string;
+  message: string;
+  outerTitle?: string;
+  author: string;
+  image?: string;
+};
+
+ const [plans, setPlans] = useState<Plan[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchPlans = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/plans/');
+      const data = await response.json();
+      setPlans(data);
+    } catch (error) {
+      console.error('Failed to fetch plans:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlans();
+  }, []);
+
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.image} />
       <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.by}>{item.by}</Text>
+      <Text style={styles.by}>{item.author}</Text>
     </View>
   );
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#999" />
+        <Text>Loading Plans...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.heading}>FYI - Build Your Inner Man</Text> */}
-
       <View style={styles.searchBar}>
         <Text> Search</Text>
       </View>
 
       <FlatList
-        data={data}
+        data={plans}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id?.toString()}
         numColumns={2}
         columnWrapperStyle={styles.row}
         contentContainerStyle={{ paddingBottom: 100 }}
@@ -40,7 +69,7 @@ export default function Plans() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  heading: { fontSize: 16, fontWeight: 'bold', marginBottom: 12 },
+  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   searchBar: {
     padding: 10,
     backgroundColor: '#f5f5f5',
