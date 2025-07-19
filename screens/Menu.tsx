@@ -14,20 +14,16 @@ export default function Menu() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
-
         <Text style={styles.headerTitle}>User Name</Text>
-
         <TouchableOpacity>
           <Icon name="menu" size={24} color="#000" />
         </TouchableOpacity>
       </View>
 
-      {/* Content Box */}
       <View style={styles.contentBox}>
         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Profile', { topic: "" })}>
           <FontAwesomeIcon icon={faUser} size={20} color="#000" style={styles.icon} />
@@ -39,32 +35,32 @@ export default function Menu() {
           <Text style={styles.itemText}>Saved Items</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PrayerRequest',{})}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PrayerRequest',{ topic: "" })}>
           <FontAwesomeIcon icon={faHandsPraying} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Prayer Request</Text>
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Fellowship',{})} >
+         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Fellowship',{ topic: "" })} >
           <FontAwesomeIcon icon={faPeopleGroup}  size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Fellowship</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PrayerWarrior',{})}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PrayerWarrior',{ topic: "" })}>
           <FontAwesomeIcon icon={faPersonPraying} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Prayer Warrier?</Text>
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ForYou',{})}>
+         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ForYou',{ topic: "" })}>
           <FontAwesomeIcon icon={faLinkSlash} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Do you feel disconnected?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ChristCommunity',{})}>
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ChristCommunity',{ topic: "" })}>
            <FontAwesomeIcon icon={faPeopleGroup} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Christ Community</Text>
         </TouchableOpacity>
 
-         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Help',{})}>
+         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Help',{ topic: "" })}>
           <FontAwesomeIcon icon={faQuestion}  size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Help</Text>
         </TouchableOpacity>

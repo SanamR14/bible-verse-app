@@ -18,22 +18,11 @@ export default function Devotions() {
 
   return (
     <View style={styles.container}>
-      {/* Search and icons row */}
-      {/* <View style={styles.headerRow}>
-        <Text style={styles.title}>FYI - Devotions</Text>
-        <View style={styles.icons}>
-          <Icon name="bell" size={20} style={styles.icon} />
-          <Icon name="menu" size={20} />
-        </View>
-      </View> */}
-
-      {/* Search bar placeholder */}
       <View style={styles.searchBar}>
         <Text>Search</Text>
         <Icon name="sliders" size={16} />
       </View>
 
-      {/* Topics grid */}
       <FlatList
         data={topics}
         renderItem={renderItem}

@@ -3,8 +3,6 @@ import { View, Text, Image, StyleSheet, Dimensions, ActivityIndicator } from 're
 import axios from 'axios';
 
 const VerseCard: React.FC = () => {
-//   const [verse, setVerse] = useState<string | null>(null);
-//   const [public_id, setPublicid] = useState<string | null>(null);
   const [verseData, setVerseData] = useState<{
     verse: string;
     public_id: string;

@@ -10,16 +10,13 @@ export default function ChristCommunity() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
-
         <Text style={styles.headerTitle}>Christ Community</Text>
         <Text></Text>
       </View>
-
       </View>
   );
 }
