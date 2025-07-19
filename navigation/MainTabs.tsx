@@ -10,8 +10,6 @@ import DevotionsStack from '../Stack/DevotionsStack';
 import { PaperProvider } from 'react-native-paper';
 import Header from '../screens/header';
 
-
-
 const Tab = createBottomTabNavigator();
 
 export default function MainTabs() {
