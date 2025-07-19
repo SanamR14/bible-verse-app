@@ -15,12 +15,12 @@ export type MenuStackParamList = {
   Menu: undefined;
   Profile: { topic: string };
   Saved: { topic: string };
-  PrayerRequest: {};
-  Fellowship: {};
-  PrayerWarrior: {};
-  ForYou: {};
-  ChristCommunity: {};
-  Help: {};
+  PrayerRequest: { topic: string};
+  Fellowship: { topic: string};
+  PrayerWarrior: { topic: string};
+  ForYou: { topic: string};
+  ChristCommunity: { topic: string};
+  Help: { topic: string};
 };
 
 const Stack = createNativeStackNavigator();
