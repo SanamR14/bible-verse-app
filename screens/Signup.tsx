@@ -31,7 +31,7 @@ export default function SignupScreen({ navigation }: any) {
         // value={password}
         // onChangeText={setPassword}
       />
-      <Button title="Sign Up" onPress={() =>navigation.replace('LandingPage')} />
+      <Button title="Sign Up" onPress={() =>navigation.replace('MainTabs')} />
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.link}>Already have an account? Log in</Text>
       </TouchableOpacity>

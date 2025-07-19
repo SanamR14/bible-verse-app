@@ -7,12 +7,16 @@ import Plans from '../screens/Plans';
 import Explore from '../screens/Explore';
 import Home from '../screens/Home';
 import DevotionsStack from '../Stack/DevotionsStack';
+import { PaperProvider } from 'react-native-paper';
+import Header from '../screens/header';
 
 
 const Tab = createBottomTabNavigator();
 
 export default function MainTabs() {
   return (
+    <PaperProvider>
+    <Header />
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -45,11 +49,12 @@ export default function MainTabs() {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Devotions" component={DevotionsStack} />
+      <Tab.Screen name="Devotions" component={DevotionsStack}/>
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Plans" component={Plans} />
       <Tab.Screen name="About" component={About} />
      
     </Tab.Navigator>
+      </PaperProvider>
   );
 }

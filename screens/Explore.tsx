@@ -12,7 +12,7 @@ export default function Explore() {
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <Image
-        source={{ uri: 'https://via.placeholder.com/50' }}
+        source={{ uri: '' }}
         style={styles.avatar}
       />
       <View style={{ flex: 1 }}>

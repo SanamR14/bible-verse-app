@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<DevotionStackParamList>();
 export default function DevotionsStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Devotion" component={Devotions} />
+      <Stack.Screen name="Devotion" component={Devotions}/>
       <Stack.Screen name="Topic" component={Topic} />
       <Stack.Screen name="Day" component={Day} />
     </Stack.Navigator>

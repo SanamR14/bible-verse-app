@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthStack from './AuthStack';
 import MainTabs from './MainTabs';
-import LandingPage from './LandingPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,11 +28,9 @@ export default function RootNavigator() {
     //     <Stack.Screen name="Auth" component={AuthStack} />
     //   )}
     // </Stack.Navigator>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-      
+      <Stack.Navigator screenOptions={{ headerShown: false }}>   
         <Stack.Screen name="Auth" component={AuthStack} />
-        <Stack.Screen name="LandingPage" component={LandingPage} />  
-   
+        <Stack.Screen name="MainTabs" component={MainTabs} />  
     </Stack.Navigator>
   );
 }

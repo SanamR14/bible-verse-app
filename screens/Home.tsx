@@ -2,11 +2,13 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import VerseCard from './VerseCard';
+import Header from './header';
 
 
-export default function Header() {
+export default function Home() {
   return (
         <PaperProvider>
+          {/* <Header /> */}
          <SafeAreaView style={styles.container}>
           <ScrollView contentContainerStyle={styles.scroll}>
            <VerseCard />
