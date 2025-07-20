@@ -2,18 +2,48 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 export default function SignupScreen({ navigation }: any) {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const handleSignup = async () => {
-  //   // Normally send data to backend for user creation
-  //   if (email && password) {
-  //     await AsyncStorage.setItem('userToken', 'dummy-auth-token');
-  //     navigation.replace('MainApp');
-  //   }
-  // };
+const handleSignup = async () => {
+  if (!email || !password) {
+    Alert.alert('Error', 'Please enter both email and password');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify  ({ email, password,
+        confirm_password : password,
+        name: 'Sanam',
+        date_of_birth: '1997-06-14',
+        city: 'Edinburgh',
+        country: 'UK'
+       }),
+    });
+
+    const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.error || 'Registration failed');
+      }
+
+      Alert.alert('Success', 'Account created successfully');
+      navigation.navigate('Login');
+    } catch (err) {
+      console.error('Signup error:', err);
+      Alert.alert('Error', 'Failed to register. Please try again.');
+    }
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -21,17 +51,17 @@ export default function SignupScreen({ navigation }: any) {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        // value={email}
-        // onChangeText={setEmail}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        // value={password}
-        // onChangeText={setPassword}
+        value={password}
+        onChangeText={setPassword}
       />
-      <Button title="Sign Up" onPress={() =>navigation.replace('MainTabs')} />
+      <Button title="Sign Up" onPress={() =>handleSignup()} />
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.link}>Already have an account? Log in</Text>
       </TouchableOpacity>

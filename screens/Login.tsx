@@ -2,18 +2,42 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 export default function LoginScreen({ navigation }: any) {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const handleLogin = async () => {
-  //   // Normally validate credentials via API, here we just store a token
-  //   if (email && password) {
-  //     await AsyncStorage.setItem('userToken', 'dummy-auth-token');
-  //     navigation.navigate('MainApp');
-  //   }
-  // };
+const handleLogin = async () => {
+  if (!email || !password) {
+    Alert.alert('Error', 'Please enter both email and password');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Login failed');
+    }
+
+    // Store token and navigate
+    await AsyncStorage.setItem('userToken', data.token); // assuming response has token
+    navigation.navigate('MainTabs');
+
+  } catch (error) {
+    console.error('Login error:', error);
+    Alert.alert('Login Failed', 'Something went wrong');
+  }
+};
 
   return (
     <View style={styles.container}>
@@ -21,17 +45,17 @@ export default function LoginScreen({ navigation }: any) {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        // value={email}
-        // onChangeText={setEmail}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        // value={password}
-        // onChangeText={setPassword}
+        value={password}
+        onChangeText={setPassword}
       />
-      <Button title="Login" onPress={() => navigation.navigate('MainTabs')} />
+      <Button title="Login" onPress={() => handleLogin()} />
       <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.link}>Don't have an account? Sign up</Text>
       </TouchableOpacity>

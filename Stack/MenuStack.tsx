@@ -10,6 +10,7 @@ import Profile from '../screens/MenuItems/Profile';
 import Saved from '../screens/MenuItems/Saved';
 import Menu from '../screens/Menu';
 import PrayerWarrior from '../screens/MenuItems/PrayerWarrior';
+import LoginScreen from '../screens/Login';
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -37,6 +38,7 @@ export default function MenuStack() {
       <Stack.Screen name="ForYou" component={ForYou} />
       <Stack.Screen name="ChristCommunity" component={ChristCommunity} />
       <Stack.Screen name="Help" component={Help} />
+      <Stack.Screen name="Logout" component={LoginScreen} />
       
     </Stack.Navigator>
   );
