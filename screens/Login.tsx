@@ -31,7 +31,7 @@ const handleLogin = async () => {
 
     // Store token and navigate
     await AsyncStorage.setItem('userToken', data.token); // assuming response has token
-    navigation.navigate('MainTabs');
+    navigation.navigate('HomeStack');
 
   } catch (error) {
     console.error('Login error:', error);

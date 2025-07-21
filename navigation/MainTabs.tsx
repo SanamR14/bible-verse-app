@@ -9,8 +9,11 @@ import Home from '../screens/Home';
 import DevotionsStack from '../Stack/DevotionsStack';
 import { PaperProvider } from 'react-native-paper';
 import Header from '../screens/header';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MenuStack from '../Stack/MenuStack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function MainTabs() {
   return (
@@ -54,6 +57,8 @@ export default function MainTabs() {
       <Tab.Screen name="About" component={About} />
      
     </Tab.Navigator>
+     {/* <Stack.Navigator>
+        </Stack.Navigator> */}
       </PaperProvider>
   );
 }

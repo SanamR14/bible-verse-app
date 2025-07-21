@@ -10,7 +10,7 @@ export default function Header (){
   const [title, setTitle] = useState('FYI - For Your Inner Man');
 
   const currentTab = useNavigationState((state) => {
-    const tabState = state.routes.find(r => r.name === 'MainTabs')?.state;
+    const tabState = state.routes.find(r => r.name === 'HomeStack')?.state;
     const currentRoute = tabState?.routes[tabState.index]?.name;
 
     return currentRoute;
