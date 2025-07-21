@@ -5,8 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 
 export default function SignupScreen({ navigation }: any) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm_password, setconfirm_password] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [date_of_birth, setdate_of_birth] = useState('');
 
 const handleSignup = async () => {
   if (!email || !password) {
@@ -21,11 +26,11 @@ const handleSignup = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify  ({ email, password,
-        confirm_password : password,
-        name: 'Sanam',
-        date_of_birth: '1997-06-14',
-        city: 'Edinburgh',
-        country: 'UK'
+        confirm_password,
+        name,
+        date_of_birth,
+        city,
+        country
        }),
     });
 
@@ -48,6 +53,12 @@ const handleSignup = async () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
+        <TextInput
+        style={styles.input}
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+      />
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -60,6 +71,31 @@ const handleSignup = async () => {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
+      />
+       <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        secureTextEntry
+        value={confirm_password}
+        onChangeText={setconfirm_password}
+      />
+        <TextInput
+        style={styles.input}
+        placeholder="DOB"
+        value={date_of_birth}
+        onChangeText={setdate_of_birth}
+      />
+        <TextInput
+        style={styles.input}
+        placeholder="City"
+        value={city}
+        onChangeText={setCity}
+      />
+        <TextInput
+        style={styles.input}
+        placeholder="Country"
+        value={country}
+        onChangeText={setCountry}
       />
       <Button title="Sign Up" onPress={() =>handleSignup()} />
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
