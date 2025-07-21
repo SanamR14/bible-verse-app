@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import About from '../screens/About';
 import Plans from '../screens/Plans';
 import Explore from '../screens/Explore';
-import Home from '../screens/Home';
+import Home from '../screens/Home/Home';
 import DevotionsStack from '../Stack/DevotionsStack';
 import { PaperProvider } from 'react-native-paper';
 import Header from '../screens/header';
