@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VerseCard: React.FC = () => {
   // const [verseData, setVerseData] = useState<{
@@ -37,6 +38,21 @@ const VerseCard: React.FC = () => {
   const [images, setImages] = useState([]);
   const [imageUrl, setImageUrl] = useState<string | ''>();
   const [loading, setLoading] = useState(true);
+  const [user, setData] = useState<any>(null);
+
+    useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('userData');
+        if (userData) setData(JSON.parse(userData));
+      } catch (err) {
+        console.error('Failed to load user:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUserData();
+  }, []);
 
   const fetchImages = async () => {
     try {
@@ -69,7 +85,7 @@ const VerseCard: React.FC = () => {
 
   return (
     <View>
-      <Text style={styles.subtitle}>Today’s word for you</Text>
+      <Text style={styles.subtitle}>Today’s word for you {user?.name}</Text>
       <View style={styles.card}>
         <Image
           source={{ uri: imageUrl }}

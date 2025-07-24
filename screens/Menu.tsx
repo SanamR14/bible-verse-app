@@ -15,8 +15,8 @@ export default function Menu() {
 
 const logout = async (navigation : any) => {
   try {
-    await AsyncStorage.removeItem('userToken'); // Clear token
-    navigation.replace('Logout'); // Navigate to Login screen
+    await AsyncStorage.clear();
+    navigation.navigate('Logout'); // Navigate to Login screen
   } catch (error) {
     console.error('Error clearing token:', error);
     Alert.alert('Logout Failed', 'Unable to clear session.');

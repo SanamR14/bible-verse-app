@@ -31,6 +31,7 @@ const handleLogin = async () => {
 
     // Store token and navigate
     await AsyncStorage.setItem('userToken', data.token); // assuming response has token
+    await AsyncStorage.setItem('userData', JSON.stringify(data.user));
     navigation.navigate('HomeStack');
 
   } catch (error) {
