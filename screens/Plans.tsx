@@ -1,6 +1,7 @@
 // src/screens/PlansScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, Dimensions, ActivityIndicator } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
 export default function Plans() {
 
@@ -8,13 +9,15 @@ export default function Plans() {
   id: number;
   title: string;
   message: string;
-  outerTitle?: string;
+  outertitle: string;
   author: string;
   image?: string;
 };
 
  const [plans, setPlans] = useState<Plan[]>([]);
-  const [loading, setLoading] = useState(true);
+ const [loading, setLoading] = useState(true);
+
+ 
 
   const fetchPlans = async () => {
     try {
@@ -32,32 +35,61 @@ export default function Plans() {
     fetchPlans();
   }, []);
 
+  useEffect(() => {
+  setFilteredData(plans);
+}, [plans]);
+
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <Image source={{ uri: item.image }} style={styles.image} />
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title}>{item.outertitle}</Text>
       <Text style={styles.by}>{item.author}</Text>
     </View>
   );
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#999" />
-        <Text>Loading Plans...</Text>
-      </View>
-    );
-  }
-
+    const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query.trim() === '') {
+      setFilteredData(plans);
+    } else {
+      const lowerCaseQuery = query.toLowerCase();
+      const filtered = plans.filter(item =>
+        item.outertitle.toLowerCase().includes(lowerCaseQuery)
+      );
+      setFilteredData(filtered);
+    }
+  };
+ const [searchQuery, setSearchQuery] = useState('');
+ const [filteredData, setFilteredData] = useState(plans);
   return (
     <View style={styles.container}>
-      <View style={styles.searchBar}>
+      {/* <View style={styles.searchBar}>
         <Text> Search</Text>
-      </View>
+      </View> */}
+
+      <TextInput
+        placeholder="Search"
+        value={searchQuery}
+        onChangeText={handleSearch}
+        underlineColor="transparent" 
+        style={{
+        height: 40,
+        paddingVertical: 0,
+        backgroundColor: '#f5f5f5',
+        borderRadius: 8,
+        marginBottom: 16,
+        }}
+        theme={{
+        colors: {
+        primary: 'transparent', 
+       }
+      }}
+      textColor='#000000'
+      />
 
       <FlatList
-        data={plans}
         renderItem={renderItem}
+        data={filteredData}
         keyExtractor={(item) => item.id?.toString()}
         numColumns={2}
         columnWrapperStyle={styles.row}
@@ -70,12 +102,6 @@ export default function Plans() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#fff' },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  searchBar: {
-    padding: 10,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-    marginBottom: 16,
-  },
   row: { justifyContent: 'space-between' },
   card: {
     flex: 0.48,
@@ -89,4 +115,6 @@ const styles = StyleSheet.create({
   image: { width: '100%', height: 100, borderRadius: 10 },
   title: { fontWeight: 'bold', marginTop: 8, textAlign: 'center' },
   by: { color: '#555', fontSize: 12, textAlign: 'center' },
+  
 });
+

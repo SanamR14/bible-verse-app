@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 
 const devotions = [
@@ -23,17 +24,53 @@ export default function Explore() {
     </View>
   );
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredData, setFilteredData] = useState(devotions);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query.trim() === '') {
+      setFilteredData(devotions);
+    } else {
+      const lowerCaseQuery = query.toLowerCase();
+      const filtered = devotions.filter(item =>
+        item.title.toLowerCase().includes(lowerCaseQuery)
+      );
+      setFilteredData(filtered);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* <Text style={styles.heading}>FYI - For Your Inner Man</Text> */}
 
-      <View style={styles.searchBar}>
+      {/* <View style={styles.searchBar}>
         <Text> Search</Text>
         <Icon name="sliders" size={16} />
-      </View>
+      </View> */}
+
+      <TextInput
+        placeholder="Search"
+        value={searchQuery}
+        onChangeText={handleSearch}
+            underlineColor="transparent" 
+        style={{
+        height: 40,
+        paddingVertical: 0,
+        backgroundColor: '#f5f5f5',
+        borderRadius: 8,
+        marginBottom: 16,
+        }}
+        theme={{
+        colors: {
+        primary: 'transparent', 
+       }
+      }}
+      textColor='#000000'
+      />
 
       <FlatList
-        data={devotions}
+        data={filteredData}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={{ paddingBottom: 100 }}
@@ -45,14 +82,6 @@ export default function Explore() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#fff' },
   heading: { fontSize: 16, fontWeight: 'bold', marginBottom: 12 },
-  searchBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-    marginBottom: 16,
-  },
   card: {
     flexDirection: 'row',
     alignItems: 'center',

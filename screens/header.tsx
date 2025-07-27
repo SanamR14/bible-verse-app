@@ -39,10 +39,14 @@ export default function Header (){
   const navigation = useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.replace('HomeStack')}>
       <Icon name="users" size={22} />
+      </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.rightIcons}>
+       <TouchableOpacity onPress={() => navigation.replace('Notifications')}>
         <Icon name="bell" size={22} style={styles.icon} />
+       </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MenuStack')}>
         <Icon name="menu" size={22} />
         </TouchableOpacity>

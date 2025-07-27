@@ -19,6 +19,7 @@ export default function MainTabs() {
   return (
     <PaperProvider>
     <Header />
+    <search />
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,

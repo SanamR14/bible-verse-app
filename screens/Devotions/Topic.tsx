@@ -2,7 +2,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-
 import Icon from 'react-native-vector-icons/Feather';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { DevotionStackParamList } from '../../Stack/DevotionsStack';
@@ -27,9 +26,13 @@ export default function Topic() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+       <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Icon name="arrow-left" size={24} color="#000" />
+       </TouchableOpacity>
       <Text style={styles.title}>{topic}</Text>
-      <Text style={styles.subtitle}>7 - Day Devotion</Text>
-
+      <Text></Text>
+      </View>
       <FlatList
         data={days}
         renderItem={renderItem}
@@ -47,6 +50,12 @@ export default function Topic() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+    header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
   title: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 4 },
   subtitle: { fontSize: 14, textAlign: 'center', marginBottom: 16 },
   row: { justifyContent: 'space-between', marginBottom: 12 },
