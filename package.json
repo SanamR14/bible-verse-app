@@ -31,6 +31,7 @@
     "react-native-safe-area-view": "^2.0.0",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.12.0",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-vector-icons": "^10.2.0",
     "react-native-view-shot": "^4.0.3",
     "react-native-web": "^0.20.0"

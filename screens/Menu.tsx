@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser, faHandsPraying, faBookmark, faPeopleGroup, faPersonPraying, faLinkSlash, faQuestion, faLanguage, faShareFromSquare, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHandsPraying, faBookmark, faPeopleGroup, faPersonPraying, faLinkSlash, faQuestion, faLanguage, faShareFromSquare, faArrowRightFromBracket, faBell } from '@fortawesome/free-solid-svg-icons';
 import { MenuStackParamList } from '../Stack/MenuStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -69,6 +69,12 @@ const logout = async (navigation : any) => {
         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ChristCommunity',{ topic: "" })}>
            <FontAwesomeIcon icon={faPeopleGroup} size={20} color="#000" style={styles.icon} />
           <Text style={styles.itemText}>Christ Community</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Notifications',{ topic: "" })}>
+          <FontAwesomeIcon icon={faBell}  size={20} color="#000" style={styles.icon} />
+          <Text style={styles.itemText}>Notifications</Text>
         </TouchableOpacity>
 
          <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Help',{ topic: "" })}>

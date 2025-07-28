@@ -44,9 +44,9 @@ export default function Header (){
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.rightIcons}>
-       <TouchableOpacity onPress={() => navigation.replace('Notifications')}>
+       {/* <TouchableOpacity onPress={() => navigation.replace('Notifications')}>
         <Icon name="bell" size={22} style={styles.icon} />
-       </TouchableOpacity>
+       </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate('MenuStack')}>
         <Icon name="menu" size={22} />
         </TouchableOpacity>
