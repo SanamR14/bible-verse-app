@@ -45,6 +45,7 @@ const handleLogin = async () => {
      Toast.show({
       type: 'error',
       text1: 'Something went wrong',
+      text2: 'Try again'
     });
   }
 };

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function SignupScreen({ navigation }: any) {
   const [name, setName] = useState('');
@@ -40,11 +41,19 @@ const handleSignup = async () => {
         throw new Error(data?.error || 'Registration failed');
       }
 
-      Alert.alert('Success', 'Account created successfully');
+         Toast.show({
+              type: 'success',
+              text1: 'Account created successfully',
+              text2: 'Please Login',
+            });
       navigation.navigate('Login');
     } catch (err) {
       console.error('Signup error:', err);
-      Alert.alert('Error', 'Failed to register. Please try again.');
+           Toast.show({
+            type: 'error',
+            text1: 'Failed to SignUp',
+            text2: 'Try again'
+          });
     }
 };
 
