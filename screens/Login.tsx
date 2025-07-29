@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
@@ -32,11 +33,19 @@ const handleLogin = async () => {
     // Store token and navigate
     await AsyncStorage.setItem('userToken', data.token); // assuming response has token
     await AsyncStorage.setItem('userData', JSON.stringify(data.user));
+       Toast.show({
+        type: 'success',
+        text1: 'Login Successful',
+        text2: 'Welcome back!',
+      });
     navigation.navigate('HomeStack');
 
   } catch (error) {
     console.error('Login error:', error);
-    Alert.alert('Login Failed', 'Something went wrong');
+     Toast.show({
+      type: 'error',
+      text1: 'Something went wrong',
+    });
   }
 };
 
