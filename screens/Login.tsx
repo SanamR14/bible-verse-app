@@ -9,12 +9,21 @@ export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-const handleLogin = async () => {
-  if (!email || !password) {
-    Alert.alert('Error', 'Please enter both email and password');
-    return;
-  }
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
+const handleLogin = async () => {
+   if (!email.trim() || !password.trim()) {
+      Alert.alert('Validation Error', 'Please enter both email and password.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      Alert.alert('Invalid Email', 'Please enter a valid email address.');
+      return;
+    }
   try {
     const response = await fetch('http://localhost:3000/auth/login', {
       method: 'POST',
@@ -52,13 +61,16 @@ const handleLogin = async () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
+    <Text style={styles.title}>Login</Text>
+     <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
+
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -66,7 +78,7 @@ const handleLogin = async () => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Login" onPress={() => handleLogin()} />
+      <Button title="Login" onPress={handleLogin} />
       <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.link}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
