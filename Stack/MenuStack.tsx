@@ -9,7 +9,6 @@ import PrayerRequest from '../screens/MenuItems/PrayerRequest';
 import Profile from '../screens/MenuItems/Profile';
 import Saved from '../screens/MenuItems/Saved';
 import Menu from '../screens/Menu';
-import PrayerWarrior from '../screens/MenuItems/PrayerWarrior';
 import LoginScreen from '../screens/Login';
 import Notifications from '../screens/MenuItems/Notifications';
 
@@ -35,12 +34,10 @@ export default function MenuStack() {
       <Stack.Screen name="Saved" component={Saved} />
       <Stack.Screen name="PrayerRequest" component={PrayerRequest} />
       <Stack.Screen name="Fellowship" component={Fellowship} />
-      <Stack.Screen name="PrayerWarrior" component={PrayerWarrior} />
       <Stack.Screen name="ForYou" component={ForYou} />
       <Stack.Screen name="ChristCommunity" component={ChristCommunity} />
       <Stack.Screen name="Help" component={Notifications} />
       <Stack.Screen name="Logout" component={LoginScreen} />
-      
     </Stack.Navigator>
   );
 }
