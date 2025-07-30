@@ -1,17 +1,66 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-paper';
 import { Switch } from 'react-native';
 import { Button } from 'react-native';
+import PrayerModal from './Modal/Modal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function PrayerRequest() {
 
   const navigation = useNavigation();
   const [value, onChangeText] = React.useState('');
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [isAnonymous, setisAnonymous] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [submittedText, setSubmittedText] = useState('');
+  const [user, setData] = useState<any>(null);
+
+const handleSave = async () => {
+  try {
+    if (!value.trim()) {
+      alert('Prayer request cannot be empty.');
+      return;
+    }
+
+    const user = await AsyncStorage.getItem('userData');
+    if (!user) {
+      alert('User not found. Please log in again.');
+      return;
+    }
+
+    const userData = JSON.parse(user);
+    const payload = {
+      userid: userData.id,
+      username: isAnonymous ? 'Anonymous' : userData.name,
+      prayer: value,
+    };
+
+    const response = await fetch('http://localhost:3000/prayer-requests/prayerReq', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      setSubmittedText(value);
+      setModalVisible(true);
+      onChangeText(''); // Optional: clear input
+    } else {
+      const error = await response.json();
+      console.error('Failed to save prayer request:', error);
+      alert('Failed to submit prayer request.');
+    }
+  } catch (err) {
+    console.error('Error posting prayer request:', err);
+    alert('An error occurred.');
+  }
+};
+
 
   return (
     <View style={styles.container}>
@@ -20,7 +69,7 @@ export default function PrayerRequest() {
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Prayer Request</Text>
-        <TouchableOpacity>
+       <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Icon name="menu" size={24} color="#000" />
         </TouchableOpacity>
       </View>
@@ -37,9 +86,14 @@ export default function PrayerRequest() {
       <Text style={styles.body}>A small prayer comes here</Text>
       <View style={styles.privateRow}>
         <Text style={styles.label}>Anonymous Prayer Request</Text>
-            <Switch style={styles.btn} value={isPrivate} onValueChange={setIsPrivate} />
+            <Switch style={styles.btn} value={isAnonymous} onValueChange={setisAnonymous} />
       </View>
-      <Button title="Save" />
+      <Button title="Save" onPress={handleSave} />
+         <PrayerModal
+        visible={modalVisible}
+        requestText={submittedText}
+        onClose={() => setModalVisible(false)}
+      />
       </View>
   );
 }
