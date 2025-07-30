@@ -1,4 +1,4 @@
-// src/screens/SignupScreen.tsx
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -176,14 +176,14 @@ return (
     onChangeText={setconfirm_password}
   />
 
-<TouchableOpacity
+{/* <TouchableOpacity
   style={styles.input}
   onPress={() => setShowPicker(true)}
 >
   <Text style={{ color: date_of_birth ? '#000' : '#888' }}>
     {date_of_birth || 'Select DOB'}
   </Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 
 {showPicker && (
   <DateTimePicker
@@ -194,6 +194,7 @@ return (
     onChange={onChange}
   />
 )}
+<View style={styles.picker}>
  <RNPickerSelect
         onValueChange={(value) => {
           setCountry(value);
@@ -207,6 +208,8 @@ return (
         placeholder={{ label: 'Choose a country...', value: null }}
         style={pickerSelectStyles}
       />
+</View>
+<View style={styles.picker}>
       <RNPickerSelect
         onValueChange={(value) => setCity(value)}
         value={city}
@@ -215,7 +218,7 @@ return (
         disabled={!country}
         style={pickerSelectStyles}
       />
-
+</View>
   <Button title="Sign Up" onPress={handleSignup} />
 
   <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -239,11 +242,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
+    backgroundColor: '#f2f2f2',
+    paddingHorizontal: 16,
+    paddingVertical: Platform.OS === 'ios' ? 14 : 10,
+    borderRadius: 12,
+    fontSize: 16,
+    marginBottom: 14,
+    color: '#333',
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 12,
-    marginBottom: 16,
-    borderRadius: 8,
+  },
+  picker: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginBottom: 14,
   },
   link: {
     marginTop: 12,
@@ -260,24 +274,17 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = {
   inputIOS: {
     fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    color: '#000',
-    backgroundColor: '#f9f9f9',
-    marginBottom: 16,
+    paddingVertical: 10,
+    color: '#333',
+    height: 30,
   },
   inputAndroid: {
     fontSize: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    color: '#000',
-    backgroundColor: '#f9f9f9',
-    marginBottom: 16,
+    paddingVertical: 10,
+    color: '#333',
+    height: 30,
+  },
+  placeholder: {
+    color: '#aaa',
   },
 };
