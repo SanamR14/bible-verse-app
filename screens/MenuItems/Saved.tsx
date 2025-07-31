@@ -1,12 +1,10 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
-import { FlatList } from 'react-native';
-
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+import { useNavigation } from "@react-navigation/native";
+import { FlatList } from "react-native";
 
 export default function Saved() {
-
   const navigation = useNavigation();
 
   return (
@@ -17,7 +15,7 @@ export default function Saved() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Saved List</Text>
       </View>
-       <FlatList
+      <FlatList
         data={savedItems}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -31,35 +29,38 @@ export default function Saved() {
           </View>
         )}
       />
-      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 16,
-    paddingTop: 50
+    paddingTop: 50,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 24,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#000',
+    fontWeight: "700",
+    color: "#000",
   },
-    card: {
-    flexDirection: 'row', alignItems: 'center',
-    marginBottom: 16, backgroundColor: '#fefefe',
-    padding: 10, borderRadius: 12,
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    backgroundColor: "#fefefe",
+    padding: 10,
+    borderRadius: 12,
   },
   thumbnail: { width: 50, height: 50, borderRadius: 4, marginRight: 10 },
-  itemTitle: { fontWeight: 'bold' },
-  itemAuthor: { color: '#666' },
+  itemTitle: { fontWeight: "bold" },
+  itemAuthor: { color: "#666" },
   bookmark: { fontSize: 20 },
 });

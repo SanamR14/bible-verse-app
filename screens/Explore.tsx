@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Feather';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { TextInput } from "react-native-paper";
+import Icon from "react-native-vector-icons/Feather";
 
 const devotions = [
-  { id: '1', title: "God's Battle Axe", author: 'Apos Joshua Selman' },
-  { id: '2', title: 'Worship Devotion 01', author: 'Pas Sunny Prasad' },
-  { id: '3', title: 'Jehovah Jireh', author: 'Apos Joshua Selman' },
+  { id: "1", title: "God's Battle Axe", author: "Apos Joshua Selman" },
+  { id: "2", title: "Worship Devotion 01", author: "Pas Sunny Prasad" },
+  { id: "3", title: "Jehovah Jireh", author: "Apos Joshua Selman" },
 ];
 
 export default function Explore() {
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
-      <Image
-        source={{ uri: '' }}
-        style={styles.avatar}
-      />
+      <Image source={{ uri: "" }} style={styles.avatar} />
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.author}>by {item.author}</Text>
@@ -24,16 +21,16 @@ export default function Explore() {
     </View>
   );
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(devotions);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    if (query.trim() === '') {
+    if (query.trim() === "") {
       setFilteredData(devotions);
     } else {
       const lowerCaseQuery = query.toLowerCase();
-      const filtered = devotions.filter(item =>
+      const filtered = devotions.filter((item) =>
         item.title.toLowerCase().includes(lowerCaseQuery)
       );
       setFilteredData(filtered);
@@ -53,20 +50,20 @@ export default function Explore() {
         placeholder="Search"
         value={searchQuery}
         onChangeText={handleSearch}
-            underlineColor="transparent" 
+        underlineColor="transparent"
         style={{
-        height: 40,
-        paddingVertical: 0,
-        backgroundColor: '#f5f5f5',
-        borderRadius: 8,
-        marginBottom: 16,
+          height: 40,
+          paddingVertical: 0,
+          backgroundColor: "#f5f5f5",
+          borderRadius: 8,
+          marginBottom: 16,
         }}
         theme={{
-        colors: {
-        primary: 'transparent', 
-       }
-      }}
-      textColor='#000000'
+          colors: {
+            primary: "transparent",
+          },
+        }}
+        textColor="#000000"
       />
 
       <FlatList
@@ -80,19 +77,19 @@ export default function Explore() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  heading: { fontSize: 16, fontWeight: 'bold', marginBottom: 12 },
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  heading: { fontSize: 16, fontWeight: "bold", marginBottom: 12 },
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 12,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginBottom: 10,
     borderRadius: 10,
     elevation: 1,
     gap: 12,
   },
   avatar: { width: 50, height: 50, borderRadius: 25 },
-  title: { fontWeight: 'bold' },
-  author: { color: '#555', fontSize: 12 },
+  title: { fontWeight: "bold" },
+  author: { color: "#555", fontSize: 12 },
 });

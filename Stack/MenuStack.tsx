@@ -1,27 +1,26 @@
-
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ForYou from '../screens/MenuItems/ForYou';
-import ChristCommunity from '../screens/MenuItems/ChristCommunity';
-import Help from '../screens/MenuItems/Help';
-import Fellowship from '../screens/MenuItems/Fellowship';
-import PrayerRequest from '../screens/MenuItems/PrayerRequest';
-import Profile from '../screens/MenuItems/Profile';
-import Saved from '../screens/MenuItems/Saved';
-import Menu from '../screens/Menu';
-import LoginScreen from '../screens/Login';
-import Notifications from '../screens/MenuItems/Notifications';
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ForYou from "../screens/MenuItems/ForYou";
+import ChristCommunity from "../screens/MenuItems/ChristCommunity";
+import Help from "../screens/MenuItems/Help";
+import Fellowship from "../screens/MenuItems/Fellowship";
+import PrayerRequest from "../screens/MenuItems/PrayerRequest";
+import Profile from "../screens/MenuItems/Profile";
+import Saved from "../screens/MenuItems/Saved";
+import Menu from "../screens/Menu";
+import LoginScreen from "../screens/Login";
+import Notifications from "../screens/MenuItems/Notifications";
 
 export type MenuStackParamList = {
   Menu: undefined;
   Profile: { topic: string };
   Saved: { topic: string };
-  PrayerRequest: { topic: string};
-  Fellowship: { topic: string};
-  PrayerWarrior: { topic: string};
-  ForYou: { topic: string};
-  ChristCommunity: { topic: string};
-  Help: { topic: string};
+  PrayerRequest: { topic: string };
+  Fellowship: { topic: string };
+  PrayerWarrior: { topic: string };
+  ForYou: { topic: string };
+  ChristCommunity: { topic: string };
+  Help: { topic: string };
 };
 
 const Stack = createNativeStackNavigator();

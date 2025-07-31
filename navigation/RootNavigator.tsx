@@ -1,10 +1,10 @@
 // src/navigation/RootNavigator.tsx
-import React, { useEffect, useState } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AuthStack from './AuthStack';
-import MainTabs from './MainTabs';
-import HomeStack from '../Stack/HomeStack';
+import React, { useEffect, useState } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthStack from "./AuthStack";
+import MainTabs from "./MainTabs";
+import HomeStack from "../Stack/HomeStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +12,7 @@ export default function RootNavigator() {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
   useEffect(() => {
     const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('userToken');
+      const token = await AsyncStorage.getItem("userToken");
       setIsSignedIn(!!token);
     };
     checkAuth();
@@ -28,11 +28,9 @@ export default function RootNavigator() {
         <Stack.Screen name="Auth" component={AuthStack} />
       )}
     </Stack.Navigator>
-    //   <Stack.Navigator screenOptions={{ headerShown: false }}>   
+    //   <Stack.Navigator screenOptions={{ headerShown: false }}>
     //     <Stack.Screen name="Auth" component={AuthStack} />
-    //     <Stack.Screen name="MainTabs" component={MainTabs} />  
+    //     <Stack.Screen name="MainTabs" component={MainTabs} />
     // </Stack.Navigator>
   );
 }
-
-

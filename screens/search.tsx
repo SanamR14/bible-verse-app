@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { View, TextInput, FlatList, Text, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { View, TextInput, FlatList, Text, StyleSheet } from "react-native";
 
 const DATA = [
-  { id: '1', name: 'John Doe' },
-  { id: '2', name: 'Jane Smith' },
-  { id: '3', name: 'Michael Johnson' },
-  { id: '4', name: 'Emily Davis' },
-  { id: '5', name: 'Daniel Lee' },
+  { id: "1", name: "John Doe" },
+  { id: "2", name: "Jane Smith" },
+  { id: "3", name: "Michael Johnson" },
+  { id: "4", name: "Emily Davis" },
+  { id: "5", name: "Daniel Lee" },
 ];
 
 export default function search() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(DATA);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    if (query.trim() === '') {
+    if (query.trim() === "") {
       setFilteredData(DATA);
     } else {
       const lowerCaseQuery = query.toLowerCase();
-      const filtered = DATA.filter(item =>
+      const filtered = DATA.filter((item) =>
         item.name.toLowerCase().includes(lowerCaseQuery)
       );
       setFilteredData(filtered);
@@ -36,10 +36,8 @@ export default function search() {
       />
       <FlatList
         data={filteredData}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <Text style={styles.item}>{item.name}</Text>
-        )}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
       />
     </View>
   );
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 10,
     marginBottom: 16,

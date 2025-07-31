@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const VerseCard: React.FC = () => {
   // const [verseData, setVerseData] = useState<{
@@ -36,17 +43,17 @@ const VerseCard: React.FC = () => {
   // }
 
   const [images, setImages] = useState([]);
-  const [imageUrl, setImageUrl] = useState<string | ''>();
+  const [imageUrl, setImageUrl] = useState<string | "">();
   const [loading, setLoading] = useState(true);
   const [user, setData] = useState<any>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const loadUserData = async () => {
       try {
-        const userData = await AsyncStorage.getItem('userData');
+        const userData = await AsyncStorage.getItem("userData");
         if (userData) setData(JSON.parse(userData));
       } catch (err) {
-        console.error('Failed to load user:', err);
+        console.error("Failed to load user:", err);
       } finally {
         setLoading(false);
       }
@@ -56,12 +63,12 @@ const VerseCard: React.FC = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch('http://localhost:3000/bibleverse/'); // Replace with your API
+      const response = await fetch("http://localhost:3000/bibleverse/"); // Replace with your API
       const data = await response.json();
       setImages(data);
       updateImage(data);
     } catch (error) {
-      console.error('Error loading images:', error);
+      console.error("Error loading images:", error);
     } finally {
       setLoading(false);
     }
@@ -69,8 +76,9 @@ const VerseCard: React.FC = () => {
 
   const updateImage = (imageArray: any[]) => {
     const today = new Date();
-    const dayIndex = today.getDate() + today.getMonth() * 31 + today.getFullYear();
-   // const dayIndex = today.getHours() * 60 + today.getMinutes();
+    const dayIndex =
+      today.getDate() + today.getMonth() * 31 + today.getFullYear();
+    // const dayIndex = today.getHours() * 60 + today.getMinutes();
     const index = dayIndex % imageArray.length;
     setImageUrl(imageArray[index]?.image_url); // Make sure your API returns `url`
   };
@@ -79,7 +87,7 @@ const VerseCard: React.FC = () => {
     fetchImages();
   }, []);
 
-    if (loading) {
+  if (loading) {
     return <ActivityIndicator style={{ marginTop: 40 }} size="large" />;
   }
 
@@ -105,34 +113,34 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     marginBottom: 10,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   card: {
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 20,
-    overflow: 'hidden',
-    position: 'relative',
+    overflow: "hidden",
+    position: "relative",
   },
   image: {
-    width: Dimensions.get('window').width * 0.9,
-    height: Dimensions.get('window').width * 0.9,
+    width: Dimensions.get("window").width * 0.9,
+    height: Dimensions.get("window").width * 0.9,
     borderRadius: 20,
   },
   textOverlay: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     paddingHorizontal: 20,
   },
   verse: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   reference: {
-    color: '#ddd',
+    color: "#ddd",
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 4,
   },
 });

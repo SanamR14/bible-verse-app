@@ -1,31 +1,36 @@
 // src/screens/PlansScreen.tsx
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, Dimensions, ActivityIndicator } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
+import { TextInput } from "react-native-paper";
 
 export default function Plans() {
-
   type Plan = {
-  id: number;
-  title: string;
-  message: string;
-  outertitle: string;
-  author: string;
-  image?: string;
-};
+    id: number;
+    title: string;
+    message: string;
+    outertitle: string;
+    author: string;
+    image?: string;
+  };
 
- const [plans, setPlans] = useState<Plan[]>([]);
- const [loading, setLoading] = useState(true);
-
- 
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchPlans = async () => {
     try {
-      const response = await fetch('http://localhost:3000/plans/');
+      const response = await fetch("http://localhost:3000/plans/");
       const data = await response.json();
       setPlans(data);
     } catch (error) {
-      console.error('Failed to fetch plans:', error);
+      console.error("Failed to fetch plans:", error);
     } finally {
       setLoading(false);
     }
@@ -36,8 +41,8 @@ export default function Plans() {
   }, []);
 
   useEffect(() => {
-  setFilteredData(plans);
-}, [plans]);
+    setFilteredData(plans);
+  }, [plans]);
 
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
@@ -47,20 +52,20 @@ export default function Plans() {
     </View>
   );
 
-    const handleSearch = (query: string) => {
+  const handleSearch = (query: string) => {
     setSearchQuery(query);
-    if (query.trim() === '') {
+    if (query.trim() === "") {
       setFilteredData(plans);
     } else {
       const lowerCaseQuery = query.toLowerCase();
-      const filtered = plans.filter(item =>
+      const filtered = plans.filter((item) =>
         item.outertitle.toLowerCase().includes(lowerCaseQuery)
       );
       setFilteredData(filtered);
     }
   };
- const [searchQuery, setSearchQuery] = useState('');
- const [filteredData, setFilteredData] = useState(plans);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(plans);
   return (
     <View style={styles.container}>
       {/* <View style={styles.searchBar}>
@@ -71,20 +76,20 @@ export default function Plans() {
         placeholder="Search"
         value={searchQuery}
         onChangeText={handleSearch}
-        underlineColor="transparent" 
+        underlineColor="transparent"
         style={{
-        height: 40,
-        paddingVertical: 0,
-        backgroundColor: '#f5f5f5',
-        borderRadius: 8,
-        marginBottom: 16,
+          height: 40,
+          paddingVertical: 0,
+          backgroundColor: "#f5f5f5",
+          borderRadius: 8,
+          marginBottom: 16,
         }}
         theme={{
-        colors: {
-        primary: 'transparent', 
-       }
-      }}
-      textColor='#000000'
+          colors: {
+            primary: "transparent",
+          },
+        }}
+        textColor="#000000"
       />
 
       <FlatList
@@ -100,21 +105,19 @@ export default function Plans() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  row: { justifyContent: 'space-between' },
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  loadingContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
+  row: { justifyContent: "space-between" },
   card: {
     flex: 0.48,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginBottom: 16,
     borderRadius: 12,
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 2,
   },
-  image: { width: '100%', height: 100, borderRadius: 10 },
-  title: { fontWeight: 'bold', marginTop: 8, textAlign: 'center' },
-  by: { color: '#555', fontSize: 12, textAlign: 'center' },
-  
+  image: { width: "100%", height: 100, borderRadius: 10 },
+  title: { fontWeight: "bold", marginTop: 8, textAlign: "center" },
+  by: { color: "#555", fontSize: 12, textAlign: "center" },
 });
-
