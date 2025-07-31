@@ -19,11 +19,6 @@ export default function SignupScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setconfirm_password] = useState("");
-  const [date_of_birth, setdate_of_birth] = useState("");
-
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
-
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
 
@@ -38,21 +33,6 @@ export default function SignupScreen({ navigation }: any) {
       { label: "Manchester", value: "Manchester" },
       { label: "Birmingham", value: "Birmingham" },
     ],
-  };
-
-  const onChange = (event: any, selectedDate?: Date) => {
-    setShowPicker(Platform.OS === "ios"); // on iOS it stays open
-    if (selectedDate) {
-      setDate(selectedDate);
-      setdate_of_birth(formatDate(selectedDate)); // Format into dd/mm/yyyy
-    }
-  };
-
-  const formatDate = (date: Date): string => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
   };
 
   const validateEmail = (email: string) => {
@@ -101,11 +81,6 @@ export default function SignupScreen({ navigation }: any) {
       return;
     }
 
-    if (!date_of_birth) {
-      Alert.alert("DOB Required", "Please select a date of birth.");
-      return;
-    }
-
     if (!country) {
       Alert.alert("Country Required", "Please select a country.");
       return;
@@ -123,11 +98,10 @@ export default function SignupScreen({ navigation }: any) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          name,
           email,
           password,
           confirm_password,
-          name,
-          date_of_birth,
           city,
           country,
         }),
@@ -186,45 +160,27 @@ export default function SignupScreen({ navigation }: any) {
         onChangeText={setconfirm_password}
       />
 
-      {/* <TouchableOpacity
-  style={styles.input}
-  onPress={() => setShowPicker(true)}
->
-  <Text style={{ color: date_of_birth ? '#000' : '#888' }}>
-    {date_of_birth || 'Select DOB'}
-  </Text>
-</TouchableOpacity> */}
-
-      {showPicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          maximumDate={new Date()} // Prevent future dates
-          onChange={onChange}
-        />
-      )}
       <View style={styles.picker}>
         <RNPickerSelect
           onValueChange={(value) => {
             setCountry(value);
             setCity(""); // Reset city when country changes
           }}
-          value={country}
+          value={country || ""}
           items={[
             { label: "India", value: "India" },
             { label: "UK", value: "UK" },
           ]}
-          placeholder={{ label: "Choose a country...", value: null }}
+          placeholder={{ label: "Choose a country...", value: "" }}
           style={pickerSelectStyles}
         />
       </View>
       <View style={styles.picker}>
         <RNPickerSelect
           onValueChange={(value) => setCity(value)}
-          value={city}
+          value={city || ""}
           items={cityOptions[country] || []}
-          placeholder={{ label: "Choose a city...", value: null }}
+          placeholder={{ label: "Choose a city...", value: "" }}
           disabled={!country}
           style={pickerSelectStyles}
         />
