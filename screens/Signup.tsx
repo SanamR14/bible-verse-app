@@ -29,6 +29,7 @@ export default function SignupScreen({ navigation }: any) {
       { label: "Bangalore", value: "Bangalore" },
     ],
     UK: [
+      { label: "Edinburgh", value: "Edinburgh" },
       { label: "London", value: "London" },
       { label: "Manchester", value: "Manchester" },
       { label: "Birmingham", value: "Birmingham" },
