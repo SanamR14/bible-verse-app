@@ -1,4 +1,4 @@
-// src/screens/TopicScreen.tsx
+// TopicScreen.tsx
 import React from "react";
 import {
   View,
@@ -12,21 +12,27 @@ import Icon from "react-native-vector-icons/Feather";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { DevotionStackParamList } from "../../Stack/DevotionsStack";
 
-const days = Array.from({ length: 7 }, (_, i) => i + 1);
-
-export default function Topic() {
+export default function TopicScreen() {
   const route = useRoute<RouteProp<DevotionStackParamList, "Topic">>();
   const navigation =
     useNavigation<NativeStackNavigationProp<DevotionStackParamList>>();
   const { topic } = route.params;
 
-  const renderItem = ({ item }: { item: number }) => (
+  if (!topic.days || topic.days.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>No days available.</Text>
+      </View>
+    );
+  }
+
+  const renderItem = ({ item, index }: { item: any; index: number }) => (
     <TouchableOpacity
       style={styles.dayButton}
-      onPress={() => navigation.navigate("Day", { topic, day: item })}
+      onPress={() => navigation.navigate("Day", { topic, day: index })}
     >
       <Icon name="calendar" size={20} />
-      <Text style={styles.dayText}>{item}</Text>
+      <Text style={styles.dayText}>{item.title || `Day ${index + 1}`}</Text>
     </TouchableOpacity>
   );
 
@@ -36,13 +42,14 @@ export default function Topic() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>{topic}</Text>
+        <Text style={styles.title}>{topic.title}</Text>
         <Text></Text>
       </View>
+
       <FlatList
-        data={days}
+        data={topic.days}
         renderItem={renderItem}
-        keyExtractor={(item) => item.toString()}
+        keyExtractor={(_, i) => i.toString()}
         numColumns={3}
         columnWrapperStyle={styles.row}
       />
@@ -68,7 +75,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 4,
   },
-  subtitle: { fontSize: 14, textAlign: "center", marginBottom: 16 },
   row: { justifyContent: "space-between", marginBottom: 12 },
   dayButton: {
     backgroundColor: "#fcf8f2",
@@ -77,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
   },
-  dayText: { marginTop: 8 },
+  dayText: { marginTop: 8, textAlign: "center" },
   quizButton: {
     marginTop: 16,
     backgroundColor: "#fcf8f2",
@@ -88,4 +94,10 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   quizText: { fontWeight: "bold" },
+  errorText: {
+    textAlign: "center",
+    marginTop: 50,
+    fontSize: 16,
+    color: "gray",
+  },
 });

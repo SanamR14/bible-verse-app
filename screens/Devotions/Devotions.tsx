@@ -1,46 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { DevotionStackParamList } from "../../Stack/DevotionsStack";
 import { TextInput } from "react-native-paper";
+import axios from "axios";
+import { DevotionStackParamList } from "../../Stack/DevotionsStack";
 
-const topics = Array.from({ length: 18 }, (_, i) => `Topic ${i + 1}`);
+export type Devotion = {
+  id: number;
+  title: string;
+  message: string;
+  days: null | Array<{
+    title: string;
+    message: string;
+  }>;
+};
 
 export default function Devotions() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<DevotionStackParamList>>();
-  const renderItem = ({ item }: { item: string }) => (
-    <TouchableOpacity
-      style={styles.topicButton}
-      onPress={() => navigation.navigate("Topic", { topic: item })}
-    >
-      <Text style={styles.topicText}>{item}</Text>
-    </TouchableOpacity>
-  );
+  useNavigation<NativeStackNavigationProp<DevotionStackParamList>>();
 
+  const [devotions, setDevotions] = useState<Devotion[]>([]);
+  const [filteredData, setFilteredData] = useState<Devotion[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(topics);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDevotions = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/devotions/"); 
+      setDevotions(res.data);
+      setFilteredData(res.data);
+    } catch (err) {
+      console.error("Failed to fetch devotions:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDevotions();
+  }, []);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (query.trim() === "") {
-      setFilteredData(topics);
+      setFilteredData(devotions);
     } else {
-      const lowerCaseQuery = query.toLowerCase();
-      const filtered = topics.filter((item) =>
-        item.toLowerCase().includes(lowerCaseQuery)
+      const lower = query.toLowerCase();
+      const filtered = devotions.filter((item) =>
+        item.title.toLowerCase().includes(lower)
       );
       setFilteredData(filtered);
     }
   };
+
+  const renderItem = ({ item }: { item: Devotion }) => (
+    <TouchableOpacity
+      style={styles.topicButton}
+      onPress={() =>
+        navigation.navigate(item.days ? "Topic" : "Day", { topic: item })
+      }
+    >
+      <Text style={styles.topicText}>{item.title}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -49,31 +79,27 @@ export default function Devotions() {
         value={searchQuery}
         onChangeText={handleSearch}
         underlineColor="transparent"
-        style={{
-          height: 40,
-          paddingVertical: 0,
-          backgroundColor: "#f5f5f5",
-          borderRadius: 8,
-          marginBottom: 16,
-        }}
-        theme={{
-          colors: {
-            primary: "transparent",
-          },
-        }}
+        style={styles.searchInput}
+        theme={{ colors: { primary: "transparent" } }}
         textColor="#000000"
       />
-      <FlatList
-        data={filteredData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      />
+
+      {loading ? (
+        <ActivityIndicator size="large" color="#999" />
+      ) : (
+        <FlatList
+          data={filteredData}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={{ paddingBottom: 100 }}
+        />
+      )}
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },
@@ -109,4 +135,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingVertical: 8,
   },
+  searchInput: {
+  height: 40,
+  paddingVertical: 0,
+  backgroundColor: "#f5f5f5",
+  borderRadius: 8,
+  marginBottom: 16,
+},
 });
