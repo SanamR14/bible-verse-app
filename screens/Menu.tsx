@@ -40,7 +40,7 @@ export default function Menu() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>User Name</Text>
+        <Text style={styles.headerTitle}>Menu</Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="menu" size={24} color="#000" />
         </TouchableOpacity>
