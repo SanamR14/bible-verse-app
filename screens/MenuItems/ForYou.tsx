@@ -15,6 +15,7 @@ export default function ForYou() {
         <Text style={styles.headerTitle}>For You</Text>
         <Text></Text>
       </View>
+      <Text>Coming Soon!</Text>
     </View>
   );
 }

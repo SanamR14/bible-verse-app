@@ -15,6 +15,7 @@ export default function ChristCommunity() {
         <Text style={styles.headerTitle}>Christ Community</Text>
         <Text></Text>
       </View>
+      <Text>Coming Soon!</Text>
     </View>
   );
 }

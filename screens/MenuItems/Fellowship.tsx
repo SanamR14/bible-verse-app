@@ -15,6 +15,7 @@ export default function Fellowship() {
         <Text style={styles.headerTitle}>Fellowship</Text>
         <Text></Text>
       </View>
+      <Text>Coming Soon!</Text>
     </View>
   );
 }

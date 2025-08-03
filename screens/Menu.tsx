@@ -127,7 +127,7 @@ export default function Menu() {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => navigation.navigate("Notifications", { topic: "" })}
+          onPress={() => navigation.navigate("Notifications")}
         >
           <FontAwesomeIcon
             icon={faBell}
@@ -140,15 +140,14 @@ export default function Menu() {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => navigation.navigate("Help", { topic: "" })}
         >
           <FontAwesomeIcon
             icon={faQuestion}
             size={20}
             color="#000"
-            style={styles.icon}
+            style={[styles.icon, styles.disabledItem]}
           />
-          <Text style={styles.itemText}>Help</Text>
+          <Text style={[styles.itemText, styles.disabledText]}>Help</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.item}>
@@ -156,9 +155,9 @@ export default function Menu() {
             icon={faLanguage}
             size={20}
             color="#000"
-            style={styles.icon}
+            style={[styles.icon, styles.disabledItem]}
           />
-          <Text style={styles.itemText}>Language</Text>
+          <Text style={[styles.itemText, styles.disabledText]}>Language</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.item}>
@@ -166,9 +165,9 @@ export default function Menu() {
             icon={faShareFromSquare}
             size={20}
             color="#000"
-            style={styles.icon}
+            style={[styles.icon, styles.disabledItem]}
           />
-          <Text style={styles.itemText}>Share</Text>
+          <Text style={[styles.itemText, styles.disabledText]}>Share</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -223,5 +222,11 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     color: "#000",
+  },
+    disabledItem: {
+    opacity: 0.5,
+  },
+  disabledText: {
+    color: "#999",
   },
 });
