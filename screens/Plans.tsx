@@ -26,7 +26,7 @@ export default function Plans() {
 
   const fetchPlans = async () => {
     try {
-      const response = await fetch("http://localhost:3000/plans/");
+      const response = await fetch("https://bible-verse-backend-1kvo.onrender.com/plans/");
       const data = await response.json();
       setPlans(data);
     } catch (error) {

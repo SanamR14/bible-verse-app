@@ -34,7 +34,7 @@ export default function Devotions() {
 
   const fetchDevotions = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/devotions/"); 
+      const res = await axios.get("https://bible-verse-backend-1kvo.onrender.com/devotions/"); 
       setDevotions(res.data);
       setFilteredData(res.data);
     } catch (err) {

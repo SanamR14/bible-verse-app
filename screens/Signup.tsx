@@ -93,7 +93,7 @@ export default function SignupScreen({ navigation }: any) {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
+      const response = await fetch("https://bible-verse-backend-1kvo.onrender.com/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

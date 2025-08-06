@@ -63,7 +63,7 @@ const VerseCard: React.FC = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch("http://localhost:3000/bibleverse/"); // Replace with your API
+      const response = await fetch("https://bible-verse-backend-1kvo.onrender.com/bibleverse/"); // Replace with your API
       const data = await response.json();
       setImages(data);
       updateImage(data);
