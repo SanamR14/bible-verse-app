@@ -35,7 +35,7 @@ export default function PrayerRequest() {
         prayer: value,
       };
       const response = await fetch(
-        "http://localhost:3000/prayer-requests/prayerReq",
+        "https://bible-verse-backend-1kvo.onrender.com/prayer-requests/prayerReq",
         {
           method: "POST",
           headers: {

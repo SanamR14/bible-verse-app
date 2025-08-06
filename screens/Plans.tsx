@@ -91,7 +91,9 @@ export default function Plans() {
         }}
         textColor="#000000"
       />
-
+   {loading ? (
+        <ActivityIndicator size="large" color="#999" />
+      ) : (
       <FlatList
         renderItem={renderItem}
         data={filteredData}
@@ -100,6 +102,7 @@ export default function Plans() {
         columnWrapperStyle={styles.row}
         contentContainerStyle={{ paddingBottom: 100 }}
       />
+      )}
     </View>
   );
 }

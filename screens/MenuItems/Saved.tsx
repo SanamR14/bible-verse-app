@@ -14,13 +14,14 @@ export default function Saved() {
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Saved List</Text>
+        <Text></Text>
       </View>
       <FlatList
-        data={savedItems}
+        data={null}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Image source={{ uri: item.image }} style={styles.thumbnail} />
+            {/* <Image source={{ uri: item.image }} style={styles.thumbnail} /> */}
             <View style={{ flex: 1 }}>
               <Text style={styles.itemTitle}>{item.title}</Text>
               <Text style={styles.itemAuthor}>by {item.author}</Text>
