@@ -1,5 +1,5 @@
 // DayScreen.tsx
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { DevotionStackParamList } from "../../Stack/DevotionsStack";
@@ -10,16 +10,20 @@ export default function DayScreen() {
   const route = useRoute<RouteProp<DevotionStackParamList, "Day">>();
   const { topic, day } = route.params;
   const navigation = useNavigation();
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSave = () => {
+    setIsSaved(!isSaved);
+
+    // Optional: Trigger API call here to save or unsave
+    // Example: saveItemToBackend(isSaved ? "unsave" : "save");
+  };
 
   const content =
-    topic.days && topic.days[day]
-      ? topic.days[day].message
-      : topic.message;
+    topic.days && topic.days[day] ? topic.days[day].message : topic.message;
 
   const dayTitle =
-    topic.days && topic.days[day]?.title
-      ? topic.days[day].title
-      : topic.title;
+    topic.days && topic.days[day]?.title ? topic.days[day].title : topic.title;
 
   return (
     <View style={styles.container}>
@@ -28,13 +32,19 @@ export default function DayScreen() {
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>{topic.title}</Text>
-        <Text></Text>
+        <TouchableOpacity onPress={handleSave}>
+          <Icon
+            name={isSaved ? "bookmark" : "bookmark"}
+            size={24}
+            color={isSaved ? "black" : "silver"}
+          />
+        </TouchableOpacity>
       </View>
       <ScrollView style={styles.scroll}>
-      <View style={styles.contentCard}>
-        {/* <Text style={styles.dayTitle}>{dayTitle}</Text> */}
-        <Text style={styles.content}>{content}</Text>
-      </View>
+        <View style={styles.contentCard}>
+          {/* <Text style={styles.dayTitle}>{dayTitle}</Text> */}
+          <Text style={styles.content}>{content}</Text>
+        </View>
       </ScrollView>
     </View>
   );
