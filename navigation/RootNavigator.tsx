@@ -9,7 +9,7 @@ import HomeStack from "../Stack/HomeStack";
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
-  const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
+  const [isSignedIn, setIsSignedIn] = useState<Boolean | null>(null);
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("userToken");

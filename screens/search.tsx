@@ -9,7 +9,7 @@ const DATA = [
   { id: "5", name: "Daniel Lee" },
 ];
 
-export default function search() {
+export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(DATA);
 

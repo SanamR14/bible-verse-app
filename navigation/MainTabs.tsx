@@ -9,7 +9,7 @@ import DevotionsStack from "../Stack/DevotionsStack";
 import { PaperProvider } from "react-native-paper";
 import Header from "../screens/header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MenuStack from "../Stack/MenuStack";
+import Search from "../screens/search";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,7 +18,6 @@ export default function MainTabs() {
   return (
     <PaperProvider>
       <Header />
-      <search />
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,

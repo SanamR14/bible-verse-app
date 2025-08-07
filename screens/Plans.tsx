@@ -1,5 +1,6 @@
 // src/screens/PlansScreen.tsx
 import React, { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
 import {
   View,
   Text,
@@ -10,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { TextInput } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Plans() {
   type Plan = {
@@ -23,10 +25,13 @@ export default function Plans() {
 
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
   const fetchPlans = async () => {
     try {
-      const response = await fetch("https://bible-verse-backend-1kvo.onrender.com/plans/");
+      const response = await fetch(
+        "https://bible-verse-backend-1kvo.onrender.com/plans/"
+      );
       const data = await response.json();
       setPlans(data);
     } catch (error) {
@@ -46,9 +51,13 @@ export default function Plans() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
-      <Text style={styles.title}>{item.outertitle}</Text>
-      <Text style={styles.by}>{item.author}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Day", { topic: item })}
+      >
+        <Image source={{ uri: item.image }} style={styles.image} />
+        <Text style={styles.title}>{item.outertitle}</Text>
+        <Text style={styles.by}>{item.author}</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -91,17 +100,17 @@ export default function Plans() {
         }}
         textColor="#000000"
       />
-   {loading ? (
+      {loading ? (
         <ActivityIndicator size="large" color="#999" />
       ) : (
-      <FlatList
-        renderItem={renderItem}
-        data={filteredData}
-        keyExtractor={(item) => item.id?.toString()}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      />
+        <FlatList
+          renderItem={renderItem}
+          data={filteredData}
+          keyExtractor={(item) => item.id?.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={{ paddingBottom: 100 }}
+        />
       )}
     </View>
   );
