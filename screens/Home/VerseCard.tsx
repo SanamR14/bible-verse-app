@@ -63,7 +63,9 @@ const VerseCard: React.FC = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch("https://bible-verse-backend-1kvo.onrender.com/bibleverse/"); // Replace with your API
+      const response = await fetch(
+        "https://bible-verse-backend-1kvo.onrender.com/bibleverse/"
+      ); // Replace with your API
       const data = await response.json();
       setImages(data);
       updateImage(data);
@@ -94,17 +96,21 @@ const VerseCard: React.FC = () => {
   return (
     <View>
       <Text style={styles.subtitle}>Today’s word for you {user?.name}</Text>
-      <View style={styles.card}>
-        <Image
-          source={{ uri: imageUrl }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-        {/* <View style={styles.textOverlay}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#999" />
+      ) : (
+        <View style={styles.card}>
+          <Image
+            source={{ uri: imageUrl }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+          {/* <View style={styles.textOverlay}>
           <Text style={styles.verse}>{verseData.verse}</Text>
           <Text style={styles.reference}>{verseData.reference}</Text>
-        </View> */}
-      </View>
+          </View> */}
+        </View>
+      )}
     </View>
   );
 };

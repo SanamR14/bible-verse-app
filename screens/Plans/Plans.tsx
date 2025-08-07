@@ -7,25 +7,27 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  Dimensions,
   ActivityIndicator,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { PlansStackParamList } from "../../Stack/PlansStack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+export type Plan = {
+  id: number;
+  title: string;
+  message: string;
+  outertitle: string;
+  author: string;
+  image?: string;
+};
 export default function Plans() {
-  type Plan = {
-    id: number;
-    title: string;
-    message: string;
-    outertitle: string;
-    author: string;
-    image?: string;
-  };
 
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
+  const navigation =
+  useNavigation<NativeStackNavigationProp<PlansStackParamList>>();
 
   const fetchPlans = async () => {
     try {
@@ -52,7 +54,7 @@ export default function Plans() {
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Day", { topic: item })}
+        onPress={() => navigation.navigate("Plans_Day")}
       >
         <Image source={{ uri: item.image }} style={styles.image} />
         <Text style={styles.title}>{item.outertitle}</Text>

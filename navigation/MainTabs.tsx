@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/Feather";
 import About from "../screens/About";
-import Plans from "../screens/Plans";
+import Plans from "../screens/Plans/Plans";
 import Explore from "../screens/Explore";
 import Home from "../screens/Home/Home";
 import DevotionsStack from "../Stack/DevotionsStack";
@@ -10,6 +10,7 @@ import { PaperProvider } from "react-native-paper";
 import Header from "../screens/header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Search from "../screens/search";
+import PlansStack from "../Stack/PlansStack";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -52,7 +53,7 @@ export default function MainTabs() {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Devotions" component={DevotionsStack} />
         <Tab.Screen name="Explore" component={Explore} />
-        <Tab.Screen name="Plans" component={Plans} />
+        <Tab.Screen name="Plans" component={PlansStack} />
         <Tab.Screen name="About" component={About} />
       </Tab.Navigator>
       {/* <Stack.Navigator>
