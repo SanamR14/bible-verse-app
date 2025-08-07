@@ -56,8 +56,6 @@ export default function MainTabs() {
         <Tab.Screen name="Plans" component={PlansStack} />
         <Tab.Screen name="About" component={About} />
       </Tab.Navigator>
-      {/* <Stack.Navigator>
-        </Stack.Navigator> */}
     </PaperProvider>
   );
 }

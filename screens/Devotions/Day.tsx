@@ -14,9 +14,6 @@ export default function DayScreen() {
 
   const handleSave = () => {
     setIsSaved(!isSaved);
-
-    // Optional: Trigger API call here to save or unsave
-    // Example: saveItemToBackend(isSaved ? "unsave" : "save");
   };
 
   const content =

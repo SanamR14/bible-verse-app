@@ -7,10 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { Platform } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
@@ -165,7 +163,7 @@ export default function SignupScreen({ navigation }: any) {
         <RNPickerSelect
           onValueChange={(value) => {
             setCountry(value);
-            setCity(""); // Reset city when country changes
+            setCity(""); 
           }}
           value={country || ""}
           items={[

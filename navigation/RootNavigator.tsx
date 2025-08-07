@@ -18,7 +18,7 @@ export default function RootNavigator() {
     checkAuth();
   }, []);
 
-  if (isSignedIn === null) return null; // or a Splash Screen
+  if (isSignedIn === null) return null;
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -28,9 +28,5 @@ export default function RootNavigator() {
         <Stack.Screen name="Auth" component={AuthStack} />
       )}
     </Stack.Navigator>
-    //   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //     <Stack.Screen name="Auth" component={AuthStack} />
-    //     <Stack.Screen name="MainTabs" component={MainTabs} />
-    // </Stack.Navigator>
   );
 }

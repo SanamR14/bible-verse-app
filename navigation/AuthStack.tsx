@@ -24,8 +24,6 @@ export default function AuthStack() {
         component={HomeStack}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-      <Stack.Screen name="MenuStack" component={MenuStack} options={{ headerShown: false }} /> */}
     </Stack.Navigator>
   );
 }
