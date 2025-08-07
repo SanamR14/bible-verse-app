@@ -56,6 +56,7 @@ export default function Plans() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
+      <Image source={{ uri: item.image }} style={styles.image} />
       <TouchableOpacity
         onPress={() =>
           navigation.navigate(item.days ? "Plans_Topic" : "Plans_Day", {
@@ -63,7 +64,6 @@ export default function Plans() {
           })
         }
       >
-        <Image source={{ uri: item.image }} style={styles.image} />
         <Text style={styles.title}>{item.outertitle}</Text>
         <Text style={styles.by}>{item.author}</Text>
       </TouchableOpacity>
