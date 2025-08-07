@@ -21,13 +21,16 @@ export type Plan = {
   outertitle: string;
   author: string;
   image?: string;
+  days: null | Array<{
+    title: string;
+    message: string;
+  }>;
 };
 export default function Plans() {
-
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation =
-  useNavigation<NativeStackNavigationProp<PlansStackParamList>>();
+    useNavigation<NativeStackNavigationProp<PlansStackParamList>>();
 
   const fetchPlans = async () => {
     try {
@@ -54,7 +57,11 @@ export default function Plans() {
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Plans_Day")}
+        onPress={() =>
+          navigation.navigate(item.days ? "Plans_Topic" : "Plans_Day", {
+            topic: item,
+          })
+        }
       >
         <Image source={{ uri: item.image }} style={styles.image} />
         <Text style={styles.title}>{item.outertitle}</Text>
