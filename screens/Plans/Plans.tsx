@@ -1,4 +1,3 @@
-// src/screens/PlansScreen.tsx
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import {
