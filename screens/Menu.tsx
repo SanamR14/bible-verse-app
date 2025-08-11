@@ -19,6 +19,7 @@ import {
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from '@react-navigation/native';
 
 export default function Menu() {
   const navigation =
@@ -27,7 +28,12 @@ export default function Menu() {
   const logout = async (navigation: any) => {
     try {
       await AsyncStorage.clear();
-      navigation.navigate("Logout"); // Navigate to Login screen
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Auth" }],
+        })
+      );
     } catch (error) {
       console.error("Error clearing token:", error);
       Alert.alert("Logout Failed", "Unable to clear session.");
@@ -138,9 +144,7 @@ export default function Menu() {
           <Text style={styles.itemText}>Notifications</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-        >
+        <TouchableOpacity style={styles.item}>
           <FontAwesomeIcon
             icon={faQuestion}
             size={20}
@@ -223,7 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
   },
-    disabledItem: {
+  disabledItem: {
     opacity: 0.5,
   },
   disabledText: {

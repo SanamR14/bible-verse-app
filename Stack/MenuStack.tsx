@@ -36,7 +36,7 @@ export default function MenuStack() {
       <Stack.Screen name="ForYou" component={ForYou} />
       <Stack.Screen name="ChristCommunity" component={ChristCommunity} />
       <Stack.Screen name="Help" component={Notifications} />
-      <Stack.Screen name="Logout" component={LoginScreen} />
+      {/* <Stack.Screen name="Logout" component={LoginScreen} /> */}
     </Stack.Navigator>
   );
 }
