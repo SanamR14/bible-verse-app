@@ -47,7 +47,7 @@ export default function PrayerRequest() {
 
       if (response.ok) {
         setSubmittedText(value);
-        // setModalVisible(true);
+      //  setModalVisible(true);
         onChangeText("");
       } else {
         const error = await response.json();

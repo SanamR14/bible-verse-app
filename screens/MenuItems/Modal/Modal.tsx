@@ -32,40 +32,44 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
 
   useEffect(() => {
     if (!userId) return;
+    if (visible === true) {
+      const fetchPrayerRequets = async () => {
+        try {
+          const response = await fetch(
+            `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}`
+          );
+          const data = await response.json();
+          setPrayer(data);
+        } catch (error) {
+          console.error("Failed to fetch plans:", error);
+        } finally {
+        }
+      };
 
-    const fetchPrayerRequets = async () => {
-      try {
-        const response = await fetch(
-          `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}`
-        );
-        const data = await response.json();
-        setPrayer(data);
-      } catch (error) {
-        console.error("Failed to fetch plans:", error);
-      } finally {
-      }
-    };
-
-    fetchPrayerRequets();
-  }, [userId]);
+      fetchPrayerRequets();
+    }
+  }, [userId, visible]);
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await fetch(`https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
-        setPrayer(prev => prev.filter(item => item.prayerid !== id));
+        setPrayer((prev) => prev.filter((item) => item.prayerid !== id));
       } else {
-        console.error('Failed to delete');
-        Alert.alert('Delete failed', 'Could not delete the prayer request.');
+        console.error("Failed to delete");
+        Alert.alert("Delete failed", "Could not delete the prayer request.");
       }
     } catch (error) {
-      console.error('Delete error:', error);
+      console.error("Delete error:", error);
     }
   };
-  
+
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.overlay}>
@@ -76,29 +80,34 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
               <Icon name="x" size={24} color="#000" />
             </TouchableOpacity>
           </View>
-
-          <SwipeListView
-            data={prayer}
-            keyExtractor={(item) => item.prayerid.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.rowFront}>
-                <Text style={styles.text}>{item.prayer}</Text>
-              </View>
-            )}
-            renderHiddenItem={({ item }) => (
-              <View style={styles.rowBack}>
-                <TouchableOpacity
-                  style={styles.deleteBtn}
-                  onPress={() => handleDelete(item.prayerid)}
-                >
-                  <Icon name="trash-2" color="#fff" size={20} />
-                </TouchableOpacity>
-              </View>
-            )}
-            rightOpenValue={-70}
-            disableRightSwipe
-            contentContainerStyle={{ paddingBottom: 20 }}
-          />
+          {prayer.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>No prayer request is added</Text>
+            </View>
+          ) : (
+            <SwipeListView
+              data={prayer}
+              keyExtractor={(item) => item.prayerid.toString()}
+              renderItem={({ item }) => (
+                <View style={styles.rowFront}>
+                  <Text style={styles.text}>{item.prayer}</Text>
+                </View>
+              )}
+              renderHiddenItem={({ item }) => (
+                <View style={styles.rowBack}>
+                  <TouchableOpacity
+                    style={styles.deleteBtn}
+                    onPress={() => handleDelete(item.prayerid)}
+                  >
+                    <Icon name="trash-2" color="#fff" size={20} />
+                  </TouchableOpacity>
+                </View>
+              )}
+              rightOpenValue={-70}
+              disableRightSwipe
+              contentContainerStyle={{ paddingBottom: 20 }}
+            />
+          )}
         </View>
       </View>
     </Modal>
@@ -110,49 +119,60 @@ export default PrayerModal;
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContent: {
-    width: '90%',
-    height: '75%',
-    backgroundColor: 'white',
+    width: "90%",
+    height: "75%",
+    backgroundColor: "white",
     borderRadius: 16,
     padding: 20,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 16,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   rowFront: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
     borderRadius: 8,
     padding: 16,
     marginBottom: 10,
   },
   rowBack: {
-    alignItems: 'center',
-    backgroundColor: '#f44336',
+    alignItems: "center",
+    backgroundColor: "#f44336",
     flex: 1,
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
+    justifyContent: "flex-end",
+    flexDirection: "row",
     borderRadius: 8,
     marginBottom: 10,
     paddingRight: 15,
   },
   deleteBtn: {
     width: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     fontSize: 15,
-    fontWeight: '500',
+    fontWeight: "500",
   },
+  emptyContainer: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  paddingVertical: 40,
+},
+emptyText: {
+  fontSize: 16,
+  color: "#888",
+  fontStyle: "italic",
+},
 });
