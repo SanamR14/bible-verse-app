@@ -7,6 +7,7 @@ import { Switch } from "react-native";
 import { Button } from "react-native";
 import PrayerModal from "./Modal/Modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 export default function PrayerRequest() {
   const navigation = useNavigation();
@@ -47,12 +48,19 @@ export default function PrayerRequest() {
 
       if (response.ok) {
         setSubmittedText(value);
-      //  setModalVisible(true);
+        //  setModalVisible(true);
+        Toast.show({
+          type: "success",
+          text1: "Prayer Request submitted",
+        });
         onChangeText("");
       } else {
         const error = await response.json();
         console.error("Failed to save prayer request:", error);
-        alert("Failed to submit prayer request.");
+        Toast.show({
+          type: "error",
+          text1: "Failer to submit your prayer request",
+        });
       }
     } catch (err) {
       console.error("Error posting prayer request:", err);
