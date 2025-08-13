@@ -6,6 +6,7 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Alert } from "react-native";
 import Toast from "react-native-toast-message";
@@ -145,37 +146,38 @@ export default function SignupScreen({ navigation }: any) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>Sign Up</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        secureTextEntry
-        value={confirm_password}
-        onChangeText={setconfirm_password}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm Password"
+          secureTextEntry
+          value={confirm_password}
+          onChangeText={setconfirm_password}
+        />
 
-      {/* <View style={styles.picker}>
+        {/* <View style={styles.picker}>
         <RNPickerSelect
           onValueChange={(value) => {
             setCountry(value);
@@ -202,37 +204,38 @@ export default function SignupScreen({ navigation }: any) {
         />
       </View> */}
 
-      <Text style={styles.label}>Country</Text>
-      <Dropdown
-        style={styles.dropdown}
-        data={countries}
-        labelField="label"
-        valueField="value"
-        placeholder="Choose a country"
-        value={country}
-        onChange={(item) => {
-          setCountry(item.value);
-          setCity("");
-        }}
-      />
+        <Text style={styles.label}>Country</Text>
+        <Dropdown
+          style={styles.dropdown}
+          data={countries}
+          labelField="label"
+          valueField="value"
+          placeholder="Choose a country"
+          value={country}
+          onChange={(item) => {
+            setCountry(item.value);
+            setCity("");
+          }}
+        />
 
-      <Text style={styles.label}>City</Text>
-      <Dropdown
-        style={styles.dropdown}
-        data={cityOptions[country] || []}
-        labelField="label"
-        valueField="value"
-        placeholder="Choose a city"
-        value={city}
-        onChange={(item) => setCity(item.value)}
-        disable={!country}
-      />
-      <Button title="Sign Up" onPress={handleSignup} />
+        <Text style={styles.label}>City</Text>
+        <Dropdown
+          style={styles.dropdown}
+          data={cityOptions[country] || []}
+          labelField="label"
+          valueField="value"
+          placeholder="Choose a city"
+          value={city}
+          onChange={(item) => setCity(item.value)}
+          disable={!country}
+        />
+        <Button title="Sign Up" onPress={handleSignup} />
 
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.link}>Already have an account? Log in</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.link}>Already have an account? Log in</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
