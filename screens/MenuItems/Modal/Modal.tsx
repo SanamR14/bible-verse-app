@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Modal, View, Text, Pressable, StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/Feather";
 
@@ -14,6 +15,7 @@ type RequestModalProps = {
 const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
   const [prayer, setPrayer] = useState<any[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -43,6 +45,7 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
         } catch (error) {
           console.error("Failed to fetch plans:", error);
         } finally {
+          setLoading(false);
         }
       };
 
@@ -73,42 +76,46 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.overlay}>
-        <View style={styles.modalContent}>
-          <View style={styles.header}>
-            <Text style={styles.title}>My Prayer Requests</Text>
-            <TouchableOpacity onPress={onClose}>
-              <Icon name="x" size={24} color="#000" />
-            </TouchableOpacity>
-          </View>
-          {prayer.length === 0 ? (
-            <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>No prayer request is added</Text>
+        {loading ? (
+          <ActivityIndicator size="large" color="#999" />
+        ) : (
+          <View style={styles.modalContent}>
+            <View style={styles.header}>
+              <Text style={styles.title}>My Prayer Requests</Text>
+              <TouchableOpacity onPress={onClose}>
+                <Icon name="x" size={24} color="#000" />
+              </TouchableOpacity>
             </View>
-          ) : (
-            <SwipeListView
-              data={prayer}
-              keyExtractor={(item) => item.prayerid.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.rowFront}>
-                  <Text style={styles.text}>{item.prayer}</Text>
-                </View>
-              )}
-              renderHiddenItem={({ item }) => (
-                <View style={styles.rowBack}>
-                  <TouchableOpacity
-                    style={styles.deleteBtn}
-                    onPress={() => handleDelete(item.prayerid)}
-                  >
-                    <Icon name="trash-2" color="#fff" size={20} />
-                  </TouchableOpacity>
-                </View>
-              )}
-              rightOpenValue={-70}
-              disableRightSwipe
-              contentContainerStyle={{ paddingBottom: 20 }}
-            />
-          )}
-        </View>
+            {prayer.length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>No prayer request is added</Text>
+              </View>
+            ) : (
+              <SwipeListView
+                data={prayer}
+                keyExtractor={(item) => item.prayerid.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.rowFront}>
+                    <Text style={styles.text}>{item.prayer}</Text>
+                  </View>
+                )}
+                renderHiddenItem={({ item }) => (
+                  <View style={styles.rowBack}>
+                    <TouchableOpacity
+                      style={styles.deleteBtn}
+                      onPress={() => handleDelete(item.prayerid)}
+                    >
+                      <Icon name="trash-2" color="#fff" size={20} />
+                    </TouchableOpacity>
+                  </View>
+                )}
+                rightOpenValue={-70}
+                disableRightSwipe
+                contentContainerStyle={{ paddingBottom: 20 }}
+              />
+            )}
+          </View>
+        )}
       </View>
     </Modal>
   );
@@ -165,14 +172,14 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   emptyContainer: {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-  paddingVertical: 40,
-},
-emptyText: {
-  fontSize: 16,
-  color: "#888",
-  fontStyle: "italic",
-},
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#888",
+    fontStyle: "italic",
+  },
 });
