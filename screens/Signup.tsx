@@ -76,7 +76,7 @@ export default function SignupScreen({ navigation }: any) {
     if (!validatePassword(password)) {
       Alert.alert(
         "Invalid Password",
-        "Password must contain upper/lowercase, number, special character, and not end with a space."
+        "Password must contain upper and lowercase, number, special character, and not end with a space."
       );
       return;
     }
@@ -116,12 +116,10 @@ export default function SignupScreen({ navigation }: any) {
       );
 
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
-        throw new Error(data?.error || "Registration failed");
+        throw data?.error;
       }
-
       Toast.show({
         type: "success",
         text1: "Account created successfully",
@@ -129,12 +127,20 @@ export default function SignupScreen({ navigation }: any) {
       });
       navigation.navigate("Login");
     } catch (err) {
-      console.error("Signup error:", err);
-      Toast.show({
-        type: "Error.. Failed to SignUp",
-        text1: "Email may be already registered",
-        text2: "Try again",
-      });
+      console.log(err);
+      if (err === "Email already registered") {
+        Toast.show({
+          type: "error",
+          text1: "Failed to Signup. Email already exists",
+          text2: "Try again",
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Failed to Signup",
+          text2: "Try again",
+        });
+      }
     }
   };
 
