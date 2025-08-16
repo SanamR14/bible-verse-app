@@ -25,7 +25,7 @@ export type Devotion = {
 
 export default function Devotions() {
   const navigation =
-  useNavigation<NativeStackNavigationProp<DevotionStackParamList>>();
+    useNavigation<NativeStackNavigationProp<DevotionStackParamList>>();
 
   const [devotions, setDevotions] = useState<Devotion[]>([]);
   const [filteredData, setFilteredData] = useState<Devotion[]>([]);
@@ -34,7 +34,9 @@ export default function Devotions() {
 
   const fetchDevotions = async () => {
     try {
-      const res = await axios.get("https://bible-verse-backend-1kvo.onrender.com/devotions/"); 
+      const res = await axios.get(
+        "https://bible-verse-backend-1kvo.onrender.com/devotions/"
+      );
       setDevotions(res.data);
       setFilteredData(res.data);
     } catch (err) {
@@ -81,16 +83,20 @@ export default function Devotions() {
         underlineColor="transparent"
         style={styles.searchInput}
         theme={{ colors: { primary: "transparent" } }}
-        textColor="#000000"
+        textColor="#000"
       />
 
       {loading ? (
-        <ActivityIndicator size="large" color="#999" />
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color="#999" />
+        </View>
       ) : (
         <FlatList
           data={filteredData}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) =>
+            item.id?.toString() || index.toString()
+          }
           numColumns={2}
           columnWrapperStyle={styles.row}
           contentContainerStyle={{ paddingBottom: 100 }}
@@ -100,18 +106,13 @@ export default function Devotions() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },
-  headerRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 16,
   },
-  title: { fontWeight: "bold", fontSize: 16 },
-  icons: { flexDirection: "row", gap: 12 },
-  icon: { marginRight: 8 },
   row: { justifyContent: "space-between" },
   topicButton: {
     backgroundColor: "#fdf6ee",
@@ -123,23 +124,12 @@ const styles = StyleSheet.create({
   },
   topicText: {
     color: "#333",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 16,
-  },
-  item: {
-    fontSize: 18,
-    paddingVertical: 8,
+    fontWeight: "500",
   },
   searchInput: {
-  height: 40,
-  paddingVertical: 0,
-  backgroundColor: "#f5f5f5",
-  borderRadius: 8,
-  marginBottom: 16,
-},
+    height: 40,
+    backgroundColor: "#f5f5f5",
+    borderRadius: 8,
+    marginBottom: 16,
+  },
 });

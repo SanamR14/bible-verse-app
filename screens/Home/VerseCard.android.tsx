@@ -17,7 +17,7 @@ export default function VerseCardAndroid() {
 
   return (
     <View>
-      <Text style={styles.subtitle}>Hello {user?.name}, your verse today</Text>
+      <Text style={styles.subtitle}>Today’s word for you {user?.name}</Text>
       <View style={styles.card}>
         {imageUrl && (
           <Image
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
     fontWeight: "bold",
-    color: "green",
+    color: "black",
   },
   card: { alignItems: "center", borderRadius: 20, overflow: "hidden" },
   image: {

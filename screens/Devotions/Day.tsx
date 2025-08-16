@@ -1,9 +1,15 @@
+// Day.tsx
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { DevotionStackParamList } from "../../Stack/DevotionsStack";
 import Icon from "react-native-vector-icons/Feather";
-import { ScrollView } from "react-native";
 
 export default function DayScreen() {
   const route = useRoute<RouteProp<DevotionStackParamList, "Day">>();
@@ -18,9 +24,6 @@ export default function DayScreen() {
   const content =
     topic.days && topic.days[day] ? topic.days[day].message : topic.message;
 
-  const dayTitle =
-    topic.days && topic.days[day]?.title ? topic.days[day].title : topic.title;
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -30,15 +33,18 @@ export default function DayScreen() {
         <Text style={styles.title}>{topic.title}</Text>
         <TouchableOpacity onPress={handleSave}>
           <Icon
-            name={isSaved ? "bookmark" : "bookmark"}
+            name="bookmark"
             size={24}
             color={isSaved ? "black" : "silver"}
           />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scroll}>
+
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+      >
         <View style={styles.contentCard}>
-          {/* <Text style={styles.dayTitle}>{dayTitle}</Text> */}
           <Text style={styles.content}>{content}</Text>
         </View>
       </ScrollView>
@@ -49,6 +55,7 @@ export default function DayScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 16 },
   scroll: { flex: 1 },
+  scrollContent: { paddingBottom: 40 },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -58,7 +65,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 16,
     textAlign: "center",
   },
   contentCard: {
@@ -66,6 +72,5 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
   },
-  dayTitle: { fontWeight: "bold", fontSize: 16, marginBottom: 8 },
-  content: { fontSize: 14, color: "#333" },
+  content: { fontSize: 16, color: "#333", lineHeight: 22 },
 });

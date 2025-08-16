@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   View,
   Text,
@@ -25,14 +25,17 @@ export default function TopicScreen() {
     );
   }
 
-  const renderItem = ({ item, index }: { item: any; index: number }) => (
-    <TouchableOpacity
-      style={styles.dayButton}
-      onPress={() => navigation.navigate("Day", { topic, day: index })}
-    >
-      <Icon name="calendar" size={20} />
-      <Text style={styles.dayText}>{item.title || `Day ${index + 1}`}</Text>
-    </TouchableOpacity>
+  const renderItem = useCallback(
+    ({ item, index }: { item: any; index: number }) => (
+      <TouchableOpacity
+        style={styles.dayButton}
+        onPress={() => navigation.navigate("Day", { topic, day: index })}
+      >
+        <Icon name="calendar" size={20} />
+        <Text style={styles.dayText}>{item.title || `Day ${index + 1}`}</Text>
+      </TouchableOpacity>
+    ),
+    [navigation, topic]
   );
 
   return (
@@ -42,7 +45,7 @@ export default function TopicScreen() {
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>{topic.title}</Text>
-        <Text></Text>
+        <View style={{ width: 24 }} />
       </View>
 
       <FlatList
@@ -53,8 +56,8 @@ export default function TopicScreen() {
         columnWrapperStyle={styles.row}
       />
 
-      <TouchableOpacity style={styles.quizButton}>
-        <Text style={styles.quizText}>Quiz</Text>
+      <TouchableOpacity style={styles.quizButton} disabled>
+        <Text style={styles.quizText}>Quiz (Coming Soon)</Text>
       </TouchableOpacity>
     </View>
   );
@@ -72,7 +75,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 4,
   },
   row: { justifyContent: "space-between", marginBottom: 12 },
   dayButton: {
@@ -90,9 +92,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     alignSelf: "center",
-    width: "30%",
+    width: "60%",
   },
-  quizText: { fontWeight: "bold" },
+  quizText: { fontWeight: "bold", color: "gray" },
   errorText: {
     textAlign: "center",
     marginTop: 50,
