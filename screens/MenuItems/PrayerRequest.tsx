@@ -1,31 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Switch,
+  Pressable,
+  KeyboardAvoidingView,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
-import { Switch } from "react-native";
-import { Button } from "react-native";
-import PrayerModal from "./Modal/Modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import PrayerModal from "./Modal/Modal";
 
 export default function PrayerRequest() {
   const navigation = useNavigation();
-  const [value, onChangeText] = React.useState("");
-  const [isAnonymous, setisAnonymous] = useState(false);
+  const [value, setValue] = useState("");
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [submittedText, setSubmittedText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
-    try {
-      if (!value.trim()) {
-        alert("Prayer request cannot be empty.");
-        return;
-      }
+    const trimmedText = value.trim();
+    if (!trimmedText) {
+      Alert.alert("Validation Error", "Prayer request cannot be empty.");
+      return;
+    }
 
+    try {
+      setLoading(true);
       const user = await AsyncStorage.getItem("userData");
       if (!user) {
-        alert("User not found. Please log in again.");
+        Alert.alert("Session Expired", "Please log in again.");
+        setLoading(false);
         return;
       }
 
@@ -33,114 +46,158 @@ export default function PrayerRequest() {
       const payload = {
         userid: userData.id,
         username: isAnonymous ? "Anonymous" : userData.name,
-        prayer: value,
+        prayer: trimmedText,
       };
+
       const response = await fetch(
         "https://bible-verse-backend-1kvo.onrender.com/prayer-requests/prayerReq",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         }
       );
 
       if (response.ok) {
-        setSubmittedText(value);
-        //  setModalVisible(true);
-        Toast.show({
-          type: "success",
-          text1: "Prayer Request submitted",
-        });
-        onChangeText("");
+        Toast.show({ type: "success", text1: "Prayer Request submitted" });
+        setValue("");
       } else {
         const error = await response.json();
-        console.error("Failed to save prayer request:", error);
+        console.error("Failed:", error);
         Toast.show({
           type: "error",
-          text1: "Failer to submit your prayer request",
+          text1: "Failed to submit prayer request",
         });
       }
     } catch (err) {
-      console.error("Error posting prayer request:", err);
-      alert("An error occurred.");
+      console.error("Error:", err);
+      Alert.alert("Error", "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Prayer Request</Text>
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <Icon name="menu" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.body}>
-        Please enter your prayer requests here and save. Your prayer request
-        list can be accessed by clicking on the top right icon. Also, the
-        requests will be sent to our prayer warrior team.
-      </Text>
-      <TextInput
-        editable
-        multiline
-        numberOfLines={10}
-        maxLength={100}
-        onChangeText={(text) => onChangeText(text)}
-        value={value}
-        style={styles.textInput}
-      />
-      <Text style={styles.body}>A small prayer comes here</Text>
-      <View style={styles.privateRow}>
-        <Text style={styles.label}>Anonymous Prayer Request</Text>
-        <Switch
-          style={styles.btn}
-          value={isAnonymous}
-          onValueChange={setisAnonymous}
-        />
-      </View>
-      <Button title="Save" onPress={handleSave} />
-      <PrayerModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.header}>
+            <Pressable onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" size={24} color="#000" />
+            </Pressable>
+            <Text style={styles.headerTitle}>Prayer Request</Text>
+            <Pressable onPress={() => setModalVisible(true)}>
+              <Icon name="menu" size={24} color="#000" />
+            </Pressable>
+          </View>
+
+          <Text style={styles.body}>
+            Please enter your prayer requests here and save. Your prayer request
+            list can be accessed by clicking on the top right icon. Also, the
+            requests will be sent to our prayer warrior team.
+          </Text>
+
+          <TextInput
+            mode="outlined"
+            multiline
+            numberOfLines={6}
+            maxLength={200}
+            value={value}
+            onChangeText={setValue}
+            placeholder="Write your prayer request here."
+            style={styles.textInput}
+          />
+
+          <Text style={styles.body}>🙏 A small prayer comes here</Text>
+
+          <View style={styles.privateRow}>
+            <Text style={styles.label}>Anonymous Prayer Request</Text>
+            <Switch value={isAnonymous} onValueChange={setIsAnonymous} />
+          </View>
+
+          <Pressable
+            onPress={handleSave}
+            disabled={loading}
+            android_ripple={{ color: "#ddd" }}
+            style={({ pressed }) => [
+              styles.saveButton,
+              loading && { backgroundColor: "#ccc" },
+              Platform.OS === "ios" && pressed && { opacity: 0.7 },
+              Platform.OS === "web" &&
+                pressed && { backgroundColor: "#eaeaea" },
+            ]}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.saveButtonText}>Save</Text>
+            )}
+          </Pressable>
+
+          <PrayerModal
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 16,
-    paddingTop: 50,
-  },
+  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
+    marginBottom: 16,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: "700",
+    ...Platform.select({
+      ios: { fontWeight: "600" },
+      android: { fontWeight: "700" },
+      web: { fontWeight: "500" },
+    }),
     color: "#000",
   },
   body: {
-    margin: 10,
+    marginVertical: 10,
+    fontSize: 14,
+    color: "#333",
   },
   textInput: {
-    padding: 5,
-    margin: 10,
+    marginVertical: 12,
+    fontSize: 16,
+    backgroundColor: "#fff",
   },
-  label: { fontSize: 16, marginBottom: 25 },
   privateRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginVertical: 16,
   },
-  btn: { marginTop: -23 },
+  label: { fontSize: 16, color: "#000" },
+  saveButton: {
+    backgroundColor: "#ffe5a7ff",
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  saveButtonText: {
+    color: "black",
+    fontSize: 16,
+    ...Platform.select({
+      ios: { fontWeight: "600" },
+      android: { fontWeight: "700" },
+      web: { fontWeight: "500" },
+    }),
+  },
 });
