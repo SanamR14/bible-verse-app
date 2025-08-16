@@ -166,7 +166,7 @@ export default function SignupScreen({ navigation }: any) {
   };
 
   return (
-    <ScrollView>
+    // <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Sign Up</Text>
 
@@ -255,7 +255,7 @@ export default function SignupScreen({ navigation }: any) {
           <Text style={styles.link}>Already have an account? Log in</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    // </ScrollView>
   );
 }
 
