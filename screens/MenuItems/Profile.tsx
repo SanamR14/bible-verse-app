@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+  Pressable,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
-import { ActivityIndicator } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile: React.FC = () => {
   const navigation = useNavigation();
   const [isPrivate, setIsPrivate] = useState(false);
-  const [user, setData] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadUserData = async () => {
       try {
         const userData = await AsyncStorage.getItem("userData");
-        if (userData) setData(JSON.parse(userData));
+        if (userData) setUser(JSON.parse(userData));
       } catch (err) {
         console.error("Failed to load user:", err);
       } finally {
@@ -25,43 +33,61 @@ const Profile: React.FC = () => {
     loadUserData();
   }, []);
 
-  if (loading) return <ActivityIndicator style={{ marginTop: 50 }} />;
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#f4a261" />
+      </SafeAreaView>
+    );
+  }
+
+  const getInitials = () => {
+    if (!user?.name) return "";
+    return user.name
+      .split(" ")
+      .map((n: string) => n[0])
+      .join("")
+      .toUpperCase();
+  };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Pressable onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}> My Profile</Text>
-        <Text></Text>
+        </Pressable>
+        <Text style={styles.headerTitle}>My Profile</Text>
+        <View style={{ width: 24 }} /> 
       </View>
 
-      <View style={styles.avatar} />
+      <View style={styles.avatar}>
+        {Platform.OS === "web" && (
+          <Text style={styles.avatarText}>{getInitials()}</Text>
+        )}
+      </View>
+
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Name: {user?.name || "-"}</Text>
         <Text style={styles.label}>Email: {user?.email || "-"}</Text>
-        <Text style={styles.label}>City : {user?.city || "-"}</Text>
-        {/* <Text style={styles.label}>Fellowships</Text> */}
+        <Text style={styles.label}>City: {user?.city || "-"}</Text>
+
         <View style={styles.privateRow}>
           <Text style={styles.label}>Private account</Text>
-          <Switch
-            style={styles.btn}
-            value={isPrivate}
-            onValueChange={setIsPrivate}
-          />
+          <Switch value={isPrivate} onValueChange={setIsPrivate} />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
+  loaderContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
-    padding: 16,
-    paddingTop: 50,
   },
   header: {
     flexDirection: "row",
@@ -71,9 +97,12 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: "700",
+    ...Platform.select({
+      ios: { fontWeight: "600" },
+      android: { fontWeight: "700" },
+      web: { fontWeight: "500" },
+    }),
     color: "#000",
-    marginLeft: -40,
   },
   avatar: {
     width: 100,
@@ -81,18 +110,27 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#ccc",
     alignSelf: "center",
-    marginTop: -10,
-    borderWidth: 2,
-    borderColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10,
   },
-  infoContainer: { marginTop: 50, paddingHorizontal: 20 },
-  label: { fontSize: 16, marginBottom: 25 },
+  avatarText: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#fff",
+  },
+  infoContainer: { marginTop: 30, paddingHorizontal: 20 },
+  label: {
+    fontSize: 16,
+    marginBottom: 20,
+    color: "#333",
+  },
   privateRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 20,
   },
-  btn: { marginTop: -23 },
 });
 
 export default Profile;
