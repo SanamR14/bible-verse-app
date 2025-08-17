@@ -1,4 +1,3 @@
-// Day.tsx
 import React, { useState } from "react";
 import {
   View,
@@ -10,15 +9,116 @@ import {
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { DevotionStackParamList } from "../../Stack/DevotionsStack";
 import Icon from "react-native-vector-icons/Feather";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 export default function DayScreen() {
   const route = useRoute<RouteProp<DevotionStackParamList, "Day">>();
   const { topic, day } = route.params;
   const navigation = useNavigation();
-  const [isSaved, setIsSaved] = useState(false);
 
-  const handleSave = () => {
-    setIsSaved(!isSaved);
+  // Local state for saved status (so UI updates instantly)
+  const [isSaved, setIsSaved] = useState(topic.issaved || false);
+
+  const handleSave = async () => {
+    const user = await AsyncStorage.getItem("userData");
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+    const userData = JSON.parse(user);
+
+    const payload = {
+      userid: userData.id,
+      item_type: "devotion",
+      item_id: topic.id,
+      title: topic.title,
+      content: topic.message,
+    };
+
+    if (!isSaved) {
+      // --- SAVE devotion ---
+      setIsSaved(true); // update UI instantly
+      try {
+        const res = await fetch(
+          "https://bible-verse-backend-1kvo.onrender.com/saved",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        if (res.ok) {
+          // also update devotions.issaved
+          await fetch(
+            `https://bible-verse-backend-1kvo.onrender.com/devotions/${topic.id}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                title: topic.title,
+                author: topic.author,
+                message: topic.message,
+                days: topic.days,
+                issaved: true,
+              }),
+            }
+          );
+          Toast.show({ type: "success", text1: "Devotion saved!" });
+        } else {
+          setIsSaved(false); // rollback if failed
+          Toast.show({ type: "error", text1: "Failed to save devotion." });
+        }
+      } catch (err) {
+        setIsSaved(false); // rollback
+        console.error("Save error:", err);
+        alert("Error saving devotion");
+      }
+    } else {
+      // --- REMOVE devotion ---
+      setIsSaved(false); // update UI instantly
+      try {
+        const response = await fetch(
+          `https://bible-verse-backend-1kvo.onrender.com/saved/${userData.id}/${topic.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (response.ok) {
+          // update devotions.issaved
+          await fetch(
+            `https://bible-verse-backend-1kvo.onrender.com/devotions/${topic.id}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+            title: topic.title,
+            author: topic.author,
+            message: topic.message,
+            days: topic.days,
+            issaved: false,
+          }),
+
+            }
+          );
+          Toast.show({
+            type: "success",
+            text1: "Devotion removed from saved!",
+          });
+        } else {
+          setIsSaved(true); // rollback
+          Toast.show({
+            type: "error",
+            text1: "Failed to remove saved devotion.",
+          });
+        }
+      } catch (error) {
+        setIsSaved(true); // rollback
+        console.error("Delete error:", error);
+      }
+    }
   };
 
   const content =

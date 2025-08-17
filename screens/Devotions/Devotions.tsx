@@ -17,10 +17,13 @@ export type Devotion = {
   id: number;
   title: string;
   message: string;
+  author: string;
   days: null | Array<{
     title: string;
     message: string;
+    isSaved: boolean;
   }>;
+  issaved: boolean;
 };
 
 export default function Devotions() {
@@ -73,7 +76,6 @@ export default function Devotions() {
       <Text style={styles.topicText}>{item.title}</Text>
     </TouchableOpacity>
   );
-
   return (
     <View style={styles.container}>
       <TextInput
