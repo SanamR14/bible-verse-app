@@ -167,105 +167,111 @@ export default function SignupScreen({ navigation }: any) {
 
   return (
     // <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>Sign Up</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Sign Up</Text>
 
+      <TextInput
+        style={styles.input}
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
+
+      {/* Password Field */}
+      <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={name}
-          onChangeText={setName}
+          style={styles.passwordInput}
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-
-        {/* Password Field */}
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.passwordInput}
-            placeholder="Password"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Icon
+            name={showPassword ? "eye-off" : "eye"}
+            size={24}
+            color="#666"
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <Icon
-              name={showPassword ? "eye-off" : "eye"}
-              size={24}
-              color="#666"
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* Confirm Password Field */}
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.passwordInput}
-            placeholder="Confirm Password"
-            secureTextEntry={!showConfirmPassword}
-            value={confirm_password}
-            onChangeText={setConfirmPassword}
-          />
-          <TouchableOpacity
-            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-          >
-            <Icon
-              name={showConfirmPassword ? "eye-off" : "eye"}
-              size={24}
-              color="#666"
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* <Text style={styles.label}>Country</Text> */}
-        <Dropdown
-          style={styles.dropdown}
-          data={countries}
-          labelField="label"
-          valueField="value"
-          placeholder="Choose a country"
-          value={country}
-          onChange={(item) => {
-            setCountry(item.value);
-            setCity("");
-          }}
-        />
-
-        {/* <Text style={styles.label}>City</Text> */}
-        <Dropdown
-          style={styles.dropdown}
-          data={cityOptions[country] || []}
-          labelField="label"
-          valueField="value"
-          placeholder="Choose a city"
-          value={city}
-          onChange={(item) => setCity(item.value)}
-          disable={!country}
-        />
-
-        <Button title="Sign Up" onPress={handleSignup} />
-
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.link}>Already have an account? Log in</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Confirm Password Field */}
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Confirm Password"
+          secureTextEntry={!showConfirmPassword}
+          value={confirm_password}
+          onChangeText={setConfirmPassword}
+        />
+        <TouchableOpacity
+          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+        >
+          <Icon
+            name={showConfirmPassword ? "eye-off" : "eye"}
+            size={24}
+            color="#666"
+          />
+        </TouchableOpacity>
+      </View>
+
+      {/* <Text style={styles.label}>Country</Text> */}
+      <Dropdown
+        style={styles.dropdown}
+        data={countries}
+        labelField="label"
+        valueField="value"
+        placeholder="Choose a country"
+        value={country}
+        onChange={(item) => {
+          setCountry(item.value);
+          setCity("");
+        }}
+      />
+
+      {/* <Text style={styles.label}>City</Text> */}
+      <Dropdown
+        style={styles.dropdown}
+        data={cityOptions[country] || []}
+        labelField="label"
+        valueField="value"
+        placeholder="Choose a city"
+        value={city}
+        onChange={(item) => setCity(item.value)}
+        disable={!country}
+      />
+
+      <Button title="Sign Up" onPress={handleSignup} />
+
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.link}>Already have an account? Log in</Text>
+      </TouchableOpacity>
+    </View>
     // </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, justifyContent: "center" },
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "center",
+    backgroundColor: "#F8F9F9",
+  },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    color: "#2c3e50",
   },
   input: {
     backgroundColor: "#f2f2f2",

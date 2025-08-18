@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   modalContent: {
     width: "90%",
     height: "75%",
-    backgroundColor: "white",
+    backgroundColor: "#F8F9F9",
     borderRadius: 16,
     padding: 20,
   },

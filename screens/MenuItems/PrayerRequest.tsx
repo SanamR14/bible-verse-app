@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   textInput: {
     marginVertical: 12,
     fontSize: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "#F8F9F9",
   },
   privateRow: {
     flexDirection: "row",

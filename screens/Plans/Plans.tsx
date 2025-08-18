@@ -125,7 +125,7 @@ export default function Plans() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: "#F8F9F9" },
   loadingContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
   row: { justifyContent: "space-between" },
   card: {

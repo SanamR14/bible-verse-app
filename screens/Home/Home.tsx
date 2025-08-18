@@ -17,7 +17,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F8F9F9",
   },
   scroll: {
     padding: 16,

@@ -32,6 +32,6 @@ export default function About() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: "#F8F9F9" },
   heading: { fontSize: 16, fontWeight: "bold", marginBottom: 12 },
 });

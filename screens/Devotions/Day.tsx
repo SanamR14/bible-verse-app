@@ -153,7 +153,7 @@ export default function DayScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
+  container: { flex: 1, backgroundColor: "#F8F9F9", padding: 16 },
   scroll: { flex: 1 },
   scrollContent: { paddingBottom: 40 },
   header: {

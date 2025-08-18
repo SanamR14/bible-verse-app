@@ -194,7 +194,7 @@ export default function Menu() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F8F9F9",
     padding: 16,
     paddingTop: 50,
   },
