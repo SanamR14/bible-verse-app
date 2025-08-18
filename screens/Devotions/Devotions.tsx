@@ -109,7 +109,11 @@ export default function Devotions() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#F8F9F9", // background
+  },
   loaderContainer: {
     flex: 1,
     justifyContent: "center",
@@ -117,21 +121,32 @@ const styles = StyleSheet.create({
   },
   row: { justifyContent: "space-between" },
   topicButton: {
-    backgroundColor: "#fdf6ee",
+    backgroundColor: "#fff", // clean white cards
+    borderWidth: 1,
+    borderColor: "#F39C12", // accent border
     flex: 0.48,
     alignItems: "center",
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2, // Android shadow
   },
   topicText: {
-    color: "#333",
-    fontWeight: "500",
+    color: "#2C3E50", // primary
+    fontWeight: "600",
+    fontSize: 15,
   },
   searchInput: {
     height: 40,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fff", // clean input
     borderRadius: 8,
     marginBottom: 16,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
 });

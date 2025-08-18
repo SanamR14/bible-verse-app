@@ -93,14 +93,13 @@ export default function DayScreen() {
             {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-            title: topic.title,
-            author: topic.author,
-            message: topic.message,
-            days: topic.days,
-            issaved: false,
-          }),
-
+              body: JSON.stringify({
+                title: topic.title,
+                author: topic.author,
+                message: topic.message,
+                days: topic.days,
+                issaved: false,
+              }),
             }
           );
           Toast.show({
@@ -130,12 +129,14 @@ export default function DayScreen() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>{topic.title}</Text>
+        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+          {topic.title}
+        </Text>
         <TouchableOpacity onPress={handleSave}>
           <Icon
             name="bookmark"
             size={24}
-            color={isSaved ? "black" : "silver"}
+            color={isSaved ? "#27AE60" : "#BDC3C7"}
           />
         </TouchableOpacity>
       </View>

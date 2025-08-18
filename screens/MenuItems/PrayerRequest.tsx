@@ -151,7 +151,11 @@ export default function PrayerRequest() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
+  container: {
+    flex: 1,
+    backgroundColor: "#F8F9F9",
+    padding: 16,
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -165,17 +169,17 @@ const styles = StyleSheet.create({
       android: { fontWeight: "700" },
       web: { fontWeight: "500" },
     }),
-    color: "#000",
+    color: "#2C3E50", // primary
   },
   body: {
     marginVertical: 10,
     fontSize: 14,
-    color: "#333",
+    color: "#34495E", // softer than pure black
   },
   textInput: {
     marginVertical: 12,
     fontSize: 16,
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#fff",
   },
   privateRow: {
     flexDirection: "row",
@@ -183,16 +187,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 16,
   },
-  label: { fontSize: 16, color: "#000" },
+  label: { fontSize: 16, color: "#2C3E50" },
   saveButton: {
-    backgroundColor: "#ffe5a7ff",
+    backgroundColor: "#2C3E50",
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: "center",
     marginTop: 10,
   },
   saveButtonText: {
-    color: "black",
+    color: "#fff",
     fontSize: 16,
     ...Platform.select({
       ios: { fontWeight: "600" },

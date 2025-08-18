@@ -19,7 +19,7 @@ import {
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions } from "@react-navigation/native";
 
 export default function Menu() {
   const navigation =
@@ -194,7 +194,7 @@ export default function Menu() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#F8F9F9", // light neutral
     padding: 16,
     paddingTop: 50,
   },
@@ -205,32 +205,52 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700",
-    color: "#000",
+    color: "#2C3E50", // primary
   },
   contentBox: {
-    backgroundColor: "#fdf6ee",
+    backgroundColor: "#FDF6EE",
     borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2, // Android shadow
   },
   item: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: 14,
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#eee",
   },
   icon: {
     marginRight: 12,
+    color: "#F39C12", // accent
   },
   itemText: {
     fontSize: 16,
-    color: "#000",
+    color: "#2C3E50", // primary
+    fontWeight: "500",
   },
   disabledItem: {
     opacity: 0.5,
   },
   disabledText: {
     color: "#999",
+  },
+  logoutItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 14,
+    marginTop: 20,
+  },
+  logoutText: {
+    fontSize: 16,
+    color: "#27AE60", // secondary for logout
+    fontWeight: "600",
   },
 });
