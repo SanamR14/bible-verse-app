@@ -249,10 +249,12 @@ export default function SignupScreen({ navigation }: any) {
         disable={!country}
       />
 
-      <Button title="Sign Up" onPress={handleSignup} />
+      <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
+        <Text style={styles.primaryBtnText}>Sign Up</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.link}>Already have an account? Log in</Text>
+        <Text style={styles.links}>Already have an account? Log in</Text>
       </TouchableOpacity>
     </View>
     // </ScrollView>
@@ -306,5 +308,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 20,
+  },
+  primaryBtn: {
+    backgroundColor: "#2C3E50",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  primaryBtnText: { color: "#fff", fontSize: 18, fontWeight: "600" },
+  links: {
+    marginTop: 12,
+    color: "#2ECC71",
+    textAlign: "center",
+    fontWeight: "500",
   },
 });

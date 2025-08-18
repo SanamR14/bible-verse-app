@@ -3,13 +3,12 @@ import {
   View,
   Text,
   TextInput,
-  Button,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // 👈 For eye icon
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
@@ -26,8 +25,8 @@ export default function LoginScreen({ navigation }: any) {
     if (!trimmedEmail || !trimmedPassword) {
       Toast.show({
         type: "error",
-        text1: "Validation Error",
-        text2: "Please enter both email and password.",
+        text1: "Error",
+        text2: "Enter email & password",
       });
       return;
     }
@@ -36,7 +35,7 @@ export default function LoginScreen({ navigation }: any) {
       Toast.show({
         type: "error",
         text1: "Invalid Email",
-        text2: "Please enter a valid email address.",
+        text2: "Enter a valid email",
       });
       return;
     }
@@ -65,13 +64,12 @@ export default function LoginScreen({ navigation }: any) {
         text1: "Login Successful",
         text2: "Welcome back!",
       });
-
       navigation.navigate("HomeStack");
     } catch (error) {
       Toast.show({
         type: "error",
         text1: "Login Failed",
-        text2: "Invalid credentials or network error.",
+        text2: "Invalid credentials",
       });
     }
   };
@@ -101,15 +99,18 @@ export default function LoginScreen({ navigation }: any) {
           <Icon
             name={showPassword ? "eye-off" : "eye"}
             size={24}
-            color="#666"
+            color="#2C3E50"
           />
         </TouchableOpacity>
       </View>
 
-      <Button title="Login" onPress={handleLogin} />
+      {/* Custom Primary Button */}
+      <TouchableOpacity style={styles.primaryBtn} onPress={handleLogin}>
+        <Text style={styles.primaryBtnText}>Login</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-        <Text style={styles.link}>Don't have an account? Sign up</Text>
+        <Text style={styles.link}>Don’t have an account? Sign up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -127,29 +128,40 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#2c3e50",
+    color: "#2C3E50",
   },
   input: {
+    backgroundColor: "#f2f2f2",
+    padding: 12,
+    borderRadius: 12,
+    fontSize: 16,
+    marginBottom: 14,
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 12,
-    marginBottom: 16,
-    borderRadius: 8,
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "#f2f2f2",
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    marginBottom: 16,
+    borderRadius: 12,
+    marginBottom: 14,
     paddingHorizontal: 10,
   },
-  passwordInput: {
-    borderRadius: 8,
-    flex: 1,
-    paddingVertical: 12,
-    fontSize: 16,
+  passwordInput: { flex: 1, paddingVertical: 12, fontSize: 16 },
+  primaryBtn: {
+    backgroundColor: "#2C3E50",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 10,
   },
-  link: { marginTop: 12, color: "blue", textAlign: "center" },
+  primaryBtnText: { color: "#fff", fontSize: 18, fontWeight: "600" },
+  link: {
+    marginTop: 12,
+    color: "#2ECC71",
+    textAlign: "center",
+    fontWeight: "500",
+  },
 });
