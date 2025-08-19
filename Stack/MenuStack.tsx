@@ -10,6 +10,7 @@ import Saved from "../screens/MenuItems/Saved";
 import Menu from "../screens/Menu";
 import LoginScreen from "../screens/Login";
 import Notifications from "../screens/MenuItems/Notifications";
+import SavedStack from "./SavedStack";
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -30,7 +31,7 @@ export default function MenuStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Saved" component={Saved} />
+      <Stack.Screen name="SavedStack" component={SavedStack} />
       <Stack.Screen name="PrayerRequest" component={PrayerRequest} />
       <Stack.Screen name="Fellowship" component={Fellowship} />
       <Stack.Screen name="ForYou" component={ForYou} />

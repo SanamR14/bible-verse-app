@@ -68,7 +68,7 @@ export default function Menu() {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => navigation.navigate("Saved", { topic: "" })}
+          onPress={() => navigation.navigate("SavedStack", { topic: "" })}
         >
           <FontAwesomeIcon
             icon={faBookmark}
