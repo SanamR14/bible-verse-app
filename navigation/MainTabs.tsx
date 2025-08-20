@@ -44,8 +44,8 @@ export default function MainTabs() {
 
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "#c89720",
-          tabBarInactiveTintColor: "gray",
+          tabBarActiveTintColor: "#1b4b7aff",
+          tabBarInactiveTintColor: "#90a9afff",
         })}
       >
         <Tab.Screen name="Home" component={Home} />

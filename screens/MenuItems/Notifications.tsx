@@ -41,7 +41,7 @@ export default function Notifications() {
         style={styles.deleteBtn}
         onPress={() => deleteRow(data.item.id)}
       >
-        <Icon name="trash-can-outline" size={24} color="#000" />
+        <Icon name="trash-can-outline" size={24} color="#1b4b7aff" />
       </TouchableOpacity>
     </View>
   );
@@ -52,7 +52,7 @@ export default function Notifications() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notifications</Text>
         <Text></Text>
@@ -76,7 +76,7 @@ export default function Notifications() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#FFFFFF",
     padding: 16,
     paddingTop: 50,
   },
@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#000",
+    color: "#1b4b7aff",
     marginLeft: -22,
   },
   rowFront: {
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     borderRadius: 14,
     padding: 20,
     marginBottom: 12,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: "600",
+    color: "#1b4b7aff"
   },
   rowBack: {
     alignItems: "center",

@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
   if (loading) {
     return (
       <SafeAreaView style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#f4a261" />
+        <ActivityIndicator size="large" color="#90a9afff" />
       </SafeAreaView>
     );
   }
@@ -52,13 +52,12 @@ const Profile: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.header}>
         <Pressable onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
         </Pressable>
         <Text style={styles.headerTitle}>My Profile</Text>
-        <View style={{ width: 24 }} /> 
+        <View style={{ width: 24 }} />
       </View>
 
       <View style={styles.avatar}>
@@ -74,7 +73,11 @@ const Profile: React.FC = () => {
 
         <View style={styles.privateRow}>
           <Text style={styles.label}>Private account</Text>
-          <Switch value={isPrivate} onValueChange={setIsPrivate} />
+          <Switch
+            value={isPrivate}
+            onValueChange={setIsPrivate}
+            trackColor={{ false: "#ECF0F1", true: "#1b4b7aff" }}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -82,12 +85,12 @@ const Profile: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
+  container: { flex: 1, backgroundColor: "#ffffff", padding: 16 },
   loaderContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#ffffff",
   },
   header: {
     flexDirection: "row",
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
       android: { fontWeight: "700" },
       web: { fontWeight: "500" },
     }),
-    color: "#000",
+    color: "#1b4b7aff",
   },
   avatar: {
     width: 100,
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 20,
-    color: "#333",
+    color: "#1b4b7aff",
   },
   privateRow: {
     flexDirection: "row",

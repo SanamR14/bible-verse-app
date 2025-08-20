@@ -10,12 +10,12 @@ export default function Fellowship() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Fellowship</Text>
         <Text></Text>
       </View>
-      <Text>Coming Soon!</Text>
+      <Text style={styles.body}>Coming Soon!</Text>
     </View>
   );
 }
@@ -23,7 +23,7 @@ export default function Fellowship() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#FFFFFF",
     padding: 16,
     paddingTop: 50,
   },
@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#000",
+    color: "#1b4b7aff",
   },
+  body: {
+    color:"#1b4b7aff"
+  }
 });

@@ -64,30 +64,32 @@ export default function TopicScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: "#fffff" },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 24,
+    color: "#1b4a7aff",
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#1b4a7aff",
   },
   row: { justifyContent: "space-between", marginBottom: 12 },
   dayButton: {
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     flex: 0.3,
     padding: 16,
     alignItems: "center",
     borderRadius: 8,
   },
-  dayText: { marginTop: 8, textAlign: "center" },
+  dayText: { marginTop: 8, textAlign: "center", color: "#1b4a7aff" },
   quizButton: {
     marginTop: 16,
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 8,
     alignItems: "center",

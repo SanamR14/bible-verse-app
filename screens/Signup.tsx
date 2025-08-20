@@ -198,7 +198,7 @@ export default function SignupScreen({ navigation }: any) {
           <Icon
             name={showPassword ? "eye-off" : "eye"}
             size={24}
-            color="#666"
+            color="#1b4b7aff"
           />
         </TouchableOpacity>
       </View>
@@ -218,7 +218,7 @@ export default function SignupScreen({ navigation }: any) {
           <Icon
             name={showConfirmPassword ? "eye-off" : "eye"}
             size={24}
-            color="#666"
+            color="#1b4b7aff"
           />
         </TouchableOpacity>
       </View>
@@ -235,6 +235,8 @@ export default function SignupScreen({ navigation }: any) {
           setCountry(item.value);
           setCity("");
         }}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
       />
 
       {/* <Text style={styles.label}>City</Text> */}
@@ -247,6 +249,8 @@ export default function SignupScreen({ navigation }: any) {
         value={city}
         onChange={(item) => setCity(item.value)}
         disable={!country}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
       />
 
       <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
@@ -266,7 +270,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: "center",
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#ffffff",
   },
   title: {
     fontSize: 28,
@@ -276,18 +280,19 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
   input: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ffffff",
     padding: 12,
     borderRadius: 12,
     fontSize: 16,
     marginBottom: 14,
     borderWidth: 1,
     borderColor: "#ccc",
+    color: "#1b4b7aff",
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ffffff",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 12,
@@ -298,9 +303,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     fontSize: 16,
+    color: "#1b4b7aff",
   },
   link: { marginTop: 12, color: "blue", textAlign: "center" },
-  label: { marginBottom: 6, fontSize: 16, fontWeight: "500", color: "#333" },
+  label: {
+    marginBottom: 6,
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#1b4b7aff",
+  },
   dropdown: {
     height: 50,
     borderColor: "#ccc",
@@ -309,8 +320,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 20,
   },
+  placeholderStyle: {
+    color: "#1b4b7aff", // gray placeholder
+    fontSize: 14,
+  },
+  selectedTextStyle: {
+    color: "#1b4b7aff", // black when selected
+    fontSize: 16,
+  },
+  // itemTextStyle: {
+  //   color: "#1b4b7aff", // text color in dropdown list
+  //   fontSize: 15,
+  // },
   primaryBtn: {
-    backgroundColor: "#2C3E50",
+    backgroundColor: "#1b4b7aff",
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: "center",
@@ -319,7 +342,7 @@ const styles = StyleSheet.create({
   primaryBtnText: { color: "#fff", fontSize: 18, fontWeight: "600" },
   links: {
     marginTop: 12,
-    color: "#2ECC71",
+    color: "#90a9afff",
     textAlign: "center",
     fontWeight: "500",
   },

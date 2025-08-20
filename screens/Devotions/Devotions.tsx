@@ -85,7 +85,7 @@ export default function Devotions() {
         underlineColor="transparent"
         style={styles.searchInput}
         theme={{ colors: { primary: "transparent" } }}
-        textColor="#000"
+        textColor="#1b4b7aff"
       />
 
       {loading ? (
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#F8F9F9", // background
+    backgroundColor: "#FFFFFF", // background
   },
   loaderContainer: {
     flex: 1,
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
   },
   row: { justifyContent: "space-between" },
   topicButton: {
-    backgroundColor: "#fff", // clean white cards
-    borderWidth: 1,
-    borderColor: "#F39C12", // accent border
+    backgroundColor: "#ECF0F1", // clean white cards
+    // borderWidth: 1,
+    borderColor: "#1b4b7aff", // accent border
     flex: 0.48,
     alignItems: "center",
     padding: 16,
@@ -132,11 +132,11 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    // shadowRadius: 4,
     elevation: 2, // Android shadow
   },
   topicText: {
-    color: "#2C3E50", // primary
+    color: "#1b4b7aff", // primary
     fontWeight: "600",
     fontSize: 15,
   },
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#DDD",
+    color: "#1b4b7aff",
   },
 });

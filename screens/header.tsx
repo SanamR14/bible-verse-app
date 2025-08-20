@@ -44,7 +44,7 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.replace("HomeStack")}>
-        <Icon name="users" size={22} />
+        <Icon name="users" size={22} color={"#1b4b7aff"} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.rightIcons}>
@@ -52,7 +52,7 @@ export default function Header() {
         <Icon name="bell" size={22} style={styles.icon} />
        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate("MenuStack")}>
-          <Icon name="menu" size={22} />
+          <Icon name="menu" size={22} color={"#1b4b7aff"} />
         </TouchableOpacity>
       </View>
     </View>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#FFFFFF",
     paddingTop: 50,
   },
   title: {
@@ -73,11 +73,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     textAlign: "center",
+    color: "#1b4b7aff",
   },
   rightIcons: {
     flexDirection: "row",
   },
   icon: {
     marginRight: 10,
+    color: "#1b4b7aff",
   },
 });

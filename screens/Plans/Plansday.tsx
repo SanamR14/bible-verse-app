@@ -28,14 +28,16 @@ export default function DayScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
         </TouchableOpacity>
-        <Text style={styles.title}>{topic.title}</Text>
+        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+          {topic.title}
+        </Text>
         <TouchableOpacity onPress={handleSave}>
           <Icon
-            name={isSaved ? "bookmark" : "bookmark"}
+            name="bookmark"
             size={24}
-            color={isSaved ? "black" : "silver"}
+            color={isSaved ? "#1b4b7aff" : "#90a9afff"}
           />
         </TouchableOpacity>
       </View>
@@ -50,7 +52,7 @@ export default function DayScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
+  container: { flex: 1, backgroundColor: "#FFFFFF", padding: 16 },
   scroll: { flex: 1 },
   header: {
     flexDirection: "row",
@@ -59,16 +61,16 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 16,
     textAlign: "center",
+    color: "#1b4b7aff",
   },
   contentCard: {
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 12,
   },
   dayTitle: { fontWeight: "bold", fontSize: 16, marginBottom: 8 },
-  content: { fontSize: 14, color: "#333" },
+  content: { fontSize: 14, color: "#1b4a7aff" },
 });

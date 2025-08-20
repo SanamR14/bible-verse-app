@@ -36,7 +36,7 @@ export default function SavedPage() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Saved Items</Text>
         <Text></Text>
@@ -70,10 +70,10 @@ export default function SavedPage() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: "#fff", paddingTop: 50 },
   item: { padding: 12, borderBottomWidth: 1, borderColor: "#eee" },
-  title: { fontSize: 16, fontWeight: "600" },
-  preview: { color: "#555" },
+  title: { fontSize: 16, fontWeight: "600", color: "#1b4b7aff" },
+  preview: { color: "#1b4b7aff" },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#000",
+    color: "#1b4b7aff",
   },
 });

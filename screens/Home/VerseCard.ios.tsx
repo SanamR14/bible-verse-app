@@ -32,7 +32,7 @@ export default function VerseCardIOS() {
 }
 
 const styles = StyleSheet.create({
-  subtitle: { fontSize: 18, marginBottom: 10, fontWeight: "600" },
+  subtitle: { fontSize: 18, marginBottom: 10, fontWeight: "600", color:"#1b4b7aff" },
   card: { alignItems: "center", borderRadius: 20, overflow: "hidden" },
   image: {
     width: Dimensions.get("window").width * 0.9,

@@ -94,19 +94,13 @@ export default function Plans() {
         value={searchQuery}
         onChangeText={handleSearch}
         underlineColor="transparent"
-        style={{
-          height: 40,
-          paddingVertical: 0,
-          backgroundColor: "#f5f5f5",
-          borderRadius: 8,
-          marginBottom: 16,
-        }}
+      style={styles.searchInput}
         theme={{
           colors: {
             primary: "transparent",
           },
         }}
-        textColor="#000000"
+        textColor="#1b4b7aff"
       />
       {loading ? (
         <ActivityIndicator size="large" color="#999" />
@@ -125,12 +119,12 @@ export default function Plans() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#F8F9F9" },
+  container: { flex: 1, padding: 16, backgroundColor: "#FFFFFF" },
   loadingContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
   row: { justifyContent: "space-between" },
   card: {
     flex: 0.48,
-    backgroundColor: "#fff",
+    backgroundColor: "#ECF0F1",
     marginBottom: 16,
     borderRadius: 12,
     padding: 10,
@@ -138,6 +132,21 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   image: { width: "100%", height: 100, borderRadius: 10 },
-  title: { fontWeight: "bold", marginTop: 8, textAlign: "center" },
-  by: { color: "#555", fontSize: 12, textAlign: "center" },
+  title: {
+    fontWeight: "bold",
+    marginTop: 8,
+    textAlign: "center",
+    color: "#1b4b7aff",
+  },
+  by: { color: "#1b4a7a65", fontSize: 12, textAlign: "center" },
+  searchInput: {
+    height: 40,
+    backgroundColor: "#fff", // clean input
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "#DDD",
+    color: "#1b4b7aff",
+  },
 });

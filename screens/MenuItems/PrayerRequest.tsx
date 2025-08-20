@@ -89,11 +89,11 @@ export default function PrayerRequest() {
         >
           <View style={styles.header}>
             <Pressable onPress={() => navigation.goBack()}>
-              <Icon name="arrow-left" size={24} color="#000" />
+              <Icon name="arrow-left" size={24} color="#1b4b7aff" />
             </Pressable>
             <Text style={styles.headerTitle}>Prayer Request</Text>
             <Pressable onPress={() => setModalVisible(true)}>
-              <Icon name="menu" size={24} color="#000" />
+              <Icon name="menu" size={24} color="#1b4b7aff" />
             </Pressable>
           </View>
 
@@ -112,13 +112,14 @@ export default function PrayerRequest() {
             onChangeText={setValue}
             placeholder="Write your prayer request here."
             style={styles.textInput}
+            textColor="#1b4b7aff"
           />
 
           <Text style={styles.body}>🙏 A small prayer comes here</Text>
 
           <View style={styles.privateRow}>
             <Text style={styles.label}>Anonymous Prayer Request</Text>
-            <Switch value={isAnonymous} onValueChange={setIsAnonymous} />
+            <Switch value={isAnonymous} onValueChange={setIsAnonymous} trackColor={{ false: "#ECF0F1", true: "#1b4b7aff" }}/>
           </View>
 
           <Pressable
@@ -153,7 +154,7 @@ export default function PrayerRequest() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#FFFFFF",
     padding: 16,
   },
   header: {
@@ -169,17 +170,18 @@ const styles = StyleSheet.create({
       android: { fontWeight: "700" },
       web: { fontWeight: "500" },
     }),
-    color: "#2C3E50", // primary
+    color: "#1b4b7aff", // primary
   },
   body: {
     marginVertical: 10,
     fontSize: 14,
-    color: "#34495E", // softer than pure black
+    color: "#1b4b7aff", // softer than pure black
   },
   textInput: {
     marginVertical: 12,
     fontSize: 16,
     backgroundColor: "#fff",
+    color: "#1b4b7aff"
   },
   privateRow: {
     flexDirection: "row",
@@ -187,9 +189,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 16,
   },
-  label: { fontSize: 16, color: "#2C3E50" },
+  label: { fontSize: 16, color: "#1b4b7aff" },
   saveButton: {
-    backgroundColor: "#2C3E50",
+    backgroundColor: "#1b4b7aff",
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: "center",

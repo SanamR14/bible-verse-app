@@ -99,7 +99,7 @@ export default function LoginScreen({ navigation }: any) {
           <Icon
             name={showPassword ? "eye-off" : "eye"}
             size={24}
-            color="#2C3E50"
+            color="#1b4a7aff"
           />
         </TouchableOpacity>
       </View>
@@ -121,37 +121,43 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: "center",
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#ffffff",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#2C3E50",
+    color: "#1b4a7aff",
   },
   input: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ffffff",
     padding: 12,
     borderRadius: 12,
     fontSize: 16,
     marginBottom: 14,
     borderWidth: 1,
     borderColor: "#ccc",
+    color: "#1b4b7aff",
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ffffff",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 12,
     marginBottom: 14,
     paddingHorizontal: 10,
   },
-  passwordInput: { flex: 1, paddingVertical: 12, fontSize: 16 },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: "#1b4b7aff",
+  },
   primaryBtn: {
-    backgroundColor: "#2C3E50",
+    backgroundColor: "#1b4a7aff",
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: "center",
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
   primaryBtnText: { color: "#fff", fontSize: 18, fontWeight: "600" },
   link: {
     marginTop: 12,
-    color: "#2ECC71",
+    color: "#90a9afff",
     textAlign: "center",
     fontWeight: "500",
   },

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 12,
     fontWeight: "500",
-    color: "#333",
+    color: "#1b4b7aff",
   },
   image: {
     width: Dimensions.get("window").width * 0.9,

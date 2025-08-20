@@ -127,7 +127,7 @@ export default function DayScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
         </TouchableOpacity>
         <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
           {topic.title}
@@ -136,7 +136,7 @@ export default function DayScreen() {
           <Icon
             name="bookmark"
             size={24}
-            color={isSaved ? "#27AE60" : "#BDC3C7"}
+            color={isSaved ? "#1b4b7aff" : "#90a9afff"}
           />
         </TouchableOpacity>
       </View>
@@ -154,7 +154,7 @@ export default function DayScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F9F9", padding: 16 },
+  container: { flex: 1, backgroundColor: "#FFFFFF", padding: 16 },
   scroll: { flex: 1 },
   scrollContent: { paddingBottom: 40 },
   header: {
@@ -164,14 +164,15 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#1b4b7aff",
   },
   contentCard: {
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 12,
   },
-  content: { fontSize: 16, color: "#333", lineHeight: 22 },
+  content: { fontSize: 16, color: "#1b4a7aff", lineHeight: 22 },
 });

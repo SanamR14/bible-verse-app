@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "FYI - FOR YOUR INNERMAN",
-    "slug": "FYI - FOR YOUR INNERMAN",
+    "name": "",
+    "slug": "",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/FYI.png",
+    "icon": "./assets/cir_FYI_tr.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/FYI.png",
+      "image": "./assets/cir_FYI_tr.png",
       "resizeMode": "contain",
       "backgroundColor": "#F8F9F9"
     },
@@ -17,13 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/FYI.png",
+        "foregroundImage": "./assets/cir_FYI_tr.png",
         "backgroundColor": "#F8F9F9"
       },
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/FYI.png"
+      "favicon": "./assets/cir_FYI_tr.png"
     }
   }
 }

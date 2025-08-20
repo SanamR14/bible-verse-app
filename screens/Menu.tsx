@@ -44,11 +44,11 @@ export default function Menu() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color="#1b4a7aff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Menu</Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="menu" size={24} color="#000" />
+          <Icon name="menu" size={24} color="#1b4a7aff" />
         </TouchableOpacity>
       </View>
 
@@ -60,7 +60,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faUser}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Profile</Text>
@@ -73,7 +73,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faBookmark}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Saved Items</Text>
@@ -86,7 +86,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faHandsPraying}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Prayer Request</Text>
@@ -99,7 +99,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faPeopleGroup}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Fellowship</Text>
@@ -112,7 +112,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faLinkSlash}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Do you feel disconnected?</Text>
@@ -125,7 +125,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faPeopleGroup}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Christ Community</Text>
@@ -138,7 +138,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faBell}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Notifications</Text>
@@ -148,7 +148,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faQuestion}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={[styles.icon, styles.disabledItem]}
           />
           <Text style={[styles.itemText, styles.disabledText]}>Help</Text>
@@ -158,7 +158,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faLanguage}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={[styles.icon, styles.disabledItem]}
           />
           <Text style={[styles.itemText, styles.disabledText]}>Language</Text>
@@ -168,7 +168,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faShareFromSquare}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={[styles.icon, styles.disabledItem]}
           />
           <Text style={[styles.itemText, styles.disabledText]}>Share</Text>
@@ -181,7 +181,7 @@ export default function Menu() {
           <FontAwesomeIcon
             icon={faArrowRightFromBracket}
             size={20}
-            color="#000"
+            color="#1b4a7aff"
             style={styles.icon}
           />
           <Text style={styles.itemText}>Logout</Text>
@@ -194,7 +194,7 @@ export default function Menu() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9F9", // light neutral
+    backgroundColor: "#FFFFFF", // light neutral
     padding: 16,
     paddingTop: 50,
   },
@@ -207,10 +207,10 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#2C3E50", // primary
+    color: "#1b4a7aff", // primary
   },
   contentBox: {
-    backgroundColor: "#FDF6EE",
+    backgroundColor: "#ECF0F1",
     borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 12,
@@ -229,18 +229,17 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 12,
-    color: "#F39C12", // accent
   },
   itemText: {
     fontSize: 16,
-    color: "#2C3E50", // primary
+    color: "#1b4a7aff", // primary
     fontWeight: "500",
   },
   disabledItem: {
     opacity: 0.5,
   },
   disabledText: {
-    color: "#999",
+    color: "#90a9afff",
   },
   logoutItem: {
     flexDirection: "row",

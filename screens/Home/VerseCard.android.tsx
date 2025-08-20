@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
     fontWeight: "bold",
-    color: "black",
+    color: "#1b4b7aff",
   },
   card: { alignItems: "center", borderRadius: 20, overflow: "hidden" },
   image: {

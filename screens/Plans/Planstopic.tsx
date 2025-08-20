@@ -67,16 +67,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 24,
+    color: "#1b4a7aff",
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 4,
+    color: "#1b4a7aff",
   },
   row: { justifyContent: "space-between", marginBottom: 12 },
   dayButton: {
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     flex: 0.3,
     padding: 16,
     alignItems: "center",
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
   dayText: { marginTop: 8, textAlign: "center" },
   quizButton: {
     marginTop: 16,
-    backgroundColor: "#fcf8f2",
+    backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 8,
     alignItems: "center",

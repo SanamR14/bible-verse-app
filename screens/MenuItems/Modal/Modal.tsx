@@ -105,7 +105,7 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
                       style={styles.deleteBtn}
                       onPress={() => handleDelete(item.prayerid)}
                     >
-                      <Icon name="trash-2" color="#fff" size={20} />
+                      <Icon name="trash-2" color="#1b4b7aff" size={20} />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   modalContent: {
     width: "90%",
     height: "75%",
-    backgroundColor: "#F8F9F9",
+    backgroundColor: "#ffffff",
     borderRadius: 16,
     padding: 20,
   },
@@ -145,9 +145,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#1b4b7aff",
   },
   rowFront: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#ECF0F1",
     borderRadius: 8,
     padding: 16,
     marginBottom: 10,
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: "500",
+    color: "#1b4b7aff",
   },
   emptyContainer: {
     flex: 1,
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: "#888",
+    color: "#1b4b7aff",
     fontStyle: "italic",
   },
 });
