@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -15,20 +16,26 @@ export default function SavedPage() {
   const [items, setItems] = useState([]);
   const navigation = useNavigation();
   const [userid, setUserid] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchSaved = async () => {
-      const user = await AsyncStorage.getItem("userData");
-      if (!user) return;
-      const userData = JSON.parse(user);
-      setUserid(userData.id);
+  const fetchSaved = async () => {
+    const user = await AsyncStorage.getItem("userData");
+    if (!user) return;
+    const userData = JSON.parse(user);
+    setUserid(userData.id);
+    try {
       const res = await fetch(
         `https://bible-verse-backend-1kvo.onrender.com/saved/${userData.id}`
       );
       const data = await res.json();
       setItems(data);
-    };
-
+    } catch (error) {
+      console.error("Failed to fetch plans:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchSaved();
   }, []);
 
@@ -41,29 +48,35 @@ export default function SavedPage() {
         <Text style={styles.headerTitle}>Saved Items</Text>
         <Text></Text>
       </View>
-      {items.length === 0 ? (
-        <Text>No saved items yet.</Text>
+      {loading ? (
+        <ActivityIndicator size="large" color="#999" />
       ) : (
-        <FlatList
-          data={items}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Pressable
-              onPress={() =>
-                navigation.navigate("SavedDetail", {
-                  id: item.id,
-                  user: userid,
-                })
-              }
-              style={styles.item}
-            >
-              <Text style={styles.title}>{item.title}</Text>
-              <Text numberOfLines={2} style={styles.preview}>
-                {item.content}
-              </Text>
-            </Pressable>
+        <View>
+          {items.length === 0 ? (
+            <Text>No saved items yet.</Text>
+          ) : (
+            <FlatList
+              data={items}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("SavedDetail", {
+                      id: item.id,
+                      user: userid,
+                    })
+                  }
+                  style={styles.item}
+                >
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Text numberOfLines={2} style={styles.preview}>
+                    {item.content}
+                  </Text>
+                </Pressable>
+              )}
+            />
           )}
-        />
+        </View>
       )}
     </View>
   );
