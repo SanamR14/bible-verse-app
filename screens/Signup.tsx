@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#2c3e50",
+    color: "#1b4b7aff",
   },
   input: {
     backgroundColor: "#ffffff",
