@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,29 @@ export default function DayScreen() {
   const navigation = useNavigation();
 
   // Local state for saved status (so UI updates instantly)
-  const [isSaved, setIsSaved] = useState(topic.issaved || false);
+  const [isSaved, setIsSaved] = useState(Boolean);
+
+  const findSaved = async () => {
+    const user = await AsyncStorage.getItem("userData");
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+    const userData = JSON.parse(user);
+
+    const res = await fetch(
+      `https://bible-verse-backend-1kvo.onrender.com/saved/devotion/${userData.id}/${topic.id}`
+    );
+    const data = await res.json();
+    if (data.length === 0) {
+      setIsSaved(false);
+    } else {
+      setIsSaved(true);
+    }
+  };
+  useEffect(() => {
+    findSaved();
+  }, []);
 
   const handleSave = async () => {
     const user = await AsyncStorage.getItem("userData");
@@ -27,7 +49,6 @@ export default function DayScreen() {
       return;
     }
     const userData = JSON.parse(user);
-
     const payload = {
       userid: userData.id,
       item_type: "devotion",
@@ -35,7 +56,6 @@ export default function DayScreen() {
       title: topic.title,
       content: topic.message,
     };
-
     if (!isSaved) {
       // --- SAVE devotion ---
       setIsSaved(true); // update UI instantly
@@ -50,21 +70,6 @@ export default function DayScreen() {
         );
 
         if (res.ok) {
-          // also update devotions.issaved
-          await fetch(
-            `https://bible-verse-backend-1kvo.onrender.com/devotions/${topic.id}`,
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                title: topic.title,
-                author: topic.author,
-                message: topic.message,
-                days: topic.days,
-                issaved: true,
-              }),
-            }
-          );
           Toast.show({ type: "success", text1: "Devotion saved!" });
         } else {
           setIsSaved(false); // rollback if failed
@@ -80,28 +85,13 @@ export default function DayScreen() {
       setIsSaved(false); // update UI instantly
       try {
         const response = await fetch(
-          `https://bible-verse-backend-1kvo.onrender.com/saved/${userData.id}/${topic.id}`,
+          `https://bible-verse-backend-1kvo.onrender.com/saved/${payload.item_type}/${userData.id}/${topic.id}`,
           {
             method: "DELETE",
           }
         );
 
         if (response.ok) {
-          // update devotions.issaved
-          await fetch(
-            `https://bible-verse-backend-1kvo.onrender.com/devotions/${topic.id}`,
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                title: topic.title,
-                author: topic.author,
-                message: topic.message,
-                days: topic.days,
-                issaved: false,
-              }),
-            }
-          );
           Toast.show({
             type: "success",
             text1: "Devotion removed from saved!",
