@@ -5,7 +5,14 @@ import {
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { MenuStackParamList } from "../Stack/MenuStack";
 
@@ -44,7 +51,8 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.replace("HomeStack")}>
-        <Icon name="users" size={22} color={"#1b4b7aff"} />
+        {/* <Icon name="users" size={22} color={"#1b4b7aff"} /> */}
+        <Image source={require("../assets/FYI_BLUE.jpg")} style={styles.img} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.rightIcons}>
@@ -74,6 +82,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     color: "#1b4b7aff",
+    marginLeft: -28,
   },
   rightIcons: {
     flexDirection: "row",
@@ -81,5 +90,10 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
     color: "#1b4b7aff",
+  },
+  img: {
+    marginRight: 10,
+    width: Dimensions.get("window").width * 0.12,
+    height: Dimensions.get("window").width * 0.095,
   },
 });
