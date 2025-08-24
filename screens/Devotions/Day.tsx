@@ -28,6 +28,9 @@ export default function DayScreen() {
     }
     const userData = JSON.parse(user);
 
+    if (topic.item_id) {
+      topic.id = topic.item_id;
+    }
     const res = await fetch(
       `https://bible-verse-backend-1kvo.onrender.com/saved/devotion/${userData.id}/${topic.id}`
     );
@@ -54,7 +57,8 @@ export default function DayScreen() {
       item_type: "devotion",
       item_id: topic.id,
       title: topic.title,
-      content: topic.message,
+      message: topic.message,
+      author: topic.author,
     };
     if (!isSaved) {
       // --- SAVE devotion ---
@@ -110,8 +114,9 @@ export default function DayScreen() {
     }
   };
 
-  const content =
-    topic.days && topic.days[day] ? topic.days[day].message : topic.message;
+  const content = topic.message;
+  // const content =
+  //   topic.days && topic.days[day] ? topic.days[day].message : topic.message;
 
   return (
     <View style={styles.container}>

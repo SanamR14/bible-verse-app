@@ -39,6 +39,7 @@ export default function SavedPage() {
     fetchSaved();
   }, []);
 
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -48,6 +49,7 @@ export default function SavedPage() {
         <Text style={styles.headerTitle}>Saved Items</Text>
         <Text></Text>
       </View>
+
       {loading ? (
         <ActivityIndicator size="large" color="#999" />
       ) : (
@@ -61,17 +63,16 @@ export default function SavedPage() {
               renderItem={({ item }) => (
                 <Pressable
                   onPress={() =>
-                    navigation.navigate("SavedDetail", {
-                      id: item.id,
-                      user: userid,
+                    navigation.navigate("Day", {
+                      topic: item,
                     })
                   }
                   style={styles.item}
                 >
                   <Text style={styles.title}>{item.title}</Text>
-                  <Text numberOfLines={2} style={styles.preview}>
+                  {/* <Text numberOfLines={2} style={styles.preview}>
                     {item.content}
-                  </Text>
+                  </Text> */}
                 </Pressable>
               )}
             />
