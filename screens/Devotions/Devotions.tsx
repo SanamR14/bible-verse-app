@@ -40,8 +40,13 @@ export default function Devotions() {
       const res = await axios.get(
         "https://bible-verse-backend-1kvo.onrender.com/devotions/"
       );
-      setDevotions(res.data);
-      setFilteredData(res.data);
+
+      const sortedData = res.data.sort((a: Devotion, b: Devotion) =>
+        a.title.localeCompare(b.title)
+      );
+
+      setDevotions(sortedData);
+      setFilteredData(sortedData);
     } catch (err) {
       console.error("Failed to fetch devotions:", err);
     } finally {
