@@ -5,6 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { DevotionStackParamList } from "../../Stack/DevotionsStack";
@@ -119,32 +122,42 @@ export default function DayScreen() {
   //   topic.days && topic.days[day] ? topic.days[day].message : topic.message;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
-        </TouchableOpacity>
-        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-          {topic.title}
-        </Text>
-        <TouchableOpacity onPress={handleSave}>
-          <Icon
-            name="bookmark"
-            size={24}
-            color={isSaved ? "#1b4b7aff" : "#90a9afff"}
-          />
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <View style={styles.contentCard}>
-          <Text style={styles.content}>{content}</Text>
-        </View>
-      </ScrollView>
-    </View>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" size={24} color="#1b4b7aff" />
+            </TouchableOpacity>
+            <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+              {topic.title}
+            </Text>
+            <TouchableOpacity onPress={handleSave}>
+              <Icon
+                name="bookmark"
+                size={24}
+                color={isSaved ? "#1b4b7aff" : "#90a9afff"}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={styles.scrollContent}
+          >
+            <View style={styles.contentCard}>
+              <Text style={styles.content}>{content}</Text>
+            </View>
+          </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -156,7 +169,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
+    margin:14
   },
   title: {
     fontSize: 18,
@@ -168,6 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 12,
+    margin:14
   },
   content: { fontSize: 16, color: "#1b4a7aff", lineHeight: 22 },
 });
