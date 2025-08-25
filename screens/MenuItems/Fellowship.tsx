@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 
@@ -7,7 +7,15 @@ export default function Fellowship() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+         <KeyboardAvoidingView
+           style={{ flex: 1 }}
+           behavior={Platform.OS === "ios" ? "padding" : undefined}
+         >
+           <ScrollView
+             contentContainerStyle={{ flexGrow: 1 }}
+             keyboardShouldPersistTaps="handled"
+           >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#1b4b7aff" />
@@ -16,7 +24,9 @@ export default function Fellowship() {
         <Text></Text>
       </View>
       <Text style={styles.body}>Coming Soon!</Text>
-    </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -25,13 +35,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     padding: 16,
-    paddingTop: 50,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
+    margin:14
   },
   headerTitle: {
     fontSize: 18,
@@ -39,6 +48,7 @@ const styles = StyleSheet.create({
     color: "#1b4b7aff",
   },
   body: {
-    color:"#1b4b7aff"
+    color:"#1b4b7aff",
+    margin: 14
   }
 });

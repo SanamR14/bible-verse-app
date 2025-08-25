@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+} from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import { ScrollView } from "react-native";
@@ -25,29 +33,39 @@ export default function DayScreen() {
     topic.days && topic.days[day]?.title ? topic.days[day].title : topic.title;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
-        </TouchableOpacity>
-        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-          {topic.title}
-        </Text>
-        <TouchableOpacity onPress={handleSave}>
-          <Icon
-            name="bookmark"
-            size={24}
-            color={isSaved ? "#1b4b7aff" : "#90a9afff"}
-          />
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={styles.scroll}>
-        <View style={styles.contentCard}>
-          {/* <Text style={styles.dayTitle}>{dayTitle}</Text> */}
-          <Text style={styles.content}>{content}</Text>
-        </View>
-      </ScrollView>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" size={24} color="#1b4b7aff" />
+            </TouchableOpacity>
+            <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+              {topic.title}
+            </Text>
+            <TouchableOpacity onPress={handleSave}>
+              <Icon
+                name="bookmark"
+                size={24}
+                color={isSaved ? "#1b4b7aff" : "#90a9afff"}
+              />
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={styles.scroll}>
+            <View style={styles.contentCard}>
+              {/* <Text style={styles.dayTitle}>{dayTitle}</Text> */}
+              <Text style={styles.content}>{content}</Text>
+            </View>
+          </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -58,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
+    margin: 14,
   },
   title: {
     fontSize: 18,
@@ -70,6 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 12,
+    margin: 14,
   },
   dayTitle: { fontWeight: "bold", fontSize: 16, marginBottom: 8 },
   content: { fontSize: 14, color: "#1b4a7aff" },

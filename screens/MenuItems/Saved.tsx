@@ -7,6 +7,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -39,52 +43,61 @@ export default function SavedPage() {
     fetchSaved();
   }, []);
 
-
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Saved Items</Text>
-        <Text></Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" size={24} color="#1b4b7aff" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Saved Items</Text>
+            <Text></Text>
+          </View>
 
-      {loading ? (
-        <ActivityIndicator size="large" color="#999" />
-      ) : (
-        <View>
-          {items.length === 0 ? (
-            <Text>No saved items yet.</Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="#999" />
           ) : (
-            <FlatList
-              data={items}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate("Day", {
-                      topic: item,
-                    })
-                  }
-                  style={styles.item}
-                >
-                  <Text style={styles.title}>{item.title}</Text>
-                  {/* <Text numberOfLines={2} style={styles.preview}>
+            <View>
+              {items.length === 0 ? (
+                <Text>No saved items yet.</Text>
+              ) : (
+                <FlatList
+                  data={items}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate("Day", {
+                          topic: item,
+                        })
+                      }
+                      style={styles.item}
+                    >
+                      <Text style={styles.title}>{item.title}</Text>
+                      {/* <Text numberOfLines={2} style={styles.preview}>
                     {item.content}
                   </Text> */}
-                </Pressable>
+                    </Pressable>
+                  )}
+                />
               )}
-            />
+            </View>
           )}
-        </View>
-      )}
-    </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff", paddingTop: 50 },
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   item: { padding: 12, borderBottomWidth: 1, borderColor: "#eee" },
   title: { fontSize: 16, fontWeight: "600", color: "#1b4b7aff" },
   preview: { color: "#1b4b7aff" },

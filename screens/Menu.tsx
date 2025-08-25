@@ -1,5 +1,15 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -41,153 +51,169 @@ export default function Menu() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#1b4a7aff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Menu</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="menu" size={24} color="#1b4a7aff" />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.contentBox}>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Profile", { topic: "" })}
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
         >
-          <FontAwesomeIcon
-            icon={faUser}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Profile</Text>
-        </TouchableOpacity>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" size={24} color="#1b4a7aff" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Menu</Text>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="menu" size={24} color="#1b4a7aff" />
+            </TouchableOpacity>
+          </View>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("SavedStack", { topic: "" })}
-        >
-          <FontAwesomeIcon
-            icon={faBookmark}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Saved Items</Text>
-        </TouchableOpacity>
+          <View style={styles.contentBox}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Profile", { topic: "" })}
+            >
+              <FontAwesomeIcon
+                icon={faUser}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Profile</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("PrayerRequest", { topic: "" })}
-        >
-          <FontAwesomeIcon
-            icon={faHandsPraying}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Prayer Request</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("SavedStack", { topic: "" })}
+            >
+              <FontAwesomeIcon
+                icon={faBookmark}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Saved Items</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Fellowship", { topic: "" })}
-        >
-          <FontAwesomeIcon
-            icon={faPeopleGroup}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Fellowship</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("PrayerRequest", { topic: "" })
+              }
+            >
+              <FontAwesomeIcon
+                icon={faHandsPraying}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Prayer Request</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("ForYou", { topic: "" })}
-        >
-          <FontAwesomeIcon
-            icon={faLinkSlash}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Do you feel disconnected?</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Fellowship", { topic: "" })}
+            >
+              <FontAwesomeIcon
+                icon={faPeopleGroup}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Fellowship</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("ChristCommunity", { topic: "" })}
-        >
-          <FontAwesomeIcon
-            icon={faPeopleGroup}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Christ Community</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("ForYou", { topic: "" })}
+            >
+              <FontAwesomeIcon
+                icon={faLinkSlash}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Do you feel disconnected?</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Notifications")}
-        >
-          <FontAwesomeIcon
-            icon={faBell}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Notifications</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("ChristCommunity", { topic: "" })
+              }
+            >
+              <FontAwesomeIcon
+                icon={faPeopleGroup}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Christ Community</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
-          <FontAwesomeIcon
-            icon={faQuestion}
-            size={20}
-            color="#1b4a7aff"
-            style={[styles.icon, styles.disabledItem]}
-          />
-          <Text style={[styles.itemText, styles.disabledText]}>Help</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Notifications")}
+            >
+              <FontAwesomeIcon
+                icon={faBell}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Notifications</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
-          <FontAwesomeIcon
-            icon={faLanguage}
-            size={20}
-            color="#1b4a7aff"
-            style={[styles.icon, styles.disabledItem]}
-          />
-          <Text style={[styles.itemText, styles.disabledText]}>Language</Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.item}>
+              <FontAwesomeIcon
+                icon={faQuestion}
+                size={20}
+                color="#1b4a7aff"
+                style={[styles.icon, styles.disabledItem]}
+              />
+              <Text style={[styles.itemText, styles.disabledText]}>Help</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item}>
-          <FontAwesomeIcon
-            icon={faShareFromSquare}
-            size={20}
-            color="#1b4a7aff"
-            style={[styles.icon, styles.disabledItem]}
-          />
-          <Text style={[styles.itemText, styles.disabledText]}>Share</Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.item}>
+              <FontAwesomeIcon
+                icon={faLanguage}
+                size={20}
+                color="#1b4a7aff"
+                style={[styles.icon, styles.disabledItem]}
+              />
+              <Text style={[styles.itemText, styles.disabledText]}>
+                Language
+              </Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => logout(navigation)}
-        >
-          <FontAwesomeIcon
-            icon={faArrowRightFromBracket}
-            size={20}
-            color="#1b4a7aff"
-            style={styles.icon}
-          />
-          <Text style={styles.itemText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+            <TouchableOpacity style={styles.item}>
+              <FontAwesomeIcon
+                icon={faShareFromSquare}
+                size={20}
+                color="#1b4a7aff"
+                style={[styles.icon, styles.disabledItem]}
+              />
+              <Text style={[styles.itemText, styles.disabledText]}>Share</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => logout(navigation)}
+            >
+              <FontAwesomeIcon
+                icon={faArrowRightFromBracket}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Logout</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -196,13 +222,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF", // light neutral
     padding: 16,
-    paddingTop: 50,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
+    margin: 14,
   },
   headerTitle: {
     fontSize: 20,
@@ -219,6 +244,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2, // Android shadow
+    margin:14
   },
   item: {
     flexDirection: "row",

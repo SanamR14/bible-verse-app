@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: "#1b4b7aff"
+    color: "#1b4b7aff",
   },
   rowBack: {
     alignItems: "center",
