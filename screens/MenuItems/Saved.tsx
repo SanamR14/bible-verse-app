@@ -49,48 +49,43 @@ export default function SavedPage() {
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon name="arrow-left" size={24} color="#1b4b7aff" />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Saved Items</Text>
-            <Text></Text>
-          </View>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="arrow-left" size={24} color="#1b4b7aff" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Saved Items</Text>
+          <Text></Text>
+        </View>
 
-          {loading ? (
-            <ActivityIndicator size="large" color="#999" />
-          ) : (
-            <View>
-              {items.length === 0 ? (
-                <Text>No saved items yet.</Text>
-              ) : (
-                <FlatList
-                  data={items}
-                  keyExtractor={(item) => item.id.toString()}
-                  renderItem={({ item }) => (
-                    <Pressable
-                      onPress={() =>
-                        navigation.navigate("Day", {
-                          topic: item,
-                        })
-                      }
-                      style={styles.item}
-                    >
-                      <Text style={styles.title}>{item.title}</Text>
-                      {/* <Text numberOfLines={2} style={styles.preview}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#999" />
+        ) : (
+          <View>
+            {items.length === 0 ? (
+              <Text>No saved items yet.</Text>
+            ) : (
+              <FlatList
+                data={items}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate("Day", {
+                        topic: item,
+                      })
+                    }
+                    style={styles.item}
+                  >
+                    <Text style={styles.title}>{item.title}</Text>
+                    {/* <Text numberOfLines={2} style={styles.preview}>
                     {item.content}
                   </Text> */}
-                    </Pressable>
-                  )}
-                />
-              )}
-            </View>
-          )}
-        </ScrollView>
+                  </Pressable>
+                )}
+              />
+            )}
+          </View>
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

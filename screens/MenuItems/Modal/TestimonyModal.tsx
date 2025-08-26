@@ -85,6 +85,7 @@ const TestimonyModal: React.FC<TestimonyModalProps> = ({
 
           <TextInput
             placeholder="Write about your prayer in few words"
+            placeholderTextColor="#A9A9A9"
             value={prayerName}
             onChangeText={setPrayerName}
             style={styles.input}
@@ -92,12 +93,13 @@ const TestimonyModal: React.FC<TestimonyModalProps> = ({
 
           <TextInput
             placeholder="Write about your testimony how GOD made it happen"
+            placeholderTextColor="#A9A9A9"
             value={testimony}
             onChangeText={setTestimony}
             multiline
             style={[styles.input, { height: 100, textAlignVertical: "top" }]}
-           
           />
+
           <View style={styles.privateRow}>
             <Text style={styles.label}>Anonymous Prayer Request</Text>
             <Switch
@@ -110,12 +112,19 @@ const TestimonyModal: React.FC<TestimonyModalProps> = ({
           {dialog.visible && (
             <View style={styles.dialogBox}>
               <Text style={styles.dialogText}>{dialog.message}</Text>
-              <Pressable
-                style={styles.dialogBtn}
-                onPress={() => setDialog({ visible: false, message: "" })}
-              >
-                <Text style={styles.dialogBtnText}>OK</Text>
-              </Pressable>
+
+              {dialog.message === "Your testimony has been saved!" ? (
+                <Pressable style={styles.dialogBtn} onPress={onClose}>
+                  <Text style={styles.dialogBtnText}>OK</Text>
+                </Pressable>
+              ) : (
+                <Pressable
+                  style={styles.dialogBtn}
+                  onPress={() => setDialog({ visible: false, message: "" })}
+                >
+                  <Text style={styles.dialogBtnText}>OK</Text>
+                </Pressable>
+              )}
             </View>
           )}
 
@@ -162,7 +171,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 12,
     fontSize: 15,
-    color: "#333333",
+    color: "#1b4b7aff",
   },
   buttonContainer: {
     flexDirection: "row",
