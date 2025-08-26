@@ -2,15 +2,13 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ForYou from "../screens/MenuItems/ForYou";
 import ChristCommunity from "../screens/MenuItems/ChristCommunity";
-import Help from "../screens/MenuItems/Help";
 import Fellowship from "../screens/MenuItems/Fellowship";
 import PrayerRequest from "../screens/MenuItems/PrayerRequest";
 import Profile from "../screens/MenuItems/Profile";
-import Saved from "../screens/MenuItems/Saved";
 import Menu from "../screens/Menu";
-import LoginScreen from "../screens/Login";
 import Notifications from "../screens/MenuItems/Notifications";
 import SavedStack from "./SavedStack";
+import Testimonies from "../screens/MenuItems/Testimonies";
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -21,6 +19,7 @@ export type MenuStackParamList = {
   PrayerWarrior: { topic: string };
   ForYou: { topic: string };
   ChristCommunity: { topic: string };
+  Testimonies: { topic: string };
   Help: { topic: string };
 };
 
@@ -36,6 +35,7 @@ export default function MenuStack() {
       <Stack.Screen name="Fellowship" component={Fellowship} />
       <Stack.Screen name="ForYou" component={ForYou} />
       <Stack.Screen name="ChristCommunity" component={ChristCommunity} />
+      <Stack.Screen name="Testimonies" component={Testimonies} />
       <Stack.Screen name="Help" component={Notifications} />
       {/* <Stack.Screen name="Logout" component={LoginScreen} /> */}
     </Stack.Navigator>

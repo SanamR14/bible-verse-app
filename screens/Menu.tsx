@@ -155,6 +155,20 @@ export default function Menu() {
 
             <TouchableOpacity
               style={styles.item}
+              onPress={() => navigation.navigate("Testimonies", { topic: "" })}
+            >
+              <FontAwesomeIcon
+                icon={faHandsPraying}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>
+                Testimonies & Answered Prayers
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
               onPress={() => navigation.navigate("Notifications")}
             >
               <FontAwesomeIcon
@@ -244,7 +258,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2, // Android shadow
-    margin:14
+    margin: 14,
   },
   item: {
     flexDirection: "row",

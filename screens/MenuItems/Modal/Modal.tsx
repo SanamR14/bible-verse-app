@@ -6,6 +6,7 @@ import { Modal, View, Text, Pressable, StyleSheet } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/Feather";
+import TestimonyModal from "./TestimonyModal";
 
 type RequestModalProps = {
   visible: boolean;
@@ -52,8 +53,33 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
       fetchPrayerRequets();
     }
   }, [userId, visible]);
+  const [showTestimonyModal, setShowTestimonyModal] = useState(false);
+  // const [selectedPrayer, setSelectedPrayer] = useState<any | null>(null);
 
   const handleDelete = async (id: number) => {
+    Alert.alert(
+      "Mark as Answered?",
+      "Do you want to add this prayer to Answered Prayers & Testimonies?",
+      [
+        {
+          text: "No",
+          style: "cancel",
+          onPress: async () => {
+            await deletePrayer(id);
+          },
+        },
+        {
+          text: "Yes",
+          onPress: async () => {
+            await deletePrayer(id);
+            setShowTestimonyModal(true);
+          },
+        },
+      ]
+    );
+  };
+
+  const deletePrayer = async (id: number) => {
     try {
       const response = await fetch(
         `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}/${id}`,
@@ -65,7 +91,6 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
       if (response.ok) {
         setPrayer((prev) => prev.filter((item) => item.prayerid !== id));
       } else {
-        console.error("Failed to delete");
         Alert.alert("Delete failed", "Could not delete the prayer request.");
       }
     } catch (error) {
@@ -105,7 +130,7 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
                       style={styles.deleteBtn}
                       onPress={() => handleDelete(item.prayerid)}
                     >
-                      <Icon name="trash-2" color="#1b4b7aff" size={20} />
+                      <Icon name="archive" color="#1b4b7aff" size={20} />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -117,6 +142,11 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
           </View>
         )}
       </View>
+      <TestimonyModal
+        visible={showTestimonyModal}
+        onClose={() => setShowTestimonyModal(false)}
+        userId={userId}
+      />
     </Modal>
   );
 };
@@ -155,7 +185,7 @@ const styles = StyleSheet.create({
   },
   rowBack: {
     alignItems: "center",
-    backgroundColor: "#f44336",
+    backgroundColor: "#6cf436ff",
     flex: 1,
     justifyContent: "flex-end",
     flexDirection: "row",
