@@ -8,6 +8,9 @@ import {
   Pressable,
   StyleSheet,
   Switch,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 type TestimonyModalProps = {
@@ -79,66 +82,71 @@ const TestimonyModal: React.FC<TestimonyModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="slide">
-      <View style={styles.overlay}>
-        <View style={styles.modalContent}>
-          <Text style={styles.title}>Add Testimony</Text>
+      <SafeAreaView style={styles.overlay}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Add Testimony</Text>
 
-          <TextInput
-            placeholder="Write about your prayer in few words"
-            placeholderTextColor="#A9A9A9"
-            value={prayerName}
-            onChangeText={setPrayerName}
-            style={styles.input}
-          />
-
-          <TextInput
-            placeholder="Write about your testimony how GOD made it happen"
-            placeholderTextColor="#A9A9A9"
-            value={testimony}
-            onChangeText={setTestimony}
-            multiline
-            style={[styles.input, { height: 100, textAlignVertical: "top" }]}
-          />
-
-          <View style={styles.privateRow}>
-            <Text style={styles.label}>Anonymous Prayer Request</Text>
-            <Switch
-              value={isAnonymous}
-              onValueChange={setIsAnonymous}
-              trackColor={{ false: "#ECF0F1", true: "#1b4b7aff" }}
+            <TextInput
+              placeholder="Write about your prayer in few words"
+              placeholderTextColor="#A9A9A9"
+              value={prayerName}
+              onChangeText={setPrayerName}
+              style={styles.input}
             />
-          </View>
 
-          {dialog.visible && (
-            <View style={styles.dialogBox}>
-              <Text style={styles.dialogText}>{dialog.message}</Text>
+            <TextInput
+              placeholder="Write about your testimony how GOD made it happen"
+              placeholderTextColor="#A9A9A9"
+              value={testimony}
+              onChangeText={setTestimony}
+              multiline
+              style={[styles.input, { height: 100, textAlignVertical: "top" }]}
+            />
 
-              {dialog.message === "Your testimony has been saved!" ? (
-                <Pressable style={styles.dialogBtn} onPress={onClose}>
-                  <Text style={styles.dialogBtnText}>OK</Text>
-                </Pressable>
-              ) : (
-                <Pressable
-                  style={styles.dialogBtn}
-                  onPress={() => setDialog({ visible: false, message: "" })}
-                >
-                  <Text style={styles.dialogBtnText}>OK</Text>
-                </Pressable>
-              )}
+            <View style={styles.privateRow}>
+              <Text style={styles.label}>Anonymous Prayer Request</Text>
+              <Switch
+                value={isAnonymous}
+                onValueChange={setIsAnonymous}
+                trackColor={{ false: "#ECF0F1", true: "#1b4b7aff" }}
+              />
             </View>
-          )}
 
-          <View style={styles.buttonContainer}>
-            <Pressable style={styles.saveBtn} onPress={handleSave}>
-              <Text style={styles.saveBtnText}>Save</Text>
-            </Pressable>
+            {dialog.visible && (
+              <View style={styles.dialogBox}>
+                <Text style={styles.dialogText}>{dialog.message}</Text>
 
-            <Pressable style={styles.cancelBtn} onPress={onClose}>
-              <Text style={styles.cancelBtnText}>Cancel</Text>
-            </Pressable>
+                {dialog.message === "Your testimony has been saved!" ? (
+                  <Pressable style={styles.dialogBtn} onPress={onClose}>
+                    <Text style={styles.dialogBtnText}>OK</Text>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={styles.dialogBtn}
+                    onPress={() => setDialog({ visible: false, message: "" })}
+                  >
+                    <Text style={styles.dialogBtnText}>OK</Text>
+                  </Pressable>
+                )}
+              </View>
+            )}
+
+            <View style={styles.buttonContainer}>
+              <Pressable style={styles.saveBtn} onPress={handleSave}>
+                <Text style={styles.saveBtnText}>Save</Text>
+              </Pressable>
+
+              <Pressable style={styles.cancelBtn} onPress={onClose}>
+                <Text style={styles.cancelBtnText}>Cancel</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </Modal>
   );
 };
