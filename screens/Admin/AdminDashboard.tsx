@@ -177,12 +177,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     color: "#1b4b7a",
-    marginBottom: 12,
+    padding: 16,
   },
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 20,
+    padding: 6,
   },
   card: {
     flex: 1,
@@ -198,6 +199,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginVertical: 10,
     color: "#1b4b7aff",
+    paddingLeft: 16,
   },
   listItem: {
     padding: 12,
