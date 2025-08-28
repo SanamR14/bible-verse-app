@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/Login";
 import SignupScreen from "../screens/Signup";
 import HomeStack from "../Stack/HomeStack";
+import AdminStack from "../Stack/AdminStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,11 @@ export default function AuthStack() {
       <Stack.Screen
         name="HomeStack"
         component={HomeStack}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name="AdminStack"
+        component={AdminStack}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

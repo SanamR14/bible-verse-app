@@ -64,7 +64,12 @@ export default function LoginScreen({ navigation }: any) {
         text1: "Login Successful",
         text2: "Welcome back!",
       });
-      navigation.navigate("HomeStack");
+
+      if (data.user.email && data.user.email.endsWith("@admin.fyi.com")) {
+        navigation.navigate("AdminStack");
+      } else {
+        navigation.navigate("HomeStack");
+      }
     } catch (error) {
       Toast.show({
         type: "error",
