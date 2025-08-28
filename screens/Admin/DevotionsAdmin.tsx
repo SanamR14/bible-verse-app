@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const DevotionsAdmin = () => {
-  return (
-    <div>DevotionsAdmin</div>
-  )
-}
+  return <div>DevotionsAdmin</div>;
+};
 
-export default DevotionsAdmin
+export default DevotionsAdmin;

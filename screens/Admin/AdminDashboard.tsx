@@ -8,8 +8,9 @@ import {
   FlatList,
   SafeAreaView,
   ActivityIndicator,
-  Alert,
   Pressable,
+  Modal,
+  Share,
 } from "react-native";
 import {
   createDrawerNavigator,
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
   const [userCount, setUserCount] = useState(0);
   const [prayerRequests, setPrayerRequests] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,11 +62,29 @@ const AdminDashboard = () => {
     fetchData();
   }, []);
 
+  const handleShare = async () => {
+    try {
+      const prayersText = prayerRequests
+        .map((item) => `${item.username}: ${item.prayer}`)
+        .join("\n\n");
+
+      await Share.share({
+        message: prayersText || "No prayer requests available",
+      });
+    } catch (err) {
+      console.error("Share error:", err);
+    }
+  };
+
   if (loading) {
     return (
       <ActivityIndicator size="large" color="#1b4b7aff" style={{ flex: 1 }} />
     );
   }
+
+  // Only show first 5 in main view
+  const displayedPrayers =
+    prayerRequests.length > 5 ? prayerRequests.slice(0, 5) : prayerRequests;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -89,7 +109,7 @@ const AdminDashboard = () => {
       {/* Prayer Requests */}
       <Text style={styles.sectionTitle}>Prayer Requests</Text>
       <FlatList
-        data={prayerRequests}
+        data={displayedPrayers}
         keyExtractor={(item, index) =>
           item.id ? item.id.toString() : `prayer-${index}`
         }
@@ -101,6 +121,46 @@ const AdminDashboard = () => {
           </View>
         )}
       />
+
+      {prayerRequests.length > 5 && (
+        <Pressable style={styles.seeMoreBtn} onPress={() => setShowModal(true)}>
+          <Text style={styles.btnText}>See More</Text>
+        </Pressable>
+      )}
+
+      <Pressable style={styles.shareBtn} onPress={handleShare}>
+        <Text style={styles.btnText}>Share</Text>
+      </Pressable>
+
+      {/* Modal for all prayers */}
+      <Modal visible={showModal} animationType="slide">
+        <SafeAreaView style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>All Prayer Requests</Text>
+          <FlatList
+            data={prayerRequests}
+            keyExtractor={(item, index) =>
+              item.id ? item.id.toString() : `modal-prayer-${index}`
+            }
+            renderItem={({ item }) => (
+              <View style={styles.listItem}>
+                <Text>
+                  {item.prayer} - {item.username}
+                </Text>
+              </View>
+            )}
+          />
+
+          <Pressable style={styles.shareBtn} onPress={handleShare}>
+            <Text style={styles.btnText}>Share</Text>
+          </Pressable>
+          <Pressable
+            style={styles.closeBtn}
+            onPress={() => setShowModal(false)}
+          >
+            <Text style={styles.btnText}>Close</Text>
+          </Pressable>
+        </SafeAreaView>
+      </Modal>
 
       {/* Testimonies */}
       <Text style={styles.sectionTitle}>Testimonies</Text>
@@ -119,6 +179,7 @@ const AdminDashboard = () => {
     </SafeAreaView>
   );
 };
+
 function CustomDrawerContent(props) {
   const navigation = useNavigation();
 
@@ -136,8 +197,6 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <DrawerItemList {...props} />
-
-      {/* Logout at bottom */}
       <View
         style={{ marginTop: "auto", borderTopWidth: 1, borderTopColor: "#ccc" }}
       >
@@ -172,7 +231,7 @@ export default function AdminDrawer() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" }, // global margin/padding
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   title: {
     fontSize: 22,
     fontWeight: "bold",
@@ -208,17 +267,28 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   userName: { fontWeight: "bold", color: "#1b4b7aff" },
-  date: { fontSize: 12, color: "#888" },
-  logoutBtn: {
-    marginTop: 20,
-    backgroundColor: "#e74c3c",
-    padding: 14,
-    borderRadius: 10,
+  shareBtn: {
+    marginTop: 10,
+    backgroundColor: "#1b4b7a",
+    padding: 12,
+    borderRadius: 8,
     alignItems: "center",
   },
-  logoutText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
+  seeMoreBtn: {
+    marginTop: 10,
+    backgroundColor: "#3498db",
+    padding: 10,
+    borderRadius: 8,
+    alignItems: "center",
   },
+  closeBtn: {
+    marginTop: 12,
+    backgroundColor: "#e74c3c",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  btnText: { color: "#fff", fontWeight: "bold" },
+  modalContainer: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  modalTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 12 },
 });
