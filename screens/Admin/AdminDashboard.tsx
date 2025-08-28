@@ -20,6 +20,7 @@ import {
 import DevotionsAdmin from "./DevotionsAdmin";
 import PlansAdmin from "./PlansAdmin";
 import ExploreAdmin from "./ExploreAdmin";
+import HomeStack from "../../Stack/HomeStack";
 
 const Drawer = createDrawerNavigator();
 
@@ -165,6 +166,7 @@ export default function AdminDrawer() {
       <Drawer.Screen name="Devotions" component={DevotionsAdmin} />
       <Drawer.Screen name="Plans" component={PlansAdmin} />
       <Drawer.Screen name="Explore" component={ExploreAdmin} />
+      <Drawer.Screen name="HomeStack" component={HomeStack} />
     </Drawer.Navigator>
   );
 }
