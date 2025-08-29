@@ -22,6 +22,7 @@ import DevotionsAdmin from "./DevotionsAdmin";
 import PlansAdmin from "./PlansAdmin";
 import ExploreAdmin from "./ExploreAdmin";
 import HomeStack from "../../Stack/HomeStack";
+import DailyBibleVerse from "./DailyBibleVerse";
 
 const Drawer = createDrawerNavigator();
 
@@ -223,6 +224,7 @@ export default function AdminDrawer() {
       }}
     >
       <Drawer.Screen name="Dashboard" component={AdminDashboard} />
+      <Drawer.Screen name="Daily Bible Verse" component={DailyBibleVerse} />
       <Drawer.Screen name="Devotions" component={DevotionsAdmin} />
       <Drawer.Screen name="Plans" component={PlansAdmin} />
       <Drawer.Screen name="Explore" component={ExploreAdmin} />
