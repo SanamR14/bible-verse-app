@@ -19,8 +19,6 @@ export default function DayScreen() {
   const route = useRoute<RouteProp<DevotionStackParamList, "Day">>();
   const { topic, day } = route.params;
   const navigation = useNavigation();
-
-  // Local state for saved status (so UI updates instantly)
   const [isSaved, setIsSaved] = useState(Boolean);
 
   const findSaved = async () => {
@@ -38,6 +36,7 @@ export default function DayScreen() {
       `https://bible-verse-backend-1kvo.onrender.com/saved/devotion/${userData.id}/${topic.id}`
     );
     const data = await res.json();
+    console.log(data);
     if (data.length === 0) {
       setIsSaved(false);
     } else {
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    margin:14
+    margin: 14,
   },
   title: {
     fontSize: 18,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ECF0F1",
     padding: 16,
     borderRadius: 12,
-    margin:14
+    margin: 14,
   },
   content: { fontSize: 16, color: "#1b4a7aff", lineHeight: 22 },
 });

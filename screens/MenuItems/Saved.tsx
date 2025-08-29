@@ -67,21 +67,31 @@ export default function SavedPage() {
               <FlatList
                 data={items}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <Pressable
-                    onPress={() =>
-                      navigation.navigate("Day", {
-                        topic: item,
-                      })
-                    }
-                    style={styles.item}
-                  >
-                    <Text style={styles.title}>{item.title}</Text>
-                    {/* <Text numberOfLines={2} style={styles.preview}>
-                    {item.content}
-                  </Text> */}
-                  </Pressable>
-                )}
+                renderItem={({ item }) =>
+                  item.item_type === "devotion" ? (
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate("Day", {
+                          topic: item,
+                        })
+                      }
+                      style={styles.item}
+                    >
+                      <Text style={styles.title}>{item.title}</Text>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate("Plans_Day", {
+                          topic: item,
+                        })
+                      }
+                      style={styles.item}
+                    >
+                      <Text style={styles.title}>{item.title}</Text>
+                    </Pressable>
+                  )
+                }
               />
             )}
           </View>

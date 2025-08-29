@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,18 +12,107 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import { ScrollView } from "react-native";
 import { PlansStackParamList } from "../../Stack/PlansStack";
+import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DayScreen() {
   const route = useRoute<RouteProp<PlansStackParamList, "Plans_Day">>();
   const { topic, day } = route.params;
   const navigation = useNavigation();
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(Boolean);
 
-  const handleSave = () => {
-    setIsSaved(!isSaved);
+  const findSaved = async () => {
+    const user = await AsyncStorage.getItem("userData");
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+    const userData = JSON.parse(user);
 
-    // Optional: Trigger API call here to save or unsave
-    // Example: saveItemToBackend(isSaved ? "unsave" : "save");
+    if (topic.item_id) {
+      topic.id = topic.item_id;
+    }
+    const res = await fetch(
+      `https://bible-verse-backend-1kvo.onrender.com/saved/plan/${userData.id}/${topic.id}`
+    );
+    const data = await res.json();
+    if (data.length === 0) {
+      setIsSaved(false);
+    } else {
+      setIsSaved(true);
+    }
+  };
+  useEffect(() => {
+    findSaved();
+  }, []);
+
+  const handleSave = async () => {
+    const user = await AsyncStorage.getItem("userData");
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+    const userData = JSON.parse(user);
+    const payload = {
+      userid: userData.id,
+      item_type: "plan",
+      item_id: topic.id,
+      title: topic.title,
+      message: topic.message,
+      author: topic.author,
+    };
+    if (!isSaved) {
+      // --- SAVE devotion ---
+      setIsSaved(true); // update UI instantly
+      try {
+        const res = await fetch(
+          "https://bible-verse-backend-1kvo.onrender.com/saved",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        if (res.ok) {
+          Toast.show({ type: "success", text1: "Your Plan is saved!" });
+        } else {
+          setIsSaved(false); // rollback if failed
+          Toast.show({ type: "error", text1: "Failed to save your Plan." });
+        }
+      } catch (err) {
+        setIsSaved(false); // rollback
+        console.error("Save error:", err);
+        alert("Error saving plan");
+      }
+    } else {
+      // --- REMOVE devotion ---
+      setIsSaved(false); // update UI instantly
+      try {
+        const response = await fetch(
+          `https://bible-verse-backend-1kvo.onrender.com/saved/${payload.item_type}/${userData.id}/${topic.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (response.ok) {
+          Toast.show({
+            type: "success",
+            text1: "Plan removed from saved!",
+          });
+        } else {
+          setIsSaved(true); // rollback
+          Toast.show({
+            type: "error",
+            text1: "Failed to remove saved plan.",
+          });
+        }
+      } catch (error) {
+        setIsSaved(true); // rollback
+        console.error("Delete error:", error);
+      }
+    }
   };
 
   const content =
