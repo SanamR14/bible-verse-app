@@ -30,9 +30,10 @@ export default function SignupScreen({ navigation }: any) {
 
   const cityOptions: { [key: string]: { label: string; value: string }[] } = {
     India: [
-      { label: "Delhi", value: "Delhi" },
+      { label: "Chennai", value: "Chennai" },
       { label: "Mumbai", value: "Mumbai" },
       { label: "Bangalore", value: "Bangalore" },
+      { label: "Trichy", value: "Trichy" },
     ],
     UK: [
       { label: "Edinburgh", value: "Edinburgh" },
