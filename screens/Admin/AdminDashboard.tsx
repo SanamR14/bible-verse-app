@@ -110,6 +110,7 @@ const AdminDashboard = () => {
       <Text style={styles.sectionTitle}>Prayer Requests</Text>
       <FlatList
         data={displayedPrayers}
+        style={styles.item}
         keyExtractor={(item, index) =>
           item.id ? item.id.toString() : `prayer-${index}`
         }
@@ -225,7 +226,7 @@ export default function AdminDrawer() {
       <Drawer.Screen name="Devotions" component={DevotionsAdmin} />
       <Drawer.Screen name="Plans" component={PlansAdmin} />
       <Drawer.Screen name="Explore" component={ExploreAdmin} />
-      <Drawer.Screen name="HomeStack" component={HomeStack} />
+      <Drawer.Screen name="Home" component={HomeStack} />
     </Drawer.Navigator>
   );
 }
@@ -266,27 +267,33 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     borderRadius: 8,
   },
+  item: {
+    flexGrow: 0,
+  },
   userName: { fontWeight: "bold", color: "#1b4b7aff" },
   shareBtn: {
     marginTop: 10,
     backgroundColor: "#1b4b7a",
     padding: 12,
     borderRadius: 8,
-    alignItems: "center",
+    width: "fit-content",
+    margin: "auto",
   },
   seeMoreBtn: {
     marginTop: 10,
     backgroundColor: "#3498db",
     padding: 10,
     borderRadius: 8,
-    alignItems: "center",
+    width: "fit-content",
+    margin: "auto",
   },
   closeBtn: {
     marginTop: 12,
     backgroundColor: "#e74c3c",
     padding: 12,
     borderRadius: 8,
-    alignItems: "center",
+    width: "fit-content",
+    margin: "auto",
   },
   btnText: { color: "#fff", fontWeight: "bold" },
   modalContainer: { flex: 1, padding: 16, backgroundColor: "#fff" },
