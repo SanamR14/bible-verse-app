@@ -7,6 +7,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/Feather";
 import TestimonyModal from "./TestimonyModal";
+import { apiClient, apiClientGet } from "../../../apiClient";
 
 type RequestModalProps = {
   visible: boolean;
@@ -38,10 +39,10 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
     if (visible === true) {
       const fetchPrayerRequets = async () => {
         try {
-          const response = await fetch(
+          const response = await apiClientGet(
             `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}`
           );
-          const data = await response.json();
+          const data = await response;
           setPrayer(data);
         } catch (error) {
           console.error("Failed to fetch plans:", error);
@@ -81,7 +82,7 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
 
   const deletePrayer = async (id: number) => {
     try {
-      const response = await fetch(
+      const response = await apiClient(
         `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}/${id}`,
         {
           method: "DELETE",

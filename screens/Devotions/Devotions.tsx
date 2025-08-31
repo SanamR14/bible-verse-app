@@ -12,6 +12,7 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { TextInput } from "react-native-paper";
 import axios from "axios";
 import { DevotionStackParamList } from "../../Stack/DevotionsStack";
+import { apiClient, apiClientGet } from "../../apiClient";
 
 export type Devotion = {
   id: number;
@@ -37,11 +38,11 @@ export default function Devotions() {
 
   const fetchDevotions = async () => {
     try {
-      const res = await axios.get(
+      const res = await apiClientGet(
         "https://bible-verse-backend-1kvo.onrender.com/devotions/"
       );
-
-      const sortedData = res.data.sort((a: Devotion, b: Devotion) =>
+      console.log(res);
+      const sortedData = res.sort((a: Devotion, b: Devotion) =>
         a.title.localeCompare(b.title)
       );
 

@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { apiClient } from "../../../apiClient";
 
 type TestimonyModalProps = {
   visible: boolean;
@@ -50,7 +51,7 @@ const TestimonyModal: React.FC<TestimonyModalProps> = ({
     const userData = JSON.parse(user);
 
     try {
-      const response = await fetch(
+      const response = await apiClient(
         "https://bible-verse-backend-1kvo.onrender.com/testimonies",
         {
           method: "POST",

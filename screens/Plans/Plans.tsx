@@ -12,6 +12,7 @@ import { TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { PlansStackParamList } from "../../Stack/PlansStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { apiClient, apiClientGet } from "../../apiClient";
 
 export type Plan = {
   id: number;
@@ -33,10 +34,10 @@ export default function Plans() {
 
   const fetchPlans = async () => {
     try {
-      const response = await fetch(
+      const response = await apiClientGet(
         "https://bible-verse-backend-1kvo.onrender.com/plans/"
       );
-      const data = await response.json();
+      const data = await response;
       setPlans(data);
     } catch (error) {
       console.error("Failed to fetch plans:", error);

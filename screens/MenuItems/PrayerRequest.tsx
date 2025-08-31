@@ -18,6 +18,7 @@ import { TextInput } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import PrayerModal from "./Modal/Modal";
+import { apiClient } from "../../apiClient";
 
 export default function PrayerRequest() {
   const navigation = useNavigation();
@@ -49,7 +50,7 @@ export default function PrayerRequest() {
         prayer: trimmedText,
       };
 
-      const response = await fetch(
+      const response = await apiClient(
         "https://bible-verse-backend-1kvo.onrender.com/prayer-requests/prayerReq",
         {
           method: "POST",

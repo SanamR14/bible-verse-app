@@ -15,6 +15,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
+import { apiClient, apiClientGet } from "../../apiClient";
 
 export default function SavedPage() {
   const [items, setItems] = useState([]);
@@ -28,10 +29,10 @@ export default function SavedPage() {
     const userData = JSON.parse(user);
     setUserid(userData.id);
     try {
-      const res = await fetch(
+      const res = await apiClientGet(
         `https://bible-verse-backend-1kvo.onrender.com/saved/${userData.id}`
       );
-      const data = await res.json();
+      const data = await res;
       setItems(data);
     } catch (error) {
       console.error("Failed to fetch plans:", error);

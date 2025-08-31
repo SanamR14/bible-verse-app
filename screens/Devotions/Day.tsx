@@ -14,6 +14,7 @@ import { DevotionStackParamList } from "../../Stack/DevotionsStack";
 import Icon from "react-native-vector-icons/Feather";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import { apiClient, apiClientGet } from "../../apiClient";
 
 export default function DayScreen() {
   const route = useRoute<RouteProp<DevotionStackParamList, "Day">>();
@@ -32,10 +33,10 @@ export default function DayScreen() {
     if (topic.item_id) {
       topic.id = topic.item_id;
     }
-    const res = await fetch(
+    const res = await apiClientGet(
       `https://bible-verse-backend-1kvo.onrender.com/saved/devotion/${userData.id}/${topic.id}`
     );
-    const data = await res.json();
+    const data = await res;
     console.log(data);
     if (data.length === 0) {
       setIsSaved(false);
@@ -66,7 +67,7 @@ export default function DayScreen() {
       // --- SAVE devotion ---
       setIsSaved(true); // update UI instantly
       try {
-        const res = await fetch(
+        const res = await apiClient(
           "https://bible-verse-backend-1kvo.onrender.com/saved",
           {
             method: "POST",
@@ -74,7 +75,7 @@ export default function DayScreen() {
             body: JSON.stringify(payload),
           }
         );
-
+        console.log(res);
         if (res.ok) {
           Toast.show({ type: "success", text1: "Devotion saved!" });
         } else {
@@ -90,13 +91,13 @@ export default function DayScreen() {
       // --- REMOVE devotion ---
       setIsSaved(false); // update UI instantly
       try {
-        const response = await fetch(
+        const response = await apiClient(
           `https://bible-verse-backend-1kvo.onrender.com/saved/${payload.item_type}/${userData.id}/${topic.id}`,
           {
             method: "DELETE",
           }
         );
-
+        console.log(response);
         if (response.ok) {
           Toast.show({
             type: "success",

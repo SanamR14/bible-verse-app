@@ -14,6 +14,7 @@ import { ScrollView } from "react-native";
 import { PlansStackParamList } from "../../Stack/PlansStack";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiClient, apiClientGet } from "../../apiClient";
 
 export default function DayScreen() {
   const route = useRoute<RouteProp<PlansStackParamList, "Plans_Day">>();
@@ -32,10 +33,10 @@ export default function DayScreen() {
     if (topic.item_id) {
       topic.id = topic.item_id;
     }
-    const res = await fetch(
+    const res = await apiClientGet(
       `https://bible-verse-backend-1kvo.onrender.com/saved/plan/${userData.id}/${topic.id}`
     );
-    const data = await res.json();
+    const data = await res;
     if (data.length === 0) {
       setIsSaved(false);
     } else {
@@ -65,7 +66,7 @@ export default function DayScreen() {
       // --- SAVE devotion ---
       setIsSaved(true); // update UI instantly
       try {
-        const res = await fetch(
+        const res = await apiClient(
           "https://bible-verse-backend-1kvo.onrender.com/saved",
           {
             method: "POST",
@@ -89,7 +90,7 @@ export default function DayScreen() {
       // --- REMOVE devotion ---
       setIsSaved(false); // update UI instantly
       try {
-        const response = await fetch(
+        const response = await apiClient(
           `https://bible-verse-backend-1kvo.onrender.com/saved/${payload.item_type}/${userData.id}/${topic.id}`,
           {
             method: "DELETE",

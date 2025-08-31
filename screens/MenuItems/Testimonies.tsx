@@ -13,6 +13,7 @@ import {
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
+import { apiClient } from "../../apiClient";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -64,7 +65,7 @@ export default function PrayerAndTestimonyTabs() {
   useEffect(() => {
     const fetchTestimonies = async () => {
       try {
-        const response = await fetch(
+        const response = await apiClient(
           "https://bible-verse-backend-1kvo.onrender.com/testimonies"
         );
         const result = await response.json();

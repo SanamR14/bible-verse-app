@@ -1,6 +1,7 @@
 // screens/Home/VerseCard.shared.tsx
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiClient, apiClientGet } from "../../apiClient";
 
 export const useVerseCard = () => {
   const [images, setImages] = useState<any[]>([]);
@@ -22,10 +23,10 @@ export const useVerseCard = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await fetch(
+      const response = await apiClientGet(
         "https://bible-verse-backend-1kvo.onrender.com/bibleverse/"
       );
-      const data = await response.json();
+      const data = await response;
       setImages(data);
       updateImage(data);
     } catch (error) {
@@ -38,7 +39,8 @@ export const useVerseCard = () => {
   const updateImage = (arr: any[]) => {
     if (arr.length === 0) return;
     const today = new Date();
-    const dayIndex = today.getDate() + today.getMonth() * 31 + today.getFullYear();
+    const dayIndex =
+      today.getDate() + today.getMonth() * 31 + today.getFullYear();
     const index = dayIndex % arr.length;
     setImageUrl(arr[index]?.image_url);
   };
