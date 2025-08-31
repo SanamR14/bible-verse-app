@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const apiClientGet = async (url, options = {}) => {
   const token = await AsyncStorage.getItem("userToken");
 
-  console.log(token);
   const headers = {
     "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -15,7 +14,7 @@ export const apiClientGet = async (url, options = {}) => {
     ...options,
     headers,
   });
-  console.log(response);
+
   if (response.status === 401 || response.status === 403) {
     throw new Error("Unauthorized - Please login again");
   }
@@ -26,7 +25,6 @@ export const apiClientGet = async (url, options = {}) => {
 export const apiClient = async (url, options = {}) => {
   const token = await AsyncStorage.getItem("userToken");
 
-  console.log(token);
   const headers = {
     "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -37,7 +35,7 @@ export const apiClient = async (url, options = {}) => {
     ...options,
     headers,
   });
-  console.log(response);
+
   if (response.status === 401 || response.status === 403) {
     throw new Error("Unauthorized - Please login again");
   }

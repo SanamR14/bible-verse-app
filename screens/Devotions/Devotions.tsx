@@ -41,7 +41,7 @@ export default function Devotions() {
       const res = await apiClientGet(
         "https://bible-verse-backend-1kvo.onrender.com/devotions/"
       );
-      console.log(res);
+
       const sortedData = res.sort((a: Devotion, b: Devotion) =>
         a.title.localeCompare(b.title)
       );

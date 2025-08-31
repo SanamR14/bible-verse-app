@@ -37,7 +37,7 @@ export default function DayScreen() {
       `https://bible-verse-backend-1kvo.onrender.com/saved/devotion/${userData.id}/${topic.id}`
     );
     const data = await res;
-    console.log(data);
+
     if (data.length === 0) {
       setIsSaved(false);
     } else {
@@ -75,7 +75,7 @@ export default function DayScreen() {
             body: JSON.stringify(payload),
           }
         );
-        console.log(res);
+
         if (res.ok) {
           Toast.show({ type: "success", text1: "Devotion saved!" });
         } else {
@@ -97,7 +97,7 @@ export default function DayScreen() {
             method: "DELETE",
           }
         );
-        console.log(response);
+
         if (response.ok) {
           Toast.show({
             type: "success",
