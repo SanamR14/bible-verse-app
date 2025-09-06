@@ -37,7 +37,6 @@ export default function DayScreen() {
       `https://bible-verse-backend-1kvo.onrender.com/saved/devotion/${userData.id}/${topic.id}`
     );
     const data = await res;
-
     if (data.length === 0) {
       setIsSaved(false);
     } else {
