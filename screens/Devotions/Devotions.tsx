@@ -38,7 +38,7 @@ export default function Devotions() {
 
   const fetchDevotions = async () => {
     try {
-      const res = await apiClientGet("/devotions/");
+      const res = await apiClientGet("/devotions");
 
       const sortedData = res.sort((a: Devotion, b: Devotion) =>
         a.title.localeCompare(b.title)

@@ -21,30 +21,19 @@ export const useVerseCard = () => {
     loadUser();
   }, []);
 
-  const fetchImages = async () => {
+  const fetchVerseOfTheDay = async () => {
     try {
-      const response = await apiClientGet("/bibleverse");
-      const data = await response;
-      setImages(data);
-      updateImage(data);
+      const data = await apiClientGet("/bibleverse/daily");
+      setImageUrl(data?.image_url || null);
     } catch (error) {
-      console.error("Error loading images:", error);
+      console.error("Error loading verse of the day:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const updateImage = (arr: any[]) => {
-    if (arr.length === 0) return;
-    const today = new Date();
-    const dayIndex =
-      today.getDate() + today.getMonth() * 31 + today.getFullYear();
-    const index = dayIndex % arr.length;
-    setImageUrl(arr[index]?.image_url);
-  };
-
   useEffect(() => {
-    fetchImages();
+    fetchVerseOfTheDay();
   }, []);
 
   return { user, imageUrl, loading };

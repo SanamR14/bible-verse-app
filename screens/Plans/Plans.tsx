@@ -34,9 +34,7 @@ export default function Plans() {
 
   const fetchPlans = async () => {
     try {
-      const response = await apiClientGet(
-        "/plans/"
-      );
+      const response = await apiClientGet("/plans");
       const data = await response;
       setPlans(data);
     } catch (error) {
@@ -95,7 +93,7 @@ export default function Plans() {
         value={searchQuery}
         onChangeText={handleSearch}
         underlineColor="transparent"
-      style={styles.searchInput}
+        style={styles.searchInput}
         theme={{
           colors: {
             primary: "transparent",
