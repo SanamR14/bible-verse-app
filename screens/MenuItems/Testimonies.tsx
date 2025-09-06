@@ -9,11 +9,13 @@ import {
   SafeAreaView,
   Pressable,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { apiClient } from "../../apiClient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,7 +31,7 @@ function AnsweredPrayersScreen({ data }: { data: TestimonyItem[] }) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data.filter((item) => item.prayer)} 
+        data={data.filter((item) => item.prayer)}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
@@ -45,7 +47,7 @@ function TestimoniesScreen({ data }: { data: TestimonyItem[] }) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data.filter((item) => item.testimony)} 
+        data={data.filter((item) => item.testimony)}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
@@ -65,8 +67,17 @@ export default function PrayerAndTestimonyTabs() {
   useEffect(() => {
     const fetchTestimonies = async () => {
       try {
+        const user = await AsyncStorage.getItem("userData");
+        if (!user) {
+          Alert.alert("Session Expired", "Please log in again.");
+          setLoading(false);
+          return;
+        }
+
+        const userData = JSON.parse(user);
+
         const response = await apiClient(
-          "https://bible-verse-backend-1kvo.onrender.com/testimonies"
+          `https://bible-verse-backend-1kvo.onrender.com/testimonies/${userData.id}`
         );
         const result = await response.json();
         setData(result);
