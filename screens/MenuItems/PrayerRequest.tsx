@@ -51,7 +51,7 @@ export default function PrayerRequest() {
       };
 
       const response = await apiClient(
-        "https://bible-verse-backend-1kvo.onrender.com/prayer-requests/prayerReq",
+        "/prayer-requests/prayerReq",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -9,6 +9,7 @@ import Menu from "../screens/Menu";
 import Notifications from "../screens/MenuItems/Notifications";
 import SavedStack from "./SavedStack";
 import Testimonies from "../screens/MenuItems/Testimonies";
+import AuthStack from "../navigation/AuthStack";
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -37,7 +38,7 @@ export default function MenuStack() {
       <Stack.Screen name="ChristCommunity" component={ChristCommunity} />
       <Stack.Screen name="Testimonies" component={Testimonies} />
       <Stack.Screen name="Help" component={Notifications} />
-      {/* <Stack.Screen name="Logout" component={LoginScreen} /> */}
+      <Stack.Screen name="Auth" component={AuthStack} />
     </Stack.Navigator>
   );
 }

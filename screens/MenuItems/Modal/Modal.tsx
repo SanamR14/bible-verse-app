@@ -40,7 +40,7 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
       const fetchPrayerRequets = async () => {
         try {
           const response = await apiClientGet(
-            `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}`
+            `/prayer-requests/${userId}`
           );
           const data = await response;
           setPrayer(data);
@@ -83,7 +83,7 @@ const PrayerModal: React.FC<RequestModalProps> = ({ visible, onClose }) => {
   const deletePrayer = async (id: number) => {
     try {
       const response = await apiClient(
-        `https://bible-verse-backend-1kvo.onrender.com/prayer-requests/${userId}/${id}`,
+        `/prayer-requests/${userId}/${id}`,
         {
           method: "DELETE",
         }

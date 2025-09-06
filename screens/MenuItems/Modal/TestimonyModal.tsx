@@ -52,7 +52,7 @@ const TestimonyModal: React.FC<TestimonyModalProps> = ({
 
     try {
       const response = await apiClient(
-        "https://bible-verse-backend-1kvo.onrender.com/testimonies",
+        "/testimonies",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

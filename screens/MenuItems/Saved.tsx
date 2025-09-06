@@ -30,7 +30,7 @@ export default function SavedPage() {
     setUserid(userData.id);
     try {
       const res = await apiClientGet(
-        `https://bible-verse-backend-1kvo.onrender.com/saved/${userData.id}`
+        `/saved/${userData.id}`
       );
       const data = await res;
       setItems(data);

@@ -35,7 +35,7 @@ export default function Plans() {
   const fetchPlans = async () => {
     try {
       const response = await apiClientGet(
-        "https://bible-verse-backend-1kvo.onrender.com/plans/"
+        "/plans/"
       );
       const data = await response;
       setPlans(data);

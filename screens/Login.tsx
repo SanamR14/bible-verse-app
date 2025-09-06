@@ -58,6 +58,7 @@ export default function LoginScreen({ navigation }: any) {
 
       await AsyncStorage.setItem("userToken", data.token);
       await AsyncStorage.setItem("userData", JSON.stringify(data.user));
+      await AsyncStorage.setItem("refreshToken", data.refreshToken);
 
       Toast.show({
         type: "success",

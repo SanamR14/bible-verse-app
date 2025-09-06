@@ -23,9 +23,7 @@ export const useVerseCard = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await apiClientGet(
-        "https://bible-verse-backend-1kvo.onrender.com/bibleverse/"
-      );
+      const response = await apiClientGet("/bibleverse");
       const data = await response;
       setImages(data);
       updateImage(data);

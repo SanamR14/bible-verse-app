@@ -33,13 +33,11 @@ export default function DayScreen() {
     if (topic.item_id) {
       topic.id = topic.item_id;
     }
-    const res = await apiClientGet(
-      `https://bible-verse-backend-1kvo.onrender.com/saved/plan/${userData.id}/${topic.id}`
-    );
+    const res = await apiClientGet(`/saved/plan/${userData.id}/${topic.id}`);
     const data = await res;
     if (data.length === 0) {
       setIsSaved(false);
-    } else {
+    } else if (data.length === 1) {
       setIsSaved(true);
     }
   };
@@ -66,14 +64,11 @@ export default function DayScreen() {
       // --- SAVE devotion ---
       setIsSaved(true); // update UI instantly
       try {
-        const res = await apiClient(
-          "https://bible-verse-backend-1kvo.onrender.com/saved",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          }
-        );
+        const res = await apiClient("/saved", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
         if (res.ok) {
           Toast.show({ type: "success", text1: "Your Plan is saved!" });
@@ -91,7 +86,7 @@ export default function DayScreen() {
       setIsSaved(false); // update UI instantly
       try {
         const response = await apiClient(
-          `https://bible-verse-backend-1kvo.onrender.com/saved/${payload.item_type}/${userData.id}/${topic.id}`,
+          `/saved/${payload.item_type}/${userData.id}/${topic.id}`,
           {
             method: "DELETE",
           }

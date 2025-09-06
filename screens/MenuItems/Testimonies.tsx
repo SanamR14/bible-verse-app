@@ -77,7 +77,7 @@ export default function PrayerAndTestimonyTabs() {
         const userData = JSON.parse(user);
 
         const response = await apiClient(
-          `https://bible-verse-backend-1kvo.onrender.com/testimonies/${userData.id}`
+          `/testimonies/${userData.id}`
         );
         const result = await response.json();
         setData(result);

@@ -38,9 +38,7 @@ export default function Devotions() {
 
   const fetchDevotions = async () => {
     try {
-      const res = await apiClientGet(
-        "https://bible-verse-backend-1kvo.onrender.com/devotions/"
-      );
+      const res = await apiClientGet("/devotions/");
 
       const sortedData = res.sort((a: Devotion, b: Devotion) =>
         a.title.localeCompare(b.title)
