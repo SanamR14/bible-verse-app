@@ -170,7 +170,7 @@ export default function Menu() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.item}
-              onPress={() => navigation.navigate("Quiz")}
+              onPress={() => navigation.navigate("QuizStack")}
             >
               <FontAwesomeIcon
                 icon={faTrophy}
