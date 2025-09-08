@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiClientGet } from "../../apiClient";
 
 const Profile: React.FC = () => {
   const navigation = useNavigation();
@@ -22,8 +23,14 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        const userData = await AsyncStorage.getItem("userData");
-        if (userData) setUser(JSON.parse(userData));
+        const userD = await AsyncStorage.getItem("userData");
+
+        if (userD) {
+          const userId = JSON.parse(userD);
+          const userData = await apiClientGet(`${userId}`);
+          setUser(userData);
+          console.log(user);
+        }
       } catch (err) {
         console.error("Failed to load user:", err);
       } finally {

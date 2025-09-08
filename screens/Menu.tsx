@@ -25,6 +25,7 @@ import {
   faShareFromSquare,
   faArrowRightFromBracket,
   faBell,
+  faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -166,6 +167,18 @@ export default function Menu() {
               <Text style={styles.itemText}>
                 Testimonies & Answered Prayers
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Quiz")}
+            >
+              <FontAwesomeIcon
+                icon={faTrophy}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Quiz Time</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.item}
