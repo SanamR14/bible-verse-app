@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
 import { socket } from "../../../services/socket";
 
@@ -7,18 +7,24 @@ export default function JoinQuiz({ navigation }: any) {
   const [code, setCode] = useState("");
 
   useEffect(() => {
-    // When a player successfully joins
-    socket.on("player_joined", (player) => {
-      console.log("Player joined:", player);
+    // per-socket confirmation: only the joining client receives this
+    socket.on("joined", (player) => {
+      console.log("Joined confirmed for player:", player);
       navigation.navigate("Quiz", { player, sessionCode: code });
     });
 
-    // If you want error handling from backend
+    // others joining are broadcast: show in lobby if you want
+    socket.on("player_joined", (player) => {
+      console.log("Another player joined:", player);
+      // You can show a toast / update a lobby players list here.
+    });
+
     socket.on("quiz_error", (msg) => {
       Alert.alert("Error", msg);
     });
 
     return () => {
+      socket.off("joined");
       socket.off("player_joined");
       socket.off("quiz_error");
     };
@@ -28,8 +34,6 @@ export default function JoinQuiz({ navigation }: any) {
     if (!name || !code) {
       return Alert.alert("Error", "Enter name and code");
     }
-
-    // Match backend event name
     socket.emit("join_session", { playerName: name, sessionCode: code });
   };
 

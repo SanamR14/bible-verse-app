@@ -20,6 +20,10 @@ export default function HostSession({ route, navigation }: any) {
           `${API_URL}/quiz/${quizId}/session`
         );
         setSessionCode(res.data.sessionCode);
+        socket.emit("join_session", {
+          playerName: "HOST",
+          sessionCode: res.data.sessionCode,
+        });
       } catch (err) {
         console.error(err);
         Alert.alert("Error", "Failed to start session");

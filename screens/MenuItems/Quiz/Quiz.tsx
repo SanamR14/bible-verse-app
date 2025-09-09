@@ -14,6 +14,7 @@ export default function Quiz({ route, navigation }: any) {
 
   useEffect(() => {
     socket.on("question_started", (q: Question) => {
+      console.log("Received question_started", q.id);
       setQuestion(q);
       setAnswered(false);
     });
@@ -40,6 +41,10 @@ export default function Quiz({ route, navigation }: any) {
       playerId: player.id,
       questionId: question.id,
       selectedOption: optionIndex,
+    });
+    console.log("submit_answer emitted", {
+      sessionCode,
+      questionId: question.id,
     });
     setAnswered(true);
   };
