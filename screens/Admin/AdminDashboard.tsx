@@ -23,6 +23,7 @@ import PlansAdmin from "./PlansAdmin";
 import ExploreAdmin from "./ExploreAdmin";
 import HomeStack from "../../Stack/HomeStack";
 import DailyBibleVerse from "./DailyBibleVerse";
+import { apiClientGet } from "../../apiClient";
 
 const Drawer = createDrawerNavigator();
 
@@ -36,22 +37,16 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersRes = await fetch(
-          "https://bible-verse-backend-1kvo.onrender.com/auth"
-        );
-        const usersData = await usersRes.json();
+        const usersRes = await apiClientGet("/auth");
+        const usersData = await usersRes;
         setUserCount(usersData.length || 0);
 
-        const prayersRes = await fetch(
-          "https://bible-verse-backend-1kvo.onrender.com/prayer-requests/allPrayers"
-        );
-        const prayersData = await prayersRes.json();
+        const prayersRes = await apiClientGet("/prayer-requests/allPrayers");
+        const prayersData = await prayersRes;
         setPrayerRequests(prayersData);
 
-        const testimoniesRes = await fetch(
-          "https://bible-verse-backend-1kvo.onrender.com/testimonies"
-        );
-        const testimoniesData = await testimoniesRes.json();
+        const testimoniesRes = await apiClientGet("/testimonies");
+        const testimoniesData = await testimoniesRes;
         setTestimonies(testimoniesData);
       } catch (err) {
         console.error("Admin fetch error:", err);

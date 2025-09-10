@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextInput } from "react-native";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Toast from "react-native-toast-message";
+import { apiClient } from "../../apiClient";
 
 export default function DevotionsAdmin() {
   const [title, setTitle] = useState("");
@@ -20,21 +21,18 @@ export default function DevotionsAdmin() {
     }
 
     try {
-      const response = await fetch(
-        "https://bible-verse-backend-1kvo.onrender.com/devotions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: title,
-            author: author,
-            message: message,
-            days: days,
-          }),
-        }
-      );
+      const response = await apiClient("/devotions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          author: author,
+          message: message,
+          days: days,
+        }),
+      });
 
       const data = await response.json();
 

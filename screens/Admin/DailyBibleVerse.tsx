@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { apiClient } from "../../apiClient";
 
 export default function DailyBibleVerse() {
   const [imageUrl, setImageUrl] = useState("");
@@ -24,16 +25,13 @@ export default function DailyBibleVerse() {
     }
 
     try {
-      const response = await fetch(
-        "https://bible-verse-backend-1kvo.onrender.com/bibleverse",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ image_url: imageUrl }),
-        }
-      );
+      const response = await apiClient("/bibleverse", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ image_url: imageUrl }),
+      });
 
       const data = await response.json();
 
@@ -65,16 +63,13 @@ export default function DailyBibleVerse() {
     }
 
     try {
-      const response = await fetch(
-        "https://bible-verse-backend-1kvo.onrender.com/bibleverse",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: id, image_url: upgImageUrl }),
-        }
-      );
+      const response = await apiClient("/bibleverse", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id, image_url: upgImageUrl }),
+      });
 
       const data = await response.json();
       if (!response.ok)

@@ -4,7 +4,7 @@ import DevotionsAdmin from "../screens/Admin/DevotionsAdmin";
 import PlansAdmin from "../screens/Admin/PlansAdmin";
 import ExploreAdmin from "../screens/Admin/ExploreAdmin";
 import HomeStack from "./HomeStack";
-
+import AuthStack from "../navigation/AuthStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +16,7 @@ export default function AdminStack() {
       <Stack.Screen name="PlansAdmin" component={PlansAdmin} />
       <Stack.Screen name="ExploreAdmin" component={ExploreAdmin} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
-      {/* Add other admin screens here */}
+      <Stack.Screen name="Auth" component={AuthStack} />
     </Stack.Navigator>
   );
 }
