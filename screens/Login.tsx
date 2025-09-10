@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
@@ -14,6 +15,7 @@ export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // 👈 loading state
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -41,6 +43,7 @@ export default function LoginScreen({ navigation }: any) {
     }
 
     try {
+      setLoading(true); // ✅ Start loading
       const response = await fetch(
         "https://bible-verse-backend-1kvo.onrender.com/auth/login",
         {
@@ -54,6 +57,7 @@ export default function LoginScreen({ navigation }: any) {
       );
 
       const data = await response.json();
+      console.log(data);
       if (!response.ok) throw new Error(data?.message || "Login failed");
 
       await AsyncStorage.setItem("userToken", data.token);
@@ -77,6 +81,8 @@ export default function LoginScreen({ navigation }: any) {
         text1: "Login Failed",
         text2: "Invalid credentials",
       });
+    } finally {
+      setLoading(false); // ✅ Stop loading
     }
   };
 
@@ -110,10 +116,18 @@ export default function LoginScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      {/* Custom Primary Button */}
-      <TouchableOpacity style={styles.primaryBtn} onPress={handleLogin}>
-        <Text style={styles.primaryBtnText}>Login</Text>
-      </TouchableOpacity>
+      {/* ✅ Show loading indicator instead of button when API call is pending */}
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#1b4a7aff"
+          style={{ marginTop: 20 }}
+        />
+      ) : (
+        <TouchableOpacity style={styles.primaryBtn} onPress={handleLogin}>
+          <Text style={styles.primaryBtnText}>Login</Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
         <Text style={styles.link}>Don’t have an account? Sign up</Text>

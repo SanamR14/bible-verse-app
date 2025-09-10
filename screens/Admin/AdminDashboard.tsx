@@ -180,15 +180,38 @@ const AdminDashboard = () => {
 function CustomDrawerContent(props) {
   const navigation = useNavigation();
 
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem("userToken");
-    await AsyncStorage.removeItem("userData");
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Auth" }],
-      })
-    );
+  const handleLogout = async (navigation: any) => {
+    try {
+      // Get userId from stored user data
+      const userData = await AsyncStorage.getItem("userData");
+      const parsedUser = userData ? JSON.parse(userData) : null;
+
+      if (parsedUser?.id) {
+        await fetch(
+          "https://bible-verse-backend-1kvo.onrender.com/auth/logout",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: parsedUser.id }),
+          }
+        );
+      }
+    } catch (err) {
+      console.error("Logout API failed:", err);
+    } finally {
+      // ✅ Clear local tokens regardless of API success/failure
+      await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userData");
+      await AsyncStorage.removeItem("refreshToken");
+
+      // Reset navigation stack to Auth flow
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Auth" }],
+        })
+      );
+    }
   };
 
   return (
