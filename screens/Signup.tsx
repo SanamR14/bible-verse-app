@@ -3,15 +3,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
-  Platform,
+  ActivityIndicator,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import { Dropdown } from "react-native-element-dropdown";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // 👈 For eye icon
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function SignupScreen({ navigation }: any) {
   const [name, setName] = useState("");
@@ -22,6 +20,7 @@ export default function SignupScreen({ navigation }: any) {
   const [city, setCity] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // 👈 Loading state
 
   const countries = [
     { label: "India", value: "India" },
@@ -76,7 +75,6 @@ export default function SignupScreen({ navigation }: any) {
       });
       return;
     }
-
     if (!validateEmail(trimmedEmail)) {
       Toast.show({
         type: "error",
@@ -85,7 +83,6 @@ export default function SignupScreen({ navigation }: any) {
       });
       return;
     }
-
     if (!validatePassword(trimmedPassword)) {
       Toast.show({
         type: "error",
@@ -95,7 +92,6 @@ export default function SignupScreen({ navigation }: any) {
       });
       return;
     }
-
     if (trimmedPassword !== trimmedConfirm) {
       Toast.show({
         type: "error",
@@ -104,7 +100,6 @@ export default function SignupScreen({ navigation }: any) {
       });
       return;
     }
-
     if (!country) {
       Toast.show({
         type: "error",
@@ -113,7 +108,6 @@ export default function SignupScreen({ navigation }: any) {
       });
       return;
     }
-
     if (!city) {
       Toast.show({
         type: "error",
@@ -124,6 +118,7 @@ export default function SignupScreen({ navigation }: any) {
     }
 
     try {
+      setLoading(true); // ✅ Start loading
       const response = await fetch(
         "https://bible-verse-backend-1kvo.onrender.com/auth/signup",
         {
@@ -163,11 +158,12 @@ export default function SignupScreen({ navigation }: any) {
           text2: "Please try again later.",
         });
       }
+    } finally {
+      setLoading(false); // ✅ Stop loading
     }
   };
 
   return (
-    // <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
@@ -224,7 +220,6 @@ export default function SignupScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      {/* <Text style={styles.label}>Country</Text> */}
       <Dropdown
         style={styles.dropdown}
         data={countries}
@@ -240,7 +235,6 @@ export default function SignupScreen({ navigation }: any) {
         selectedTextStyle={styles.selectedTextStyle}
       />
 
-      {/* <Text style={styles.label}>City</Text> */}
       <Dropdown
         style={styles.dropdown}
         data={cityOptions[country] || []}
@@ -254,15 +248,22 @@ export default function SignupScreen({ navigation }: any) {
         selectedTextStyle={styles.selectedTextStyle}
       />
 
-      <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
-        <Text style={styles.primaryBtnText}>Sign Up</Text>
-      </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#1b4b7aff"
+          style={{ marginTop: 20 }}
+        />
+      ) : (
+        <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
+          <Text style={styles.primaryBtnText}>Sign Up</Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.links}>Already have an account? Log in</Text>
       </TouchableOpacity>
     </View>
-    // </ScrollView>
   );
 }
 
@@ -306,13 +307,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#1b4b7aff",
   },
-  link: { marginTop: 12, color: "blue", textAlign: "center" },
-  label: {
-    marginBottom: 6,
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#1b4b7aff",
-  },
   dropdown: {
     height: 50,
     borderColor: "#ccc",
@@ -321,18 +315,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 20,
   },
-  placeholderStyle: {
-    color: "#1b4b7aff", // gray placeholder
-    fontSize: 14,
-  },
-  selectedTextStyle: {
-    color: "#1b4b7aff", // black when selected
-    fontSize: 16,
-  },
-  // itemTextStyle: {
-  //   color: "#1b4b7aff", // text color in dropdown list
-  //   fontSize: 15,
-  // },
+  placeholderStyle: { color: "#1b4b7aff", fontSize: 14 },
+  selectedTextStyle: { color: "#1b4b7aff", fontSize: 16 },
   primaryBtn: {
     backgroundColor: "#1b4b7aff",
     paddingVertical: 14,
