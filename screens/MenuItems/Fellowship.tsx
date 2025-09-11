@@ -87,11 +87,11 @@ export default function Fellowship({ navigation }: any) {
           </View>
         </View>
 
-        <Text style={styles.title}>People you may know</Text>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
         >
+          <Text style={styles.title}>People you may know</Text>
           {loading ? (
             <ActivityIndicator size="large" style={{ marginTop: 40 }} />
           ) : (
