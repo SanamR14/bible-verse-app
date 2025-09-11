@@ -27,3 +27,19 @@ export interface Answer {
   is_correct: boolean;
   answered_at: string;
 }
+
+export interface Mutual {
+  id: number;
+  name: string;
+  avatar_url?: string;
+}
+
+export interface User {
+  id: number;
+    name: string;
+  is_private: boolean;
+  // avatar_url?: string;
+  // headline?: string;
+  // mutuals?: Mutual[];
+}
+
