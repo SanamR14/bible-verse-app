@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
 
         if (userD) {
           const userId = JSON.parse(userD);
-          const userData = await apiClientGet(`${userId}`);
+          const userData = await apiClientGet(`/auth/${userId.id}`);
           setUser(userData);
           console.log(user);
         }

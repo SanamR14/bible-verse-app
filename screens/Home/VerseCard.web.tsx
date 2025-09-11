@@ -11,7 +11,7 @@ export default function VerseCardWeb() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>Today’s word for {user?.name}</Text>
+      <Text style={styles.subtitle}>Today’s word for you {user?.name}</Text>
       {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
     </View>
   );
