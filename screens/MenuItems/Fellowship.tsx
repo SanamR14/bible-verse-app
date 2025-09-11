@@ -92,41 +92,38 @@ export default function Fellowship({ navigation }: any) {
           </View>
         </View>
 
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          }
-        >
-          <Text style={styles.title}>People you may know</Text>
-          {loading ? (
-            <ActivityIndicator size="large" style={{ marginTop: 40 }} />
-          ) : (
-            <FlatList
-              contentContainerStyle={{
-                paddingHorizontal: 8,
-                paddingBottom: 120,
-              }}
-              data={visibleUsers}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <UserCard
-                  user={item}
-                  onConnect={handleConnect}
-                  onDismiss={handleDismiss}
-                />
-              )}
-              numColumns={2}
-              columnWrapperStyle={{ justifyContent: "space-between" }}
-              ListEmptyComponent={() => (
-                <View style={{ alignItems: "center", marginTop: 40 }}>
-                  <Text style={{ color: "#666" }}>No suggestions</Text>
-                </View>
-              )}
-            />
-          )}
-        </ScrollView>
+        <Text style={styles.title}>People you may know</Text>
+        {loading ? (
+          <ActivityIndicator size="large" style={{ marginTop: 40 }} />
+        ) : (
+          <FlatList
+            contentContainerStyle={{
+              paddingHorizontal: 8,
+              paddingBottom: 120,
+            }}
+            data={visibleUsers}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <UserCard
+                user={item}
+                onConnect={handleConnect}
+                onDismiss={handleDismiss}
+              />
+            )}
+            numColumns={2}
+            columnWrapperStyle={{ justifyContent: "space-between" }}
+            ListEmptyComponent={() => (
+              <View style={{ alignItems: "center", marginTop: 40 }}>
+                <Text style={{ color: "#666" }}>No suggestions</Text>
+              </View>
+            )}
+            refreshing={refreshing} // 👈 Native pull-to-refresh
+            onRefresh={() => {
+              setRefreshing(true);
+              fetchUsers().finally(() => setRefreshing(false));
+            }}
+          />
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

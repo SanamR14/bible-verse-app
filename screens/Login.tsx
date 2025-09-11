@@ -57,7 +57,6 @@ export default function LoginScreen({ navigation }: any) {
       );
 
       const data = await response.json();
-      console.log(data);
       if (!response.ok) throw new Error(data?.message || "Login failed");
 
       await AsyncStorage.setItem("userToken", data.token);

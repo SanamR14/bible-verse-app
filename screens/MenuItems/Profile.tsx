@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // 🔹 Fetch user details on mount
+  // Fetch user details on mount
   useEffect(() => {
     const loadUserData = async () => {
       try {
@@ -32,7 +32,6 @@ const Profile: React.FC = () => {
           const userData = await apiClientGet(`/auth/${parsedUser.id}`);
           setUser(userData);
           setIsPrivate(parsedUser.is_private); // Set toggle based on DB value
-          console.log(parsedUser.is_private);
         }
       } catch (err) {
         console.error("Failed to load user:", err);
@@ -43,7 +42,7 @@ const Profile: React.FC = () => {
     loadUserData();
   }, []);
 
-  // 🔹 Handle toggle change
+  // Handle toggle change
   const handleTogglePrivacy = async (value: boolean) => {
     if (!user) return;
     setIsPrivate(value);

@@ -56,7 +56,6 @@ export default function HostSession({ route, navigation }: any) {
   const startQuestion = (index = currentQIndex) => {
     if (!sessionCode || !questions[index]) return;
     const question = questions[index];
-    console.log("➡️ Sending question:", question);
     socket.emit("start_question", { sessionCode, question });
   };
 
