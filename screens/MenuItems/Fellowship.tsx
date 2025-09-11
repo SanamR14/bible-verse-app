@@ -12,6 +12,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -23,6 +24,7 @@ export default function Fellowship({ navigation }: any) {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -49,6 +51,9 @@ export default function Fellowship({ navigation }: any) {
     fetchUsers();
   }, []);
 
+  const handleRefresh = () => {
+    fetchUsers();
+  };
   const visibleUsers = users.filter((u) =>
     u.name.toLowerCase().includes(query.toLowerCase())
   );
@@ -90,6 +95,9 @@ export default function Fellowship({ navigation }: any) {
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }
         >
           <Text style={styles.title}>People you may know</Text>
           {loading ? (

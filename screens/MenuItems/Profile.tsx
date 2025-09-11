@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
     setSaving(true);
 
     try {
-      await apiClient(`/auth/users/${user.id}/privacy`, {
+      await apiClient(`/auth/${user.id}/privacy`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ is_private: value }),
