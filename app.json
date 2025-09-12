@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "",
-    "slug": "",
+    "slug": "bible-verse-app",   
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/cir_FYI_TRBLUE.png",
