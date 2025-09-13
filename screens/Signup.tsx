@@ -17,10 +17,10 @@ export default function SignupScreen({ navigation }: any) {
   const [confirm_password, setConfirmPassword] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
-  const [church, setChurch] = useState(""); // optional field
+  const [church, setChurch] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // 👈 Loading state
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -31,6 +31,7 @@ export default function SignupScreen({ navigation }: any) {
     const hasNumber = /[0-9]/.test(password);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     const endsWithSpace = /\s$/.test(password);
+
     return (
       password.length >= 6 &&
       hasUpperCase &&
@@ -42,33 +43,62 @@ export default function SignupScreen({ navigation }: any) {
   };
 
   const handleSignup = async () => {
-    if (!name.trim() || name.length > 20) {
-      Toast.show({ type: "error", text1: "Invalid Name" });
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    const trimmedConfirm = confirm_password.trim();
+
+    if (name.trim().length === 0 || name.length > 20) {
+      Toast.show({
+        type: "error",
+        text1: "Invalid Name",
+        text2: "Name must be between 1 and 20 characters.",
+      });
       return;
     }
-    if (!validateEmail(email.trim())) {
-      Toast.show({ type: "error", text1: "Invalid Email" });
+    if (!validateEmail(trimmedEmail)) {
+      Toast.show({
+        type: "error",
+        text1: "Invalid Email",
+        text2: "Please enter a valid email.",
+      });
       return;
     }
-    if (!validatePassword(password.trim())) {
-      Toast.show({ type: "error", text1: "Invalid Password" });
+    if (!validatePassword(trimmedPassword)) {
+      Toast.show({
+        type: "error",
+        text1: "Invalid Password",
+        text2:
+          "Password must contain uppercase, lowercase, number, special character, and not end with a space.",
+      });
       return;
     }
-    if (password.trim() !== confirm_password.trim()) {
-      Toast.show({ type: "error", text1: "Passwords do not match" });
+    if (trimmedPassword !== trimmedConfirm) {
+      Toast.show({
+        type: "error",
+        text1: "Mismatch",
+        text2: "Passwords do not match.",
+      });
       return;
     }
-    if (!country.trim()) {
-      Toast.show({ type: "error", text1: "Country Required" });
+    if (!country) {
+      Toast.show({
+        type: "error",
+        text1: "Country Required",
+        text2: "Please select a country.",
+      });
       return;
     }
-    if (!city.trim()) {
-      Toast.show({ type: "error", text1: "City Required" });
+    if (!city) {
+      Toast.show({
+        type: "error",
+        text1: "City Required",
+        text2: "Please select a city.",
+      });
       return;
     }
 
     try {
-      setLoading(true);
+      setLoading(true); 
       const response = await fetch(
         "https://bible-verse-backend-1kvo.onrender.com/auth/signup",
         {
@@ -76,15 +106,15 @@ export default function SignupScreen({ navigation }: any) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name,
-            email: email.trim(),
-            password: password.trim(),
-            confirm_password: confirm_password.trim(),
+            email: trimmedEmail,
+            password: trimmedPassword,
+            confirm_password: trimmedConfirm,
             city,
             country,
-            church, // send church (can be empty)
           }),
         }
       );
+
       const data = await response.json();
       if (!response.ok) throw data?.error;
 
@@ -95,13 +125,21 @@ export default function SignupScreen({ navigation }: any) {
       });
       navigation.navigate("Login");
     } catch (err) {
-      Toast.show({
-        type: "error",
-        text1: "Signup failed",
-        text2: err?.toString() || "Please try again.",
-      });
+      if (err === "Email already registered") {
+        Toast.show({
+          type: "error",
+          text1: "Email already exists",
+          text2: "Try again with a different email.",
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Failed to Signup",
+          text2: "Please try again later.",
+        });
+      }
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
@@ -120,11 +158,10 @@ export default function SignupScreen({ navigation }: any) {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
         autoCapitalize="none"
+        keyboardType="email-address"
       />
 
-      {/* Password fields */}
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.passwordInput}
@@ -134,7 +171,11 @@ export default function SignupScreen({ navigation }: any) {
           onChangeText={setPassword}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon name={showPassword ? "eye-off" : "eye"} size={24} />
+          <Icon
+            name={showPassword ? "eye-off" : "eye"}
+            size={24}
+            color="#1b4b7aff"
+          />
         </TouchableOpacity>
       </View>
 
@@ -149,11 +190,14 @@ export default function SignupScreen({ navigation }: any) {
         <TouchableOpacity
           onPress={() => setShowConfirmPassword(!showConfirmPassword)}
         >
-          <Icon name={showConfirmPassword ? "eye-off" : "eye"} size={24} />
+          <Icon
+            name={showConfirmPassword ? "eye-off" : "eye"}
+            size={24}
+            color="#1b4b7aff"
+          />
         </TouchableOpacity>
       </View>
 
-      {/* Replaced dropdowns with text boxes */}
       <TextInput
         style={styles.input}
         placeholder="Enter your country"
@@ -167,7 +211,6 @@ export default function SignupScreen({ navigation }: any) {
         onChangeText={setCity}
       />
 
-      {/* Optional church field */}
       <TextInput
         style={styles.input}
         placeholder="Enter your church name here (optional)"
@@ -176,36 +219,74 @@ export default function SignupScreen({ navigation }: any) {
       />
 
       {loading ? (
-        <ActivityIndicator size="large" color="#1b4b7aff" />
+        <ActivityIndicator
+          size="large"
+          color="#1b4b7aff"
+          style={{ marginTop: 20 }}
+        />
       ) : (
         <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
           <Text style={styles.primaryBtnText}>Sign Up</Text>
         </TouchableOpacity>
       )}
+
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.links}>Already have an account? Log in</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, justifyContent: "center" },
-  title: { fontSize: 28, fontWeight: "bold", textAlign: "center" },
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#1b4b7aff",
+  },
   input: {
+    backgroundColor: "#ffffff",
+    padding: 12,
+    borderRadius: 12,
+    fontSize: 16,
+    marginBottom: 14,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 14,
+    color: "#1b4b7aff",
   },
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "#ffffff",
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    paddingHorizontal: 10,
+    borderRadius: 12,
     marginBottom: 14,
+    paddingHorizontal: 10,
   },
-  passwordInput: { flex: 1, paddingVertical: 12 },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: "#1b4b7aff",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 20,
+  },
+  placeholderStyle: { color: "#1b4b7aff", fontSize: 14 },
+  selectedTextStyle: { color: "#1b4b7aff", fontSize: 16 },
   primaryBtn: {
     backgroundColor: "#1b4b7aff",
     paddingVertical: 14,
@@ -214,4 +295,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   primaryBtnText: { color: "#fff", fontSize: 18, fontWeight: "600" },
+  links: {
+    marginTop: 12,
+    color: "#90a9afff",
+    textAlign: "center",
+    fontWeight: "500",
+  },
 });
