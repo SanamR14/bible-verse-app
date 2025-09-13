@@ -53,6 +53,31 @@ export default function HostSession({ route, navigation }: any) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!sessionCode) return;
+
+    socket.on("all_answered", ({ questionId }) => {
+      // Auto-advance after 2 seconds for smooth transition
+      setTimeout(() => {
+        if (currentQIndex + 1 < questions.length) {
+          setCurrentQIndex((prev) => {
+            const nextIndex = prev + 1;
+            const nextQ = questions[nextIndex];
+            socket.emit("start_question", { sessionCode, question: nextQ });
+            return nextIndex;
+          });
+        } else {
+          socket.emit("end_quiz", { sessionCode });
+          navigation.navigate("Leaderboard", { sessionCode });
+        }
+      }, 2000);
+    });
+
+    return () => {
+      socket.off("all_answered");
+    };
+  }, [sessionCode, currentQIndex, questions]);
+
   const startQuestion = (index = currentQIndex) => {
     if (!sessionCode || !questions[index]) return;
     const question = questions[index];
