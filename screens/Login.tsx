@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -10,12 +10,14 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { ThemeContext } from "../themeContext";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false); // 👈 loading state
+  const [loading, setLoading] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -43,7 +45,7 @@ export default function LoginScreen({ navigation }: any) {
     }
 
     try {
-      setLoading(true); // ✅ Start loading
+      setLoading(true);
       const response = await fetch(
         "https://bible-verse-backend-1kvo.onrender.com/auth/login",
         {
@@ -81,12 +83,12 @@ export default function LoginScreen({ navigation }: any) {
         text2: "Invalid credentials",
       });
     } finally {
-      setLoading(false); // ✅ Stop loading
+      setLoading(false);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={styles.title}>Login</Text>
 
       <TextInput
@@ -115,7 +117,6 @@ export default function LoginScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      {/* ✅ Show loading indicator instead of button when API call is pending */}
       {loading ? (
         <ActivityIndicator
           size="large"

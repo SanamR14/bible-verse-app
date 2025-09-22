@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { ThemeContext } from "../themeContext";
 
 export default function SignupScreen({ navigation }: any) {
   const [name, setName] = useState("");
@@ -98,7 +99,7 @@ export default function SignupScreen({ navigation }: any) {
     }
 
     try {
-      setLoading(true); 
+      setLoading(true);
       const response = await fetch(
         "https://bible-verse-backend-1kvo.onrender.com/auth/signup",
         {
@@ -139,12 +140,12 @@ export default function SignupScreen({ navigation }: any) {
         });
       }
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
-
+  const { theme } = useContext(ThemeContext);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={styles.title}>Sign Up</Text>
 
       <TextInput
