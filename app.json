@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "",
-    "slug": "bible-verse-app",   
+    "name": "FYI",
+    "slug": "FYI",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/cir_FYI_TRBLUE.png",
@@ -13,14 +13,16 @@
       "backgroundColor": "#F8F9F9"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.bibleverseapp"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/cir_FYI_TRBLUE.png",
+        "foregroundImage": "./assets/FYI.jpg",
         "backgroundColor": "#F8F9F9"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.bibleverseapp"
     },
     "web": {
       "favicon": "./assets/cir_FYI_TRBLUE.png"
