@@ -26,6 +26,7 @@ import {
   faArrowRightFromBracket,
   faBell,
   faTrophy,
+  faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -37,34 +38,37 @@ export default function Menu() {
     useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
 
   const logout = async (navigation: any) => {
-  try {
-    // Get userId from stored user data
-    const userData = await AsyncStorage.getItem("userData");
-    const parsedUser = userData ? JSON.parse(userData) : null;
+    try {
+      // Get userId from stored user data
+      const userData = await AsyncStorage.getItem("userData");
+      const parsedUser = userData ? JSON.parse(userData) : null;
 
-    if (parsedUser?.id) {
-      await fetch("https://bible-verse-backend-1kvo.onrender.com/auth/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: parsedUser.id }),
-      });
+      if (parsedUser?.id) {
+        await fetch(
+          "https://bible-verse-backend-1kvo.onrender.com/auth/logout",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: parsedUser.id }),
+          }
+        );
+      }
+    } catch (err) {
+      console.error("Logout API failed:", err);
+    } finally {
+      // ✅ Clear local tokens regardless of API success/failure
+      await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userData");
+      await AsyncStorage.removeItem("refreshToken");
+
+      // Reset navigation stack to Auth flow
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Auth" }],
+        })
+      );
     }
-  } catch (err) {
-    console.error("Logout API failed:", err);
-  } finally {
-    // ✅ Clear local tokens regardless of API success/failure
-    await AsyncStorage.removeItem("userToken");
-    await AsyncStorage.removeItem("userData");
-    await AsyncStorage.removeItem("refreshToken");
-
-    // Reset navigation stack to Auth flow
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Auth" }],
-      })
-    );
-  }
   };
 
   return (
@@ -207,6 +211,19 @@ export default function Menu() {
                 style={styles.icon}
               />
               <Text style={styles.itemText}>Notifications</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Calendar")}
+            >
+              <FontAwesomeIcon
+                icon={faCalendar}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Calendar</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.item}>

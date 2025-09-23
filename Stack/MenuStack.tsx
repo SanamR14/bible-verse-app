@@ -12,6 +12,7 @@ import Testimonies from "../screens/MenuItems/Testimonies";
 import AuthStack from "../navigation/AuthStack";
 import Quiz from "../screens/MenuItems/Quiz/Quiz";
 import QuizStack from "./QuizStack";
+import Calendar from "../screens/Calendar";
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -41,6 +42,7 @@ export default function MenuStack() {
       <Stack.Screen name="Testimonies" component={Testimonies} />
       <Stack.Screen name="QuizStack" component={QuizStack} />
       <Stack.Screen name="Help" component={Notifications} />
+      <Stack.Screen name="Calendar" component={Calendar} />
       <Stack.Screen name="Auth" component={AuthStack} />
     </Stack.Navigator>
   );
