@@ -10,9 +10,9 @@ import Notifications from "../screens/MenuItems/Notifications";
 import SavedStack from "./SavedStack";
 import Testimonies from "../screens/MenuItems/Testimonies";
 import AuthStack from "../navigation/AuthStack";
-import Quiz from "../screens/MenuItems/Quiz/Quiz";
 import QuizStack from "./QuizStack";
 import Calendar from "../screens/Calendar";
+import ChurchAdminStack from "./ChurchAdminStack";
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -34,6 +34,7 @@ export default function MenuStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="ChurchAdminStack" component={ChurchAdminStack} />
       <Stack.Screen name="SavedStack" component={SavedStack} />
       <Stack.Screen name="PrayerRequest" component={PrayerRequest} />
       <Stack.Screen name="Fellowship" component={Fellowship} />

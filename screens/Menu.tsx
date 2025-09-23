@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,6 @@ import {
   faHandsPraying,
   faBookmark,
   faPeopleGroup,
-  faPersonPraying,
   faLinkSlash,
   faQuestion,
   faLanguage,
@@ -27,6 +26,7 @@ import {
   faBell,
   faTrophy,
   faCalendar,
+  faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -36,32 +36,41 @@ import { CommonActions } from "@react-navigation/native";
 export default function Menu() {
   const navigation =
     useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
+  const [userData, setUserData] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const logout = async (navigation: any) => {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedData = await AsyncStorage.getItem("userData");
+        if (storedData) {
+          const parsed = JSON.parse(storedData);
+          setUserData(parsed);
+          setIsAdmin(parsed?.is_church_admin || false);
+        }
+      } catch (err) {
+        console.error("Failed to fetch user data", err);
+      }
+    };
+    fetchUserData();
+  }, []);
+  const logout = async () => {
     try {
-      // Get userId from stored user data
-      const userData = await AsyncStorage.getItem("userData");
-      const parsedUser = userData ? JSON.parse(userData) : null;
-
-      if (parsedUser?.id) {
+      if (userData?.id) {
         await fetch(
           "https://bible-verse-backend-1kvo.onrender.com/auth/logout",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userId: parsedUser.id }),
+            body: JSON.stringify({ userId: userData.id }),
           }
         );
       }
     } catch (err) {
       console.error("Logout API failed:", err);
     } finally {
-      // ✅ Clear local tokens regardless of API success/failure
-      await AsyncStorage.removeItem("userToken");
-      await AsyncStorage.removeItem("userData");
-      await AsyncStorage.removeItem("refreshToken");
+      await AsyncStorage.multiRemove(["userToken", "userData", "refreshToken"]);
 
-      // Reset navigation stack to Auth flow
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -104,6 +113,20 @@ export default function Menu() {
               />
               <Text style={styles.itemText}>Profile</Text>
             </TouchableOpacity>
+            {isAdmin && (
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => navigation.navigate("ChurchAdminStack")}
+              >
+                <FontAwesomeIcon
+                  icon={faCircleUser}
+                  size={20}
+                  color="#1b4a7aff"
+                  style={styles.icon}
+                />
+                <Text style={styles.itemText}>Admin</Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
               style={styles.item}
@@ -258,10 +281,7 @@ export default function Menu() {
               <Text style={[styles.itemText, styles.disabledText]}>Share</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => logout(navigation)}
-            >
+            <TouchableOpacity style={styles.item} onPress={() => logout()}>
               <FontAwesomeIcon
                 icon={faArrowRightFromBracket}
                 size={20}
@@ -280,7 +300,7 @@ export default function Menu() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF", // light neutral
+    backgroundColor: "#FFFFFF",
     padding: 16,
   },
   header: {
@@ -292,7 +312,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#1b4a7aff", // primary
+    color: "#1b4a7aff",
   },
   contentBox: {
     backgroundColor: "#ECF0F1",
@@ -303,7 +323,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2, // Android shadow
+    elevation: 2,
     margin: 14,
   },
   item: {
@@ -318,7 +338,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 16,
-    color: "#1b4a7aff", // primary
+    color: "#1b4a7aff",
     fontWeight: "500",
   },
   disabledItem: {
@@ -335,7 +355,7 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    color: "#27AE60", // secondary for logout
+    color: "#27AE60",
     fontWeight: "600",
   },
 });
