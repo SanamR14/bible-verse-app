@@ -12,7 +12,8 @@ export default function App() {
   const scheme = useColorScheme();
 
   return (
-    <NavigationContainer theme={scheme === "dark" ? DarkTheme : DefaultTheme}>
+    // theme={scheme === "dark" ? DarkTheme : DefaultTheme}
+    <NavigationContainer>
       <RootNavigator />
       <Toast />
     </NavigationContainer>

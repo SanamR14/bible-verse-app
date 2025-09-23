@@ -146,11 +146,11 @@ export default function SignupScreen({ navigation }: any) {
   };
   const { colors } = useTheme();
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: "#1b4b7aff" }]}
         placeholder="Name"
         value={name}
         onChangeText={setName}
@@ -166,7 +166,7 @@ export default function SignupScreen({ navigation }: any) {
 
       <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.passwordInput}
+          style={[styles.passwordInput, { color: "#1b4b7aff" }]}
           placeholder="Password"
           secureTextEntry={!showPassword}
           value={password}
@@ -183,7 +183,7 @@ export default function SignupScreen({ navigation }: any) {
 
       <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.passwordInput}
+          style={[styles.passwordInput, { color: "#1b4b7aff" }]}
           placeholder="Confirm Password"
           secureTextEntry={!showConfirmPassword}
           value={confirm_password}
@@ -201,20 +201,20 @@ export default function SignupScreen({ navigation }: any) {
       </View>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: "#1b4b7aff" }]}
         placeholder="Enter your country"
         value={country}
         onChangeText={setCountry}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: "#1b4b7aff" }]}
         placeholder="Enter your city"
         value={city}
         onChangeText={setCity}
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: "#1b4b7aff" }]}
         placeholder="Enter your church name here (optional)"
         value={church}
         onChangeText={setChurch}

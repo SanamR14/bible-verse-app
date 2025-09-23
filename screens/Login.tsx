@@ -88,11 +88,11 @@ export default function LoginScreen({ navigation }: any) {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: "#1b4b7aff" }]}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
@@ -102,7 +102,7 @@ export default function LoginScreen({ navigation }: any) {
 
       <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.passwordInput}
+          style={[styles.passwordInput, { color: "#1b4b7aff" }]}
           placeholder="Password"
           secureTextEntry={!showPassword}
           value={password}
