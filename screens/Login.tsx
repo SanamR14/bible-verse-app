@@ -10,14 +10,14 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { ThemeContext } from "../themeContext";
+import { useTheme } from "@react-navigation/native";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { theme } = useContext(ThemeContext);
+  const { colors } = useTheme();
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -88,7 +88,7 @@ export default function LoginScreen({ navigation }: any) {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={styles.title}>Login</Text>
 
       <TextInput

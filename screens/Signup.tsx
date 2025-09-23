@@ -10,6 +10,7 @@ import {
 import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ThemeContext } from "../themeContext";
+import { useTheme } from "@react-navigation/native";
 
 export default function SignupScreen({ navigation }: any) {
   const [name, setName] = useState("");
@@ -21,7 +22,7 @@ export default function SignupScreen({ navigation }: any) {
   const [church, setChurch] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false); // 👈 Loading state
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -143,9 +144,9 @@ export default function SignupScreen({ navigation }: any) {
       setLoading(false);
     }
   };
-  const { theme } = useContext(ThemeContext);
+  const { colors } = useTheme();
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={styles.title}>Sign Up</Text>
 
       <TextInput
