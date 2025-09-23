@@ -49,7 +49,7 @@ export default function Notifications() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#1b4b7aff" />
@@ -70,7 +70,7 @@ export default function Notifications() {
           alignSelf: "center",
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     padding: 16,
-    paddingTop: 50,
   },
   header: {
     flexDirection: "row",

@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { MenuStackParamList } from "../Stack/MenuStack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Header() {
   const [title, setTitle] = useState("FYI - For Your Inner Man");
@@ -49,7 +50,7 @@ export default function Header() {
   const navigation =
     useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigation.replace("HomeStack")}>
         {/* <Icon name="users" size={22} color={"#1b4b7aff"} /> */}
         <Image source={require("../assets/FYI_BLUE.jpg")} style={styles.img} />
@@ -63,7 +64,7 @@ export default function Header() {
           <Icon name="menu" size={22} color={"#1b4b7aff"} />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -74,7 +75,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    paddingTop: 50,
   },
   title: {
     flex: 1,
