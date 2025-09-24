@@ -13,9 +13,13 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarPlus,
+  faPeopleGroup,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { apiClientGet } from "../../apiClient";
+import { apiClientGet } from "../../../apiClient";
 
 export default function Menu() {
   const navigation = useNavigation();
@@ -76,12 +80,26 @@ export default function Menu() {
               }
             >
               <FontAwesomeIcon
-                icon={faUser}
+                icon={faPeopleGroup}
                 size={20}
                 color="#1b4a7aff"
                 style={styles.icon}
               />
               <Text style={styles.itemText}>Church Members</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentBox}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Rota")}
+            >
+              <FontAwesomeIcon
+                icon={faCalendarPlus}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Rota</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -106,18 +124,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#1b4a7aff",
+    marginBottom: 7,
   },
   contentBox: {
     backgroundColor: "#ECF0F1",
     borderRadius: 12,
-    paddingVertical: 16,
     paddingHorizontal: 12,
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
-    margin: 14,
+    margin: 7,
   },
   item: {
     flexDirection: "row",

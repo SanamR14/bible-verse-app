@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import Members from "../screens/ChurchAdmin/Members";
-import ChurchAdmin from "../screens/ChurchAdmin/ChurchAdmin";
+import Members from "../screens/MenuItems/ChurchAdmin/Members";
+import ChurchAdmin from "../screens/MenuItems/ChurchAdmin/ChurchAdmin";
+import Rota from "../screens/MenuItems/ChurchAdmin/Rota";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,6 +11,7 @@ const ChurchAdminStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ChurchAdmin" component={ChurchAdmin} />
       <Stack.Screen name="Members" component={Members} />
+      <Stack.Screen name="Rota" component={Rota} />
     </Stack.Navigator>
   );
 };

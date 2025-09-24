@@ -246,7 +246,7 @@ export default function Menu() {
                 color="#1b4a7aff"
                 style={styles.icon}
               />
-              <Text style={styles.itemText}>Calendar</Text>
+              <Text style={styles.itemText}>Calendar & Events</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.item}>
