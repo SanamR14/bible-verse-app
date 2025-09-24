@@ -46,6 +46,8 @@ export const apiClientGet = async (url, options = {}) => {
     headers: getHeaders(token, options.headers),
   });
 
+  console.log(response);
+
   // if expired, try refresh
   if (response.status === 401 || response.status === 403) {
     const newToken = await refreshAccessToken();

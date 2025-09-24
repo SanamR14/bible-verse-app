@@ -113,6 +113,7 @@ export default function SignupScreen({ navigation }: any) {
             confirm_password: trimmedConfirm,
             city,
             country,
+            church,
           }),
         }
       );
