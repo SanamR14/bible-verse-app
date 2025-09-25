@@ -238,7 +238,7 @@ export default function Menu() {
 
             <TouchableOpacity
               style={styles.item}
-              onPress={() => navigation.navigate("Calendar")}
+              onPress={() => navigation.navigate("Calendar", {user: userData})}
             >
               <FontAwesomeIcon
                 icon={faCalendar}

@@ -91,7 +91,9 @@ export default function Menu() {
           <View style={styles.contentBox}>
             <TouchableOpacity
               style={styles.item}
-              onPress={() => navigation.navigate("Rota")}
+              onPress={() =>
+                navigation.navigate("AddEventAndRota", { membersData: members })
+              }
             >
               <FontAwesomeIcon
                 icon={faCalendarPlus}
