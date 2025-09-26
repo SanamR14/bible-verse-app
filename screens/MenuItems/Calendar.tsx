@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,10 @@ export default function CalendarScreen({ route }) {
   const [events, setEvents] = useState<any[]>([]);
   const [rota, setRota] = useState<any[]>([]);
   const [markedDates, setMarkedDates] = useState<any>({});
-  const [selectedDate, setSelectedDate] = useState<string>("");
+
+  // 🔹 Set selectedDate to today initially
+  const today = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(today);
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -26,10 +29,11 @@ export default function CalendarScreen({ route }) {
     { key: "rota", title: "Rota" },
   ]);
 
-  // 🔹 Helper to normalize backend date ("2025-09-28T00:00:00.000Z" -> "2025-09-28")
+  // 🔹 Helper to normalize backend date
   const normalizeDate = (dateStr: string) =>
     dateStr ? dateStr.split("T")[0] : "";
 
+  // Fetch events
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -51,6 +55,7 @@ export default function CalendarScreen({ route }) {
     fetchEvents();
   }, []);
 
+  // Fetch rota
   useEffect(() => {
     const fetchRota = async () => {
       try {
@@ -72,26 +77,30 @@ export default function CalendarScreen({ route }) {
     fetchRota();
   }, []);
 
-  // 🔹 Filter events & rota for clicked date
-  const filteredEvents = selectedDate
-    ? events.filter((e) => normalizeDate(e.event_date) === selectedDate)
-    : [];
-  const filteredRota = selectedDate
-    ? rota.filter((r) => normalizeDate(r.rota_date) === selectedDate)
-    : [];
+  // 🔹 Filter events & rota using useMemo for efficiency
+  const filteredEvents = useMemo(
+    () => events.filter((e) => normalizeDate(e.event_date) === selectedDate),
+    [events, selectedDate]
+  );
+
+  const filteredRota = useMemo(
+    () => rota.filter((r) => normalizeDate(r.rota_date) === selectedDate),
+    [rota, selectedDate]
+  );
 
   const EventsRoute = () => (
     <ScrollView style={styles.list}>
-      {filteredEvents.map((e) => (
-        <View key={e.id} style={styles.item}>
-          <Text style={styles.title}>{e.title}</Text>
-          <Text>
-            {normalizeDate(e.event_date)} {e.event_time}
-          </Text>
-          {e.description && <Text>{e.description}</Text>}
-        </View>
-      ))}
-      {filteredEvents.length === 0 && (
+      {filteredEvents.length ? (
+        filteredEvents.map((e) => (
+          <View key={e.id} style={styles.item}>
+            <Text style={styles.title}>{e.title}</Text>
+            <Text>
+              {normalizeDate(e.event_date)} {e.event_time}
+            </Text>
+            {e.description && <Text>{e.description}</Text>}
+          </View>
+        ))
+      ) : (
         <Text style={styles.empty}>No events for this date</Text>
       )}
     </ScrollView>
@@ -99,16 +108,17 @@ export default function CalendarScreen({ route }) {
 
   const RotaRoute = () => (
     <ScrollView style={styles.list}>
-      {filteredRota.map((r) => (
-        <View key={r.id} style={styles.item}>
-          <Text style={styles.title}>{r.duty}</Text>
-          <Text>
-            {normalizeDate(r.rota_date)} {r.rota_time}
-          </Text>
-          <Text>{r.member_name}</Text>
-        </View>
-      ))}
-      {filteredRota.length === 0 && (
+      {filteredRota.length ? (
+        filteredRota.map((r) => (
+          <View key={r.id} style={styles.item}>
+            <Text style={styles.title}>{r.duty}</Text>
+            <Text>
+              {normalizeDate(r.rota_date)} {r.rota_time}
+            </Text>
+            <Text>{r.member_name}</Text>
+          </View>
+        ))
+      ) : (
         <Text style={styles.empty}>No rota for this date</Text>
       )}
     </ScrollView>
@@ -125,14 +135,12 @@ export default function CalendarScreen({ route }) {
       <RNCalendar
         markedDates={{
           ...markedDates,
-          ...(selectedDate && {
-            [selectedDate]: {
-              selected: true,
-              selectedColor: "#1b4a7aff",
-              marked: markedDates[selectedDate]?.marked,
-              dotColor: markedDates[selectedDate]?.dotColor,
-            },
-          }),
+          [selectedDate]: {
+            selected: true,
+            selectedColor: "#1b4a7aff",
+            marked: markedDates[selectedDate]?.marked,
+            dotColor: markedDates[selectedDate]?.dotColor,
+          },
         }}
         onDayPress={(day) => setSelectedDate(day.dateString)}
         theme={{
@@ -153,10 +161,7 @@ export default function CalendarScreen({ route }) {
             {...props}
             indicatorStyle={{ backgroundColor: "#1b4a7aff", height: 3 }}
             style={{ backgroundColor: "#fff", elevation: 2 }}
-            labelStyle={{
-              fontWeight: "600",
-              fontSize: 16,
-            }}
+            labelStyle={{ fontWeight: "600", fontSize: 16 }}
             activeColor="#1b4a7aff"
             inactiveColor="gray"
           />
@@ -177,19 +182,4 @@ const styles = StyleSheet.create({
   },
   title: { fontWeight: "bold", marginBottom: 4 },
   empty: { textAlign: "center", marginTop: 20, color: "gray" },
-  card: {
-    padding: 12,
-    marginVertical: 6,
-    borderRadius: 10,
-    backgroundColor: "#f9f9f9",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  cardText: {
-    fontSize: 14,
-    marginBottom: 4,
-  },
 });
