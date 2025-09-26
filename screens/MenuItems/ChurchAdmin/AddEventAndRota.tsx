@@ -17,8 +17,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiClientGet, apiClient } from "../../../apiClient";
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
-export default function RotaScreen() {
+export default function AddEventAndRota({ route }) {
   const navigation = useNavigation();
 
   const [selectedDateRota, setSelectedDateRota] = useState("");
@@ -33,13 +35,13 @@ export default function RotaScreen() {
 
   const [rota, setRota] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
-  const [members, setMembers] = useState<any[]>([]);
   const [memberId, setMemberId] = useState("");
   const [duty, setDuty] = useState("");
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [userData, setUserData] = useState<any>(null);
 
+  const { membersData } = route.params;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,25 +49,25 @@ export default function RotaScreen() {
         if (!storedData) return;
         const parsed = JSON.parse(storedData);
         setUserData(parsed);
-
-        const { church, city, country } = parsed;
-        const membersData = await apiClientGet(
-          `/auth/churchfilter/users?church=${encodeURIComponent(
-            church
-          )}&city=${encodeURIComponent(city)}&country=${encodeURIComponent(
-            country
-          )}`
-        );
-        setMembers(membersData);
-
-        const rotaData = await apiClientGet(
-          `/churchrota/monthrota/${new Date().toISOString().slice(0, 7)}`
-        );
-        setRota(rotaData);
-
-        const eventsData = await apiClientGet("/churchevent");
-        setEvents(eventsData);
       } catch (err) {
+        // const { church, city, country } = parsed;
+        // const membersData = await apiClientGet(
+        //   `/auth/churchfilter/users?church=${encodeURIComponent(
+        //     church
+        //   )}&city=${encodeURIComponent(city)}&country=${encodeURIComponent(
+        //     country
+        //   )}`
+        // );
+        // setMembers(membersData);
+
+        //   const rotaData = await apiClientGet(
+        //     `/churchrota/monthrota/${new Date().toISOString().slice(0, 7)}`
+        //   );
+        //   setRota(rotaData);
+
+        //   const eventsData = await apiClientGet("/churchevent");
+        //   setEvents(eventsData);
+        // }
         console.error(err);
       }
     };
@@ -114,7 +116,7 @@ export default function RotaScreen() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           event_date: selectedDateEvent,
-          event_time: selectedTimeEvent, 
+          event_time: selectedTimeEvent,
           title: eventTitle,
           description: eventDescription,
           created_by: userData?.id,
@@ -179,11 +181,23 @@ export default function RotaScreen() {
               <Icon name="arrow-left" size={24} color="#1b4a7aff" />
             </TouchableOpacity>
             <Text style={styles.sectionHeader}>Add Rota</Text>
-            <Text />
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Calendar", { user: userData })
+              }
+            >
+              <FontAwesomeIcon
+                icon={faCalendar}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+            </TouchableOpacity>
           </View>
           <Picker selectedValue={memberId} onValueChange={setMemberId}>
             <Picker.Item label="Select Member" value="" />
-            {members.map((m) => (
+            {membersData.map((m) => (
               <Picker.Item key={m.id} label={m.name} value={m.id} />
             ))}
           </Picker>
@@ -332,4 +346,19 @@ const styles = StyleSheet.create({
   input: { marginVertical: 10 },
   button: { marginVertical: 10, backgroundColor: "#1b4a7aff" },
   buttonText: { color: "#fff", fontWeight: "700" },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 14,
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#eee",
+  },
+  icon: {
+    marginRight: 12,
+  },
+  itemText: {
+    fontSize: 16,
+    color: "#1b4a7aff",
+    fontWeight: "500",
+  },
 });
