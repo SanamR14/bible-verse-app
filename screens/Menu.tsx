@@ -236,18 +236,22 @@ export default function Menu() {
               <Text style={styles.itemText}>Notifications</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => navigation.navigate("Calendar", {user: userData})}
-            >
-              <FontAwesomeIcon
-                icon={faCalendar}
-                size={20}
-                color="#1b4a7aff"
-                style={styles.icon}
-              />
-              <Text style={styles.itemText}>Calendar & Events</Text>
-            </TouchableOpacity>
+            {userData?.church && (
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() =>
+                  navigation.navigate("Calendar", { user: userData })
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faCalendar}
+                  size={20}
+                  color="#1b4a7aff"
+                  style={styles.icon}
+                />
+                <Text style={styles.itemText}>Calendar & Events</Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity style={styles.item}>
               <FontAwesomeIcon
