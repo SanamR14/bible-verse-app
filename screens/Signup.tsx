@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
+  Modal,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { ThemeContext } from "../themeContext";
 import { useTheme } from "@react-navigation/native";
 
 export default function SignupScreen({ navigation }: any) {
@@ -23,6 +24,10 @@ export default function SignupScreen({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // ✅ Privacy
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
+  const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -45,6 +50,15 @@ export default function SignupScreen({ navigation }: any) {
   };
 
   const handleSignup = async () => {
+    if (!acceptedPrivacy) {
+      Toast.show({
+        type: "error",
+        text1: "Privacy Notice",
+        text2: "You must accept the Privacy Notice to continue.",
+      });
+      return;
+    }
+
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
     const trimmedConfirm = confirm_password.trim();
@@ -145,13 +159,15 @@ export default function SignupScreen({ navigation }: any) {
       setLoading(false);
     }
   };
+
   const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
       <TextInput
-        style={[styles.input, { color: "#1b4b7aff" }]}
+        style={styles.input}
         placeholder="Name"
         value={name}
         onChangeText={setName}
@@ -167,7 +183,7 @@ export default function SignupScreen({ navigation }: any) {
 
       <View style={styles.passwordContainer}>
         <TextInput
-          style={[styles.passwordInput, { color: "#1b4b7aff" }]}
+          style={styles.passwordInput}
           placeholder="Password"
           secureTextEntry={!showPassword}
           value={password}
@@ -184,7 +200,7 @@ export default function SignupScreen({ navigation }: any) {
 
       <View style={styles.passwordContainer}>
         <TextInput
-          style={[styles.passwordInput, { color: "#1b4b7aff" }]}
+          style={styles.passwordInput}
           placeholder="Confirm Password"
           secureTextEntry={!showConfirmPassword}
           value={confirm_password}
@@ -202,24 +218,48 @@ export default function SignupScreen({ navigation }: any) {
       </View>
 
       <TextInput
-        style={[styles.input, { color: "#1b4b7aff" }]}
+        style={styles.input}
         placeholder="Enter your country"
         value={country}
         onChangeText={setCountry}
       />
       <TextInput
-        style={[styles.input, { color: "#1b4b7aff" }]}
+        style={styles.input}
         placeholder="Enter your city"
         value={city}
         onChangeText={setCity}
       />
-
       <TextInput
-        style={[styles.input, { color: "#1b4b7aff" }]}
+        style={styles.input}
         placeholder="Enter your church name here (optional)"
         value={church}
         onChangeText={setChurch}
       />
+
+      {/* ✅ Privacy Checkbox */}
+      <View style={styles.privacyContainer}>
+        <TouchableOpacity
+          onPress={() => setAcceptedPrivacy(!acceptedPrivacy)}
+          style={styles.checkbox}
+        >
+          <Icon
+            name={
+              acceptedPrivacy ? "checkbox-marked" : "checkbox-blank-outline"
+            }
+            size={24}
+            color="#1b4b7aff"
+          />
+        </TouchableOpacity>
+        <Text style={styles.privacyText}>
+          I agree to the{" "}
+          <Text
+            style={styles.link}
+            onPress={() => setPrivacyModalVisible(true)}
+          >
+            Privacy Notice
+          </Text>
+        </Text>
+      </View>
 
       {loading ? (
         <ActivityIndicator
@@ -236,17 +276,43 @@ export default function SignupScreen({ navigation }: any) {
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.links}>Already have an account? Log in</Text>
       </TouchableOpacity>
-    </View>
+
+      {/* ✅ Privacy Notice Modal */}
+      <Modal visible={privacyModalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.modalContent}>
+            <Text style={styles.modalTitle}>Privacy Notice</Text>
+            <Text style={styles.modalText}>
+              By registering with For Your Inner Man (FYI) application, you
+              agree to provide your personal details (name, email, city, country
+              and church you attend) so that we can provide you our services.
+              {"\n\n"}
+              We will use your information only for:{"\n"}- Managing your
+              account based on the place and connecting you with your church
+              {"\n"}- Contacting you if there are any issues or updates{"\n\n"}
+              We will not share your details with third parties, except where
+              required by law. Your data will be stored securely and retained
+              until you wish to be with us.{"\n\n"}
+              For more details about how we handle your information, or to
+              exercise your rights under UK data protection law (including
+              access, correction, or deletion of your data), please contact us
+              at foryourinnerman@gmail.com.
+            </Text>
+            <TouchableOpacity
+              style={styles.primaryBtn}
+              onPress={() => setPrivacyModalVisible(false)}
+            >
+              <Text style={styles.primaryBtnText}>Close</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      </Modal>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
-    backgroundColor: "#ffffff",
-  },
+  container: { flexGrow: 1, padding: 20, backgroundColor: "#fff" },
   title: {
     fontSize: 28,
     fontWeight: "bold",
@@ -255,7 +321,7 @@ const styles = StyleSheet.create({
     color: "#1b4b7aff",
   },
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     padding: 12,
     borderRadius: 12,
     fontSize: 16,
@@ -267,7 +333,6 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#ffffff",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 12,
@@ -280,16 +345,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#1b4b7aff",
   },
-  dropdown: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    marginBottom: 20,
-  },
-  placeholderStyle: { color: "#1b4b7aff", fontSize: 14 },
-  selectedTextStyle: { color: "#1b4b7aff", fontSize: 16 },
   primaryBtn: {
     backgroundColor: "#1b4b7aff",
     paddingVertical: 14,
@@ -303,5 +358,27 @@ const styles = StyleSheet.create({
     color: "#90a9afff",
     textAlign: "center",
     fontWeight: "500",
+  },
+  privacyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  checkbox: { marginRight: 8 },
+  privacyText: { fontSize: 14, color: "#333", flexShrink: 1 },
+  link: { color: "#1b4b7aff", fontWeight: "600" },
+  modalContainer: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  modalContent: { paddingBottom: 30 },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 15,
+    color: "#1b4b7aff",
+  },
+  modalText: {
+    fontSize: 15,
+    color: "#333",
+    lineHeight: 22,
+    marginBottom: 20,
   },
 });
