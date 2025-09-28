@@ -70,7 +70,9 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    paddingBottom: -30,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

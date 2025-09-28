@@ -12,6 +12,7 @@ import {
 import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useTheme } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignupScreen({ navigation }: any) {
   const [name, setName] = useState("");
@@ -163,151 +164,155 @@ export default function SignupScreen({ navigation }: any) {
   const { colors } = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Sign Up</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-
-      <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.passwordInput}
-          placeholder="Password"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
         />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon
-            name={showPassword ? "eye-off" : "eye"}
-            size={24}
-            color="#1b4b7aff"
-          />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.passwordContainer}>
         <TextInput
-          style={styles.passwordInput}
-          placeholder="Confirm Password"
-          secureTextEntry={!showConfirmPassword}
-          value={confirm_password}
-          onChangeText={setConfirmPassword}
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
         />
-        <TouchableOpacity
-          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-        >
-          <Icon
-            name={showConfirmPassword ? "eye-off" : "eye"}
-            size={24}
-            color="#1b4b7aff"
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Password"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
           />
-        </TouchableOpacity>
-      </View>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your country"
-        value={country}
-        onChangeText={setCountry}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your city"
-        value={city}
-        onChangeText={setCity}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your church name here (optional)"
-        value={church}
-        onChangeText={setChurch}
-      />
-
-      {/* ✅ Privacy Checkbox */}
-      <View style={styles.privacyContainer}>
-        <TouchableOpacity
-          onPress={() => setAcceptedPrivacy(!acceptedPrivacy)}
-          style={styles.checkbox}
-        >
-          <Icon
-            name={
-              acceptedPrivacy ? "checkbox-marked" : "checkbox-blank-outline"
-            }
-            size={24}
-            color="#1b4b7aff"
-          />
-        </TouchableOpacity>
-        <Text style={styles.privacyText}>
-          I agree to the{" "}
-          <Text
-            style={styles.link}
-            onPress={() => setPrivacyModalVisible(true)}
-          >
-            Privacy Notice
-          </Text>
-        </Text>
-      </View>
-
-      {loading ? (
-        <ActivityIndicator
-          size="large"
-          color="#1b4b7aff"
-          style={{ marginTop: 20 }}
-        />
-      ) : (
-        <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
-          <Text style={styles.primaryBtnText}>Sign Up</Text>
-        </TouchableOpacity>
-      )}
-
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.links}>Already have an account? Log in</Text>
-      </TouchableOpacity>
-
-      {/* ✅ Privacy Notice Modal */}
-      <Modal visible={privacyModalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <ScrollView contentContainerStyle={styles.modalContent}>
-            <Text style={styles.modalTitle}>Privacy Notice</Text>
-            <Text style={styles.modalText}>
-              By registering with For Your Inner Man (FYI) application, you
-              agree to provide your personal details (name, email, city, country
-              and church you attend) so that we can provide you our services.
-              {"\n\n"}
-              We will use your information only for:{"\n"}- Managing your
-              account based on the place and connecting you with your church
-              {"\n"}- Contacting you if there are any issues or updates{"\n\n"}
-              We will not share your details with third parties, except where
-              required by law. Your data will be stored securely and retained
-              until you wish to be with us.{"\n\n"}
-              For more details about how we handle your information, or to
-              exercise your rights under UK data protection law (including
-              access, correction, or deletion of your data), please contact us
-              at foryourinnerman@gmail.com.
-            </Text>
-            <TouchableOpacity
-              style={styles.primaryBtn}
-              onPress={() => setPrivacyModalVisible(false)}
-            >
-              <Text style={styles.primaryBtnText}>Close</Text>
-            </TouchableOpacity>
-          </ScrollView>
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Icon
+              name={showPassword ? "eye-off" : "eye"}
+              size={24}
+              color="#1b4b7aff"
+            />
+          </TouchableOpacity>
         </View>
-      </Modal>
-    </ScrollView>
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Confirm Password"
+            secureTextEntry={!showConfirmPassword}
+            value={confirm_password}
+            onChangeText={setConfirmPassword}
+          />
+          <TouchableOpacity
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            <Icon
+              name={showConfirmPassword ? "eye-off" : "eye"}
+              size={24}
+              color="#1b4b7aff"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your country"
+          value={country}
+          onChangeText={setCountry}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your city"
+          value={city}
+          onChangeText={setCity}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your church name here (optional)"
+          value={church}
+          onChangeText={setChurch}
+        />
+
+        {/*Privacy Checkbox */}
+        <View style={styles.privacyContainer}>
+          <TouchableOpacity
+            onPress={() => setAcceptedPrivacy(!acceptedPrivacy)}
+            style={styles.checkbox}
+          >
+            <Icon
+              name={
+                acceptedPrivacy ? "checkbox-marked" : "checkbox-blank-outline"
+              }
+              size={24}
+              color="#1b4b7aff"
+            />
+          </TouchableOpacity>
+          <Text style={styles.privacyText}>
+            I agree to the{" "}
+            <Text
+              style={styles.link}
+              onPress={() => setPrivacyModalVisible(true)}
+            >
+              Privacy Notice
+            </Text>
+          </Text>
+        </View>
+
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#1b4b7aff"
+            style={{ marginTop: 20 }}
+          />
+        ) : (
+          <TouchableOpacity style={styles.primaryBtn} onPress={handleSignup}>
+            <Text style={styles.primaryBtnText}>Sign Up</Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.links}>Already have an account? Log in</Text>
+        </TouchableOpacity>
+
+        {/* Privacy Notice Modal */}
+        <Modal visible={privacyModalVisible} animationType="slide">
+          <View style={styles.modalContainer}>
+            <ScrollView contentContainerStyle={styles.modalContent}>
+              <Text style={styles.modalTitle}>Privacy Notice</Text>
+              <Text style={styles.modalText}>
+                By registering with For Your Inner Man (FYI) application, you
+                agree to provide your personal details (name, email, city,
+                country and church you attend) so that we can provide you our
+                services.
+                {"\n\n"}
+                We will use your information only for:{"\n"}- Managing your
+                account based on the place and connecting you with your church
+                {"\n"}- Contacting you if there are any issues or updates
+                {"\n\n"}
+                We will not share your details with third parties, except where
+                required by law. Your data will be stored securely and retained
+                until you wish to be with us.{"\n\n"}
+                For more details about how we handle your information, or to
+                exercise your rights under UK data protection law (including
+                access, correction, or deletion of your data), please contact us
+                at foryourinnerman@gmail.com.
+              </Text>
+              <TouchableOpacity
+                style={styles.primaryBtn}
+                onPress={() => setPrivacyModalVisible(false)}
+              >
+                <Text style={styles.primaryBtnText}>Close</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </Modal>
+      </View>
+    </SafeAreaView>
   );
 }
 
