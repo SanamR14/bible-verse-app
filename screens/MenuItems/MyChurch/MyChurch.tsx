@@ -14,22 +14,30 @@ import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
+  faCalendar,
   faCalendarPlus,
+  faCircleUser,
   faPeopleGroup,
-  faTrophy,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiClientGet } from "../../../apiClient";
 
-export default function ChurchAmin() {
+export default function MyChurch() {
   const navigation = useNavigation();
   const [members, setMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
 
   const fetchMembers = async () => {
     try {
       const storedData = await AsyncStorage.getItem("userData");
+      if (storedData) {
+        const parsed = JSON.parse(storedData);
+        setUserData(parsed);
+        setIsAdmin(parsed?.is_church_admin || false);
+      }
       if (!storedData) return;
 
       const { church, city, country } = JSON.parse(storedData);
@@ -67,17 +75,34 @@ export default function ChurchAmin() {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Icon name="arrow-left" size={24} color="#1b4a7aff" />
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>Admin</Text>
+            <Text style={styles.headerTitle}>My Church</Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Icon name="menu" size={24} color="#1b4a7aff" />
             </TouchableOpacity>
           </View>
 
+          {isAdmin && (
+            <View style={styles.contentBox}>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => navigation.navigate("ChurchAdminStack")}
+              >
+                <FontAwesomeIcon
+                  icon={faCircleUser}
+                  size={20}
+                  color="#1b4a7aff"
+                  style={styles.icon}
+                />
+                <Text style={styles.itemText}>Admin</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <View style={styles.contentBox}>
             <TouchableOpacity
               style={styles.item}
               onPress={() =>
-                navigation.navigate("Members", { membersData: members })
+                navigation.navigate("Worship", { membersData: members })
               }
             >
               <FontAwesomeIcon
@@ -86,14 +111,14 @@ export default function ChurchAmin() {
                 color="#1b4a7aff"
                 style={styles.icon}
               />
-              <Text style={styles.itemText}>Church Members</Text>
+              <Text style={styles.itemText}>Worship</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.contentBox}>
             <TouchableOpacity
               style={styles.item}
               onPress={() =>
-                navigation.navigate("AddEventAndRota", { membersData: members })
+                navigation.navigate("Sermon", { membersData: members })
               }
             >
               <FontAwesomeIcon
@@ -102,21 +127,71 @@ export default function ChurchAmin() {
                 color="#1b4a7aff"
                 style={styles.icon}
               />
-              <Text style={styles.itemText}>Rota</Text>
+              <Text style={styles.itemText}>Sermon</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.contentBox}>
             <TouchableOpacity
               style={styles.item}
-              onPress={() => navigation.navigate("AdminQuizStack")}
+              onPress={() =>
+                navigation.navigate("SundaySchool", { membersData: members })
+              }
             >
               <FontAwesomeIcon
-                icon={faTrophy}
+                icon={faCalendarPlus}
                 size={20}
                 color="#1b4a7aff"
                 style={styles.icon}
               />
-              <Text style={styles.itemText}>Create Quiz</Text>
+              <Text style={styles.itemText}>Sunday School</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentBox}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("YoungAdults", { membersData: members })
+              }
+            >
+              <FontAwesomeIcon
+                icon={faCalendarPlus}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Young Adults</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentBox}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Youth", { membersData: members })
+              }
+            >
+              <FontAwesomeIcon
+                icon={faCalendarPlus}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Youth</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.contentBox}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Calendar", { user: userData })
+              }
+            >
+              <FontAwesomeIcon
+                icon={faCalendar}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Calendar & Events</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

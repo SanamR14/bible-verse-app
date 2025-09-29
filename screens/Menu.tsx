@@ -26,7 +26,6 @@ import {
   faBell,
   faTrophy,
   faCalendar,
-  faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -37,7 +36,7 @@ export default function Menu() {
   const navigation =
     useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
   const [userData, setUserData] = useState<any>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -46,7 +45,7 @@ export default function Menu() {
         if (storedData) {
           const parsed = JSON.parse(storedData);
           setUserData(parsed);
-          setIsAdmin(parsed?.is_church_admin || false);
+          // setIsAdmin(parsed?.is_church_admin || false);
         }
       } catch (err) {
         console.error("Failed to fetch user data", err);
@@ -113,7 +112,25 @@ export default function Menu() {
               />
               <Text style={styles.itemText}>Profile</Text>
             </TouchableOpacity>
-            {isAdmin && (
+
+            {userData?.church && (
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() =>
+                  navigation.navigate("MyChurchStack", { topic: "" })
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faUser}
+                  size={20}
+                  color="#1b4a7aff"
+                  style={styles.icon}
+                />
+                <Text style={styles.itemText}>My Church</Text>
+              </TouchableOpacity>
+            )}
+
+            {/* {isAdmin && (
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => navigation.navigate("ChurchAdminStack")}
@@ -126,7 +143,7 @@ export default function Menu() {
                 />
                 <Text style={styles.itemText}>Admin</Text>
               </TouchableOpacity>
-            )}
+            )} */}
 
             <TouchableOpacity
               style={styles.item}
@@ -236,7 +253,7 @@ export default function Menu() {
               <Text style={styles.itemText}>Notifications</Text>
             </TouchableOpacity>
 
-            {userData?.church && (
+            {/* {userData?.church && (
               <TouchableOpacity
                 style={styles.item}
                 onPress={() =>
@@ -251,7 +268,7 @@ export default function Menu() {
                 />
                 <Text style={styles.itemText}>Calendar & Events</Text>
               </TouchableOpacity>
-            )}
+            )} */}
 
             <TouchableOpacity style={styles.item}>
               <FontAwesomeIcon
