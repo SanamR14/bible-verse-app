@@ -18,7 +18,9 @@ const QuizStack = () => {
       const userJson = await AsyncStorage.getItem("userData");
       if (userJson) {
         const user = JSON.parse(userJson);
-        setIsAdmin(user.email.endsWith("@admin.fyi.com"));
+        setIsAdmin(
+          user.email.endsWith("@admin.fyi.com") || user.is_church_admin
+        );
       } else {
         setIsAdmin(false);
       }
