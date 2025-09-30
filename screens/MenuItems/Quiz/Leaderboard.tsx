@@ -7,35 +7,54 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { Player } from "../../../types";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { socket } from "../../../services/socket";
 
+const API_URL = "https://bible-verse-backend-1kvo.onrender.com";
+
+interface Player {
+  id?: number; // for live quiz
+  name?: string; // for live quiz
+  user_email?: string; // for public quiz
+  score: number;
+}
+
 export default function Leaderboard({ route, navigation }: any) {
-  const { sessionCode } = route.params;
+  const { quizId, sessionCode, isPublic } = route.params;
   const [players, setPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
-    socket.emit("get_leaderboard", { sessionCode });
-
-    const handleLeaderboard = (data: Player[]) => setPlayers(data);
-
-    socket.on("leaderboard", handleLeaderboard);
-    return () => socket.off("leaderboard", handleLeaderboard);
-  }, [sessionCode]);
+    if (isPublic) {
+      // Public quiz: fetch leaderboard from API
+      fetch(`${API_URL}/quiz/${quizId}/leaderboard`)
+        .then((res) => res.json())
+        .then((data) => setPlayers(data))
+        .catch((err) => console.error("Failed to fetch leaderboard:", err));
+    } else {
+      // Live quiz: listen via socket
+      socket.emit("get_leaderboard", { sessionCode });
+      const handleLeaderboard = (data: Player[]) => setPlayers(data);
+      socket.on("leaderboard", handleLeaderboard);
+      return () => socket.off("leaderboard", handleLeaderboard);
+    }
+  }, [quizId, sessionCode, isPublic]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Leaderboard</Text>
+
       {players.length === 0 ? (
         <Text style={styles.empty}>No players yet</Text>
       ) : (
         <FlatList
           data={players}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <View style={styles.card}>
               <Text style={styles.rank}>{index + 1}.</Text>
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.name}>
+                {isPublic ? item.user_email : item.name}
+              </Text>
               <Text style={styles.score}>{item.score}</Text>
             </View>
           )}
@@ -48,7 +67,7 @@ export default function Leaderboard({ route, navigation }: any) {
       >
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -59,6 +78,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
+    color: "#1b4a7a",
   },
   empty: { textAlign: "center", fontSize: 16, marginTop: 20 },
   card: {

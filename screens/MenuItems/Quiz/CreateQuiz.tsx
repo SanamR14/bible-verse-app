@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons"; // <-- add this for icon
+import { Ionicons } from "@expo/vector-icons"; 
 import { apiClient } from "../../../apiClient";
 
 export default function CreateQuiz() {
@@ -24,6 +24,7 @@ export default function CreateQuiz() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: title,
+        
         }),
       });
       const data = res.json ? await res.json() : res;
@@ -36,7 +37,7 @@ export default function CreateQuiz() {
 
   return (
     <View style={styles.container}>
-      {/* 🔹 Top row with title + Saved Quizzes icon */}
+      {/* Top row with title + Saved Quizzes icon */}
       <View style={styles.topRow}>
         <Text style={styles.header}>Create New Quiz</Text>
         <TouchableOpacity
@@ -61,7 +62,7 @@ export default function CreateQuiz() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20 },
+  container: { flex: 1, padding: 20, backgroundColor: "#ffffff" },
   topRow: {
     flexDirection: "row",
     alignItems: "center",

@@ -1,36 +1,78 @@
-import React from "react";
+// screens/quiz/FyiQuiz.tsx
+import React, { useEffect, useState } from "react";
 import {
-  SafeAreaView,
-  TouchableOpacity,
   View,
   Text,
+  FlatList,
+  TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function FyiQuiz() {
-  const navigation = useNavigation();
+const API_URL = "https://bible-verse-backend-1kvo.onrender.com";
+
+export default function FyiQuiz({ navigation }: any) {
+  const [quizzes, setQuizzes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/quiz/public`);
+        setQuizzes(res.data);
+      } catch (err) {
+        console.error("Error fetching FYI quizzes", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const renderQuizItem = ({ item }: any) => (
+    <View style={styles.card}>
+      <Text style={styles.title}>{item.title}</Text>
+      <TouchableOpacity
+        style={styles.playButton}
+        onPress={() =>
+          navigation.navigate("Quiz", {
+            quizId: item.id,
+            isPublic: true, // so Quiz screen knows it’s a public quiz
+          })
+        }
+      >
+        <Text style={styles.playButtonText}>Play</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       {/* Header */}
-      <View style={styles.headerBar}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#1b4a7a" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>FYI Quiz</Text>
-        <View style={{ width: 24 }} /> {/* spacing to balance icon */}
-      </View>
 
-      {/* Content */}
-      <View style={styles.content}>
-        <Text style={styles.infoText}>
-          Welcome to the FYI Quiz — a pre-built quiz created by the FYI Team.
-        </Text>
-        {/* You can add your quiz list or start button here */}
-      </View>
-    </SafeAreaView>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#1b4a7a"
+          style={{ marginTop: 20 }}
+        />
+      ) : (
+        <FlatList
+          contentContainerStyle={{ padding: 16 }}
+          data={quizzes}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderQuizItem}
+          ListEmptyComponent={
+            <Text style={{ textAlign: "center", marginTop: 20 }}>
+              No FYI quizzes available.
+            </Text>
+          }
+        />
+      )}
+    </View>
   );
 }
 
@@ -42,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderColor: "#eee",
   },
   headerTitle: {
     flex: 1,
@@ -51,14 +93,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1b4a7a",
   },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
+  card: {
+    backgroundColor: "#f9f9f9",
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    elevation: 2,
   },
-  infoText: {
-    textAlign: "center",
-    fontSize: 16,
-    color: "#333",
+  title: { fontSize: 18, fontWeight: "600", color: "#333" },
+  playButton: {
+    marginTop: 12,
+    backgroundColor: "#1b4a7a",
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: "center",
   },
+  playButtonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
 });

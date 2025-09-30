@@ -1,26 +1,46 @@
 // screens/quiz/Quiz.tsx
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import axios from "axios";
 import { socket } from "../../../services/socket";
 import { Player, Question } from "../../../types";
+import { apiClient } from "../../../apiClient";
+
+const API_URL = "https://bible-verse-backend-1kvo.onrender.com";
 
 export default function Quiz({ route, navigation }: any) {
-  const { player, sessionCode } = route.params as {
-    player: Player;
-    sessionCode: string;
-  };
+  const { player, sessionCode, quizId, isPublic } = route.params;
 
+  // For live quizzes
   const [question, setQuestion] = useState<Question | null>(null);
   const [answered, setAnswered] = useState(false);
 
+  // For public quizzes
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [score, setScore] = useState(0);
+
   useEffect(() => {
+    if (isPublic) {
+      // Load questions for public quiz
+      axios
+        .get<Question[]>(`${API_URL}/quiz/${quizId}/questions`)
+        .then((res) => setQuestions(res.data))
+        .catch((err) => {
+          console.error(err);
+          Alert.alert("Error", "Failed to load quiz");
+        });
+      return;
+    }
+
+    // Socket-based live quiz
     socket.on("question_started", (q: Question) => {
       setQuestion(q);
       setAnswered(false);
     });
 
     socket.on("question_result", ({ playerId }) => {
-      if (playerId === player.id) setAnswered(true);
+      if (playerId === player?.id) setAnswered(true);
     });
 
     socket.on("quiz_ended", () => {
@@ -34,7 +54,8 @@ export default function Quiz({ route, navigation }: any) {
     };
   }, []);
 
-  const submitAnswer = (optionIndex: number) => {
+  // ---- Submit answer for live quiz ----
+  const submitAnswerLive = (optionIndex: number) => {
     if (answered || !question) return;
     socket.emit("submit_answer", {
       sessionCode,
@@ -45,6 +66,61 @@ export default function Quiz({ route, navigation }: any) {
     setAnswered(true);
   };
 
+  // ---- Submit answer for public quiz ----
+  const submitAnswerPublic = async (optionIndex: number) => {
+    const currentQ = questions[currentIndex];
+
+    // calculate new score locally
+    let newScore = score;
+    console.log(currentQ.correct_answer, optionIndex);
+    if (optionIndex === currentQ.correct_answer) {
+      newScore += 1;
+    }
+
+    // move to next question or finish
+    if (currentIndex + 1 < questions.length) {
+      setScore(newScore);
+      setCurrentIndex((prev) => prev + 1);
+    } else {
+      setScore(newScore); // make sure state is updated
+      await apiClient(`/quiz/${quizId}/score`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ score: newScore }), // backend will get email from auth
+      });
+      navigation.navigate("Leaderboard", { quizId, isPublic: true });
+    }
+  };
+
+  // ---- Render ----
+  if (isPublic) {
+    if (!questions.length) {
+      return (
+        <View style={styles.waitingContainer}>
+          <Text style={styles.waitingText}>Loading quiz…</Text>
+        </View>
+      );
+    }
+    const currentQ = questions[currentIndex];
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>
+          {currentQ.question_text} ({currentIndex + 1}/{questions.length})
+        </Text>
+        {currentQ.options.map((opt, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.optionButton}
+            onPress={() => submitAnswerPublic(idx)}
+          >
+            <Text style={styles.optionText}>{opt}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  }
+
+  // Live quiz UI:
   if (!question)
     return (
       <View style={styles.waitingContainer}>
@@ -59,7 +135,7 @@ export default function Quiz({ route, navigation }: any) {
         <TouchableOpacity
           key={idx}
           style={[styles.optionButton, answered && { backgroundColor: "#ccc" }]}
-          onPress={() => submitAnswer(idx)}
+          onPress={() => submitAnswerLive(idx)}
           disabled={answered}
         >
           <Text style={styles.optionText}>{opt}</Text>

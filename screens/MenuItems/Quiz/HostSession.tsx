@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import { socket } from "../../../services/socket";
 import { Question, Player } from "../../../types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const API_URL = "https://bible-verse-backend-1kvo.onrender.com";
 
@@ -108,7 +109,7 @@ export default function HostSession({ route, navigation }: any) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Host Session</Text>
       {sessionCode && (
         <Text style={styles.code}>Session Code: {sessionCode}</Text>
@@ -139,7 +140,7 @@ export default function HostSession({ route, navigation }: any) {
       <TouchableOpacity style={styles.button} onPress={nextQuestion}>
         <Text style={styles.buttonText}>Next Question</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

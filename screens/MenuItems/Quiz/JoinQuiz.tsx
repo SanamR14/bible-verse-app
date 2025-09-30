@@ -33,15 +33,14 @@ export default function JoinQuiz({ navigation }: any) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      {/* Header */}
-      <View style={styles.headerBar}>
+    <View style={styles.safeArea}>
+      {/* <View style={styles.headerBar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#1b4a7a" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Take a Quiz</Text>
-        <View style={{ width: 24 }} /> {/* spacing to balance icon */}
-      </View>
+        <Text style={{ width: 24 }} />
+      </View> */}
 
       {/* Content */}
       <View style={styles.container}>
@@ -66,7 +65,9 @@ export default function JoinQuiz({ navigation }: any) {
         </View>
 
         {/* Divider */}
-        <Text style={styles.orText}>— OR —</Text>
+        <View style={{ alignItems: "center", marginVertical: 16 }}>
+          <Text style={styles.orText}>- OR -</Text>
+        </View>
 
         {/* Option 2: FYI Quiz */}
         <TouchableOpacity
@@ -76,7 +77,7 @@ export default function JoinQuiz({ navigation }: any) {
           <Text style={styles.buttonText}>Play FYI Quiz</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -87,7 +88,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 14,
-
   },
   headerTitle: {
     flex: 1,
