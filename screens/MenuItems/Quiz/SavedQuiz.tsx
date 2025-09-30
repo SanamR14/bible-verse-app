@@ -96,6 +96,14 @@ export default function SavedQuiz({ navigation }: any) {
                   <Text style={styles.buttonText}>Start Session</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  style={[styles.button, { backgroundColor: "#2196f3" }]}
+                  onPress={() =>
+                    navigation.navigate("QuizDetail", { quizId: item.id })
+                  }
+                >
+                  <Text style={styles.buttonText}>View</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={[styles.button, { backgroundColor: "#f44336" }]}
                   onPress={() => deleteQuiz(item.id)}
                 >
