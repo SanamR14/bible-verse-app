@@ -9,6 +9,7 @@ import Questions from "../screens/MenuItems/Quiz/Questions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SavedQuiz from "../screens/MenuItems/Quiz/SavedQuiz";
 import QuizDetail from "../screens/MenuItems/Quiz/QuizDetail";
+import FyiQuiz from "../screens/MenuItems/Quiz/FyiQuiz";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +33,7 @@ const QuizStack = () => {
   if (isAdmin === null) return null;
 
   return (
-    <Stack.Navigator initialRouteName={isAdmin ? "CreateQuiz" : "JoinQuiz"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAdmin ? (
         <>
           <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
@@ -45,6 +46,7 @@ const QuizStack = () => {
       ) : (
         <>
           <Stack.Screen name="JoinQuiz" component={JoinQuiz} />
+          <Stack.Screen name="FyiQuiz" component={FyiQuiz} />
           <Stack.Screen name="Quiz" component={Quiz} />
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
         </>

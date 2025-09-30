@@ -1,5 +1,6 @@
+// screens/quiz/Quiz.tsx
 import React, { useEffect, useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { socket } from "../../../services/socket";
 import { Player, Question } from "../../../types";
 
@@ -14,12 +15,11 @@ export default function Quiz({ route, navigation }: any) {
 
   useEffect(() => {
     socket.on("question_started", (q: Question) => {
-      console.log("Received question_started", q.id);
       setQuestion(q);
       setAnswered(false);
     });
 
-    socket.on("question_result", ({ playerId, correct }) => {
+    socket.on("question_result", ({ playerId }) => {
       if (playerId === player.id) setAnswered(true);
     });
 
@@ -42,29 +42,62 @@ export default function Quiz({ route, navigation }: any) {
       questionId: question.id,
       selectedOption: optionIndex,
     });
-    console.log("submit_answer emitted", {
-      sessionCode,
-      questionId: question.id,
-    });
     setAnswered(true);
   };
 
   if (!question)
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Waiting for host to start...</Text>
+      <View style={styles.waitingContainer}>
+        <Text style={styles.waitingText}>Waiting for host to start…</Text>
       </View>
     );
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>
-        {question.question_text}
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>{question.question_text}</Text>
       {question.options.map((opt, idx) => (
-        <Button key={idx} title={opt} onPress={() => submitAnswer(idx)} />
+        <TouchableOpacity
+          key={idx}
+          style={[styles.optionButton, answered && { backgroundColor: "#ccc" }]}
+          onPress={() => submitAnswer(idx)}
+          disabled={answered}
+        >
+          <Text style={styles.optionText}>{opt}</Text>
+        </TouchableOpacity>
       ))}
-      {answered && <Text style={{ marginTop: 10 }}>Answer submitted!</Text>}
+      {answered && <Text style={styles.answeredText}>Answer submitted!</Text>}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  optionButton: {
+    backgroundColor: "#1b4a7a",
+    padding: 14,
+    marginVertical: 8,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  optionText: { color: "#fff", fontSize: 16 },
+  answeredText: {
+    textAlign: "center",
+    marginTop: 15,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "green",
+  },
+  waitingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  waitingText: { fontSize: 18, fontStyle: "italic" },
+});
