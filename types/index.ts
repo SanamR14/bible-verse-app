@@ -2,6 +2,7 @@ export interface Quiz {
   id: number;
   title: string;
   created_at: string;
+  created_by: string
 }
 
 export interface Question {

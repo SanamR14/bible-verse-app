@@ -7,6 +7,7 @@ import JoinQuiz from "../screens/MenuItems/Quiz/JoinQuiz";
 import Quiz from "../screens/MenuItems/Quiz/Quiz";
 import Questions from "../screens/MenuItems/Quiz/Questions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SavedQuiz from "../screens/MenuItems/Quiz/SavedQuiz";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ const QuizStack = () => {
         <>
           <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
           <Stack.Screen name="AddQuestion" component={Questions} />
+          <Stack.Screen name="SavedQuiz" component={SavedQuiz} />
           <Stack.Screen name="HostSession" component={HostSession} />
           <Stack.Screen name="Leaderboard" component={Leaderboard} />
         </>
