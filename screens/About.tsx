@@ -12,11 +12,11 @@ export default function About() {
       </Text>
       <Text style={styles.body}>
         FYI MISSION – To build an application, which is suitable for all age
-        groups, so that people will be able to learn about God, his mysteries,
-        his plans and purpose for every mankind. People will be able to connect
-        with others around the world to have a mutual fellowship.
+        groups, so that people will be able to learn more about God, his
+        mysteries, his plans and purpose for every mankind. People will be able
+        to connect with others around the world to have a mutual fellowship.
       </Text>
-       <Text style={styles.body}>
+      <Text style={styles.body}>
         As the word of God says in Colossians 2:6-7 (NLT),“And now, just as you
         accepted Christ Jesus as your Lord, you must continue to follow him. Let
         your roots grow down into him, and let your lives be built on him. Then
@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 12,
     color: "#1b4b7aff",
   },
   body: {
-    color:"#1b4a7aff"
-  }
+    marginTop: 10,
+    color: "#1b4a7aff",
+  },
 });
