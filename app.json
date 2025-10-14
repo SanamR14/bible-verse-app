@@ -2,7 +2,7 @@
   "expo": {
     "name": "FYI",
     "slug": "FYI",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/cir_FYI_TRBLUE.png",
     "userInterfaceStyle": "light",
@@ -17,7 +17,7 @@
       "bundleIdentifier": "com.anonymous.bibleverseapp"
     },
     "android": {
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/FYI.png",
         "backgroundColor": "#F8F9F9",
