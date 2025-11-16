@@ -9,6 +9,7 @@ import Worship from "../screens/MenuItems/MyChurch/Worship";
 import ChurchAdminStack from "./ChurchAdminStack";
 import Calendar from "../screens/MenuItems/Calendar";
 import FolderDetail from "../screens/MenuItems/MyChurch/FolderDetail";
+import FilePreview from "../screens/MenuItems/MyChurch/FilePreview";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const MyChurchStack = () => {
       <Stack.Screen name="Youth" component={Youth} />
       <Stack.Screen name="Calendar" component={Calendar} />
       <Stack.Screen name="FolderDetail" component={FolderDetail} />
+      <Stack.Screen name="FilePreview" component={FilePreview} />
     </Stack.Navigator>
   );
 };
