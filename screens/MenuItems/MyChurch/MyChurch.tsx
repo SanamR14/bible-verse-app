@@ -19,6 +19,8 @@ import {
   faCircleUser,
   faPeopleGroup,
   faUser,
+  faPersonChalkboard,
+  faSchool,
 } from "@fortawesome/free-solid-svg-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiClientGet } from "../../../apiClient";
@@ -122,7 +124,7 @@ export default function MyChurch() {
               }
             >
               <FontAwesomeIcon
-                icon={faCalendarPlus}
+                icon={faPersonChalkboard}
                 size={20}
                 color="#1b4a7aff"
                 style={styles.icon}
@@ -138,7 +140,7 @@ export default function MyChurch() {
               }
             >
               <FontAwesomeIcon
-                icon={faCalendarPlus}
+                icon={faSchool}
                 size={20}
                 color="#1b4a7aff"
                 style={styles.icon}
@@ -154,7 +156,7 @@ export default function MyChurch() {
               }
             >
               <FontAwesomeIcon
-                icon={faCalendarPlus}
+                icon={faPeopleGroup}
                 size={20}
                 color="#1b4a7aff"
                 style={styles.icon}
@@ -170,7 +172,7 @@ export default function MyChurch() {
               }
             >
               <FontAwesomeIcon
-                icon={faCalendarPlus}
+                icon={faPeopleGroup}
                 size={20}
                 color="#1b4a7aff"
                 style={styles.icon}
