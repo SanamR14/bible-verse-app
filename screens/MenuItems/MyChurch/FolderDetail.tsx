@@ -91,7 +91,7 @@ const FolderDetail = ({ route, navigation }) => {
     const data = new FormData();
     data.append("file", file);
     data.append("userEmail", userEmail);
-
+    console.log(file);
     try {
       await axios.post(`${API_URL}/folders/${folderId}/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -121,7 +121,7 @@ const FolderDetail = ({ route, navigation }) => {
     if (!mime) return "file";
     if (mime.includes("image")) return "image";
     if (mime.includes("pdf")) return "file-text";
-    if (mime.includes("docx")) return "file-text";
+    if (mime.includes("doc") || mime.includes("ppt")) return "file-text";
     return "file";
   };
 
@@ -132,7 +132,8 @@ const FolderDetail = ({ route, navigation }) => {
     const previewable =
       item.mime_type?.includes("image") ||
       item.mime_type?.includes("pdf") ||
-      item.mime_type?.includes("docx");
+      item.mime_type?.includes("doc") ||
+      item.mime_type?.includes("ppt");
 
     if (previewable) {
       navigation.navigate("FilePreview", {
@@ -156,7 +157,7 @@ const FolderDetail = ({ route, navigation }) => {
     //     style: "destructive",
     //     onPress: async () => {
     //       try {
-            await axios.delete(`${API_URL}/folders/files/${id}`);
+    await axios.delete(`${API_URL}/folders/files/${id}`);
     //         loadFiles();
     //       } catch (err) {
     //         console.log("delete error:", err);
@@ -237,6 +238,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 16,
+    marginTop: 15,
     alignItems: "center",
   },
   headerTitle: {
