@@ -11,13 +11,11 @@ export default function Worship() {
   return (
     <FolderList
       apiUrl="https://bible-verse-backend-1kvo.onrender.com/folders"
-      isAdmin={true}
       pageName="Worship"
       onFolderPress={(folder) =>
         navigation.navigate("FolderDetail", {
           folderId: folder.id,
-          folderName: folder.name,
-          isAdmin: true,
+          folderName: folder.name
         })
       }
     />
