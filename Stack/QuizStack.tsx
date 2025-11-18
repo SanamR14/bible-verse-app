@@ -10,31 +10,34 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SavedQuiz from "../screens/MenuItems/Quiz/SavedQuiz";
 import QuizDetail from "../screens/MenuItems/Quiz/QuizDetail";
 import FyiQuiz from "../screens/MenuItems/Quiz/FyiQuiz";
+import { useUser } from "../screens/hooks/useUser";
 
 const Stack = createNativeStackNavigator();
 
 const QuizStack = () => {
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [isAdminFyi, setIsAdminFyi] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       const userJson = await AsyncStorage.getItem("userData");
       if (userJson) {
         const user = JSON.parse(userJson);
-        setIsAdmin(user.email.endsWith("@admin.fyi.com"));
+        setIsAdminFyi(user.email.endsWith("@admin.fyi.com"));
       } else {
-        setIsAdmin(false);
+        setIsAdminFyi(false);
       }
     };
     checkAuth();
   }, []);
+
+  const { isAdmin } = useUser();
 
   // Wait until we know if user is admin
   if (isAdmin === null) return null;
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAdmin ? (
+      {isAdmin || isAdminFyi ? (
         <>
           <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
           <Stack.Screen name="AddQuestion" component={Questions} />

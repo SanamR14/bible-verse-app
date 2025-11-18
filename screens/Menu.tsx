@@ -31,28 +31,16 @@ import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
+import { useUser } from "./hooks/useUser";
 
 export default function Menu() {
   const navigation =
     useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
-  const [userData, setUserData] = useState<any>(null);
+  //const [userData, setUserData] = useState<any>(null);
   // const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const storedData = await AsyncStorage.getItem("userData");
-        if (storedData) {
-          const parsed = JSON.parse(storedData);
-          setUserData(parsed);
-          // setIsAdmin(parsed?.is_church_admin || false);
-        }
-      } catch (err) {
-        console.error("Failed to fetch user data", err);
-      }
-    };
-    fetchUserData();
-  }, []);
+  const { userData } = useUser();
+
   const logout = async () => {
     try {
       if (userData?.id) {

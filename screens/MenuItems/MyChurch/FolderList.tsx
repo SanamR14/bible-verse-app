@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useUser } from "../../hooks/useUser";
 
 interface Folder {
   id: string;
@@ -37,28 +38,11 @@ export default function FolderList({
   const [folders, setFolders] = useState<Folder[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
-  const [userData, setUserData] = useState<any>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [userData, setUserData] = useState<any>(null);
+  // const [isAdmin, setIsAdmin] = useState(false);
+  const { userData, isAdmin } = useUser();
   const navigation = useNavigation();
   const rowRef = useRef<any>({});
-
-  /** LOAD USER FIRST */
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const stored = await AsyncStorage.getItem("userData");
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          setUserData(parsed);
-          setIsAdmin(parsed?.is_church_admin || false);
-        }
-      } catch (err) {
-        console.error("User load error:", err);
-      }
-    };
-
-    loadUser();
-  }, []);
 
   /** LOAD FOLDERS AFTER USER IS READY */
   useEffect(() => {

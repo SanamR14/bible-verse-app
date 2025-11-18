@@ -24,25 +24,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiClientGet } from "../../../apiClient";
+import { useUser } from "../../hooks/useUser";
 
 export default function MyChurch() {
   const navigation = useNavigation();
   const [members, setMembers] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [isAdmin, setIsAdmin] = useState(false);
+  // const [userData, setUserData] = useState<any>(null);
+  const { userData, isAdmin, loadingUser } = useUser();
 
   const fetchMembers = async () => {
     try {
-      const storedData = await AsyncStorage.getItem("userData");
-      if (storedData) {
-        const parsed = JSON.parse(storedData);
-        setUserData(parsed);
-        setIsAdmin(parsed?.is_church_admin || false);
-      }
-      if (!storedData) return;
+      if (!userData) return;
 
-      const { church, city, country } = JSON.parse(storedData);
+      const { church, city, country } = JSON.parse(userData);
 
       const data = await apiClientGet(
         `/auth/churchfilter/users?church=${encodeURIComponent(
@@ -54,8 +50,6 @@ export default function MyChurch() {
       setMembers(data);
     } catch (err) {
       console.error("Error fetching members:", err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -63,7 +57,7 @@ export default function MyChurch() {
     fetchMembers();
   }, []);
 
-  if (loading)
+  if (loadingUser)
     return <ActivityIndicator size="large" style={{ marginTop: 50 }} />;
 
   return (
