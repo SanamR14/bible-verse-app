@@ -2,7 +2,8 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import FolderList from "./FolderList";
-import { useFileHandler } from "./hooks/useFileHandler";
+import { useFileHandler } from "../../hooks/useFileHandler";
+
 
 export default function Worship() {
   const navigation = useNavigation();
