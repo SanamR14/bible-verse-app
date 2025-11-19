@@ -65,13 +65,13 @@ export default function Explore() {
         }}
         textColor="#000000"
       />
-
-      <FlatList
+      Coming Soon!
+      {/* <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         contentContainerStyle={{ paddingBottom: 100 }}
-      />
+      /> */}
     </View>
   );
 }

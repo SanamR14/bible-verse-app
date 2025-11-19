@@ -91,7 +91,7 @@ export default function Fellowship({ navigation }: any) {
             />
           </View>
         </View>
-
+        <Text style={styles.title}>Development in Progress...</Text>
         <Text style={styles.title}>People you may know</Text>
         {loading ? (
           <ActivityIndicator size="large" style={{ marginTop: 40 }} />

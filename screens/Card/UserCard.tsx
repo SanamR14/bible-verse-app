@@ -81,7 +81,9 @@ const UserCard: React.FC<Props> = ({
         style={styles.connectBtn}
         onPress={() => onConnect(user)}
       >
-        <Text style={styles.connectText}>Connect</Text>
+        <Text style={styles.connectText}>
+          Connect
+        </Text>
       </TouchableOpacity>
     </View>
   );

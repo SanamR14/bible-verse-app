@@ -26,6 +26,8 @@ import {
   faBell,
   faTrophy,
   faCalendar,
+  faChurch,
+  faBookBible,
 } from "@fortawesome/free-solid-svg-icons";
 import { MenuStackParamList } from "../Stack/MenuStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -101,6 +103,19 @@ export default function Menu() {
               <Text style={styles.itemText}>Profile</Text>
             </TouchableOpacity>
 
+               <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("HolyBible", { topic: "" })}
+            >
+              <FontAwesomeIcon
+                icon={faBookBible}
+                size={20}
+                color="#1b4a7aff"
+                style={styles.icon}
+              />
+              <Text style={styles.itemText}>Holy Bible</Text>
+            </TouchableOpacity>
+
             {userData?.church && (
               <TouchableOpacity
                 style={styles.item}
@@ -109,7 +124,7 @@ export default function Menu() {
                 }
               >
                 <FontAwesomeIcon
-                  icon={faUser}
+                  icon={faChurch}
                   size={20}
                   color="#1b4a7aff"
                   style={styles.icon}
