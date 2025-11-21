@@ -12,7 +12,8 @@ import Testimonies from "../screens/MenuItems/Testimonies";
 import AuthStack from "../navigation/AuthStack";
 import QuizStack from "./QuizStack";
 import MyChurchStack from "./MyChurchStack";
-import HolyBible from "../screens/MenuItems/HolyBible";
+import HolyBible from "../screens/MenuItems/HolyBible/HolyBible";
+import BibleStack from "./BibleStack";
 
 export type MenuStackParamList = {
   Menu: undefined;
@@ -34,7 +35,7 @@ export default function MenuStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="HolyBible" component={HolyBible} />
+      <Stack.Screen name="BibleStack" component={BibleStack} />
       <Stack.Screen name="MyChurchStack" component={MyChurchStack} />
       <Stack.Screen name="SavedStack" component={SavedStack} />
       <Stack.Screen name="PrayerRequest" component={PrayerRequest} />

@@ -103,9 +103,9 @@ export default function Menu() {
               <Text style={styles.itemText}>Profile</Text>
             </TouchableOpacity>
 
-               <TouchableOpacity
+            <TouchableOpacity
               style={styles.item}
-              onPress={() => navigation.navigate("HolyBible", { topic: "" })}
+              onPress={() => navigation.navigate("BibleStack", { topic: "" })}
             >
               <FontAwesomeIcon
                 icon={faBookBible}
