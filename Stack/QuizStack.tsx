@@ -30,14 +30,12 @@ const QuizStack = () => {
     checkAuth();
   }, []);
 
-  const { isAdmin } = useUser();
-
   // Wait until we know if user is admin
-  if (isAdmin === null) return null;
+  if (isAdminFyi === null) return null;
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAdmin || isAdminFyi ? (
+      {isAdminFyi ? (
         <>
           <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
           <Stack.Screen name="AddQuestion" component={Questions} />
