@@ -19,6 +19,10 @@ import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import {
+  sendPushToAll,
+  sendPushToOne,
+} from "../../../services/notificationsAPI";
 
 export default function AddEventAndRota({ route }) {
   const navigation = useNavigation();
@@ -102,6 +106,12 @@ export default function AddEventAndRota({ route }) {
     const month = new Date().toISOString().slice(0, 7);
     const rotaData = await apiClientGet(`/churchrota/monthrota?month=${month}`);
     setRota(rotaData);
+
+    await sendPushToOne(
+      memberId,
+      `New Rota scheduled on ${selectedDateRota} at ${selectedTimeRota}`
+    );
+
   };
 
   const addEvent = async () => {
@@ -133,6 +143,11 @@ export default function AddEventAndRota({ route }) {
 
       const eventsData = await apiClientGet("/churchevent");
       setEvents(eventsData);
+
+      await sendPushToAll(
+        `New Event scheduled on ${selectedDateEvent} at ${selectedTimeEvent}`
+      );
+
     } catch (err) {
       console.error("Error adding event:", err);
       Alert.alert("Error", "Failed to save event");

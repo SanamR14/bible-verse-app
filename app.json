@@ -2,7 +2,12 @@
   "expo": {
     "name": "FYI",
     "slug": "FYI",
-    "version": "1.0.4",
+    "version": "1.0.7",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "orientation": "portrait",
     "icon": "./assets/cir_FYI_TRBLUE.png",
     "userInterfaceStyle": "light",
@@ -14,20 +19,42 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.bibleverseapp"
+      "bundleIdentifier": "com.anonymous.bibleverseapp",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "remote-notification"
+        ],
+        "NSUserNotificationUsageDescription": "This app uses notifications to remind you of daily bible verses."
+      }
     },
     "android": {
-      "versionCode": 5,
+      "versionCode": 8,
+      "useNextNotificationsApi": true,
+      "permissions": [
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.POST_NOTIFICATIONS"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/FYI.png",
         "backgroundColor": "#F8F9F9",
-         "resizeMode": "contain"
+        "resizeMode": "contain"
+      },
+      "notification": {
+        "icon": "./assets/notification_icon.png",
+        "color": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.bibleverseapp"
+      "package": "com.anonymous.bibleverseapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/cir_FYI_TRBLUE.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cdb3315b-c995-4cd8-802b-6ec25ee7874b"
+      }
+    },
+    "owner": "sanamr14"
   }
 }

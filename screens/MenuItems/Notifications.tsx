@@ -1,121 +1,109 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
+  FlatList,
 } from "react-native";
-import { SwipeListView } from "react-native-swipe-list-view";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  getNotifications,
+  deleteNotification,
+  clearNotifications,
+} from "../../storage/notificationStorage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useNavigation } from "@react-navigation/native";
 
-const initialNotifications = [
-  { id: "1", text: "Notification 1" },
-  { id: "2", text: "Notification 2" },
-  { id: "3", text: "Notification 3" },
-  { id: "4", text: "Notification 4" },
-  { id: "5", text: "Notification 5" },
-  { id: "6", text: "Notification 6" },
-  { id: "7", text: "Notification 7" },
-  { id: "8", text: "Notification 8" },
-];
+interface NotificationItem {
+  id: string;
+  title: string;
+  body: string;
+  date: string;
+}
 
-export default function Notifications() {
-  const [notifications, setNotifications] = useState(initialNotifications);
-
-  const deleteRow = (rowKey: string) => {
-    const newData = notifications.filter((item) => item.id !== rowKey);
-    setNotifications(newData);
+export default function NotificationsScreen() {
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const navigation = useNavigation();
+  const loadNotifications = async () => {
+    const data = await getNotifications();
+    setNotifications(data);
   };
 
-  const renderItem = ({ item }: any) => (
-    <View style={styles.rowFront}>
-      <Text style={styles.text}>{item.text}</Text>
-    </View>
-  );
+  useEffect(() => {
+    loadNotifications();
+  }, []);
 
-  const renderHiddenItem = (data: any, rowMap: any) => (
-    <View style={styles.rowBack}>
+  const handleDelete = async (id: string) => {
+    await deleteNotification(id);
+    loadNotifications();
+  };
+
+  const handleClearAll = async () => {
+    await clearNotifications();
+    loadNotifications();
+  };
+
+  const renderItem = ({ item }: { item: NotificationItem }) => (
+    <View style={styles.rowFront}>
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.body}>{item.body}</Text>
+      <Text style={styles.date}>{new Date(item.date).toLocaleString()}</Text>
+
       <TouchableOpacity
+        onPress={() => handleDelete(item.id)}
         style={styles.deleteBtn}
-        onPress={() => deleteRow(data.item.id)}
       >
-        <Icon name="trash-can-outline" size={24} color="#1b4b7aff" />
+        <Icon name="trash-can-outline" size={20} color="#f44336" />
       </TouchableOpacity>
     </View>
   );
-
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#1b4b7aff" />
+          <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notifications</Text>
-        <Text></Text>
+        <TouchableOpacity onPress={handleClearAll}>
+          <Icon name="broom" size={24} color="#1b4b7aff" />
+        </TouchableOpacity>
       </View>
-      <SwipeListView
-        data={notifications}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        renderHiddenItem={renderHiddenItem}
-        rightOpenValue={-70}
-        disableRightSwipe
-        contentContainerStyle={{
-          paddingBottom: 100,
-          width: "90%",
-          alignSelf: "center",
-        }}
-      />
+
+      {notifications.length === 0 ? (
+        <Text style={styles.empty}>No notifications yet</Text>
+      ) : (
+        <FlatList
+          data={notifications}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={{ paddingBottom: 50 }}
+        />
+      )}
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    padding: 16,
-  },
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   header: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 24,
+    alignItems: "center",
+    marginBottom: 16,
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#1b4b7aff",
-    marginLeft: -22,
-  },
+  headerTitle: { fontSize: 20, fontWeight: "700", color: "#1b4b7aff" },
   rowFront: {
     backgroundColor: "#ECF0F1",
-    borderRadius: 14,
-    padding: 20,
+    borderRadius: 12,
+    padding: 16,
     marginBottom: 12,
-    justifyContent: "center",
+    position: "relative",
   },
-  text: {
-    fontSize: 16,
-    color: "#1b4b7aff",
-  },
-  rowBack: {
-    alignItems: "center",
-    backgroundColor: "#f44336",
-    flex: 1,
-    borderRadius: 14,
-    marginBottom: 12,
-    justifyContent: "flex-end",
-    flexDirection: "row",
-    paddingRight: 20,
-  },
-  deleteBtn: {
-    width: 50,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  title: { fontSize: 16, fontWeight: "700", color: "#1b4b7aff" },
+  body: { fontSize: 14, marginTop: 4, color: "#1b4b7aff" },
+  date: { fontSize: 12, marginTop: 4, color: "#555" },
+  deleteBtn: { position: "absolute", top: 16, right: 16 },
+  empty: { fontSize: 16, color: "#888", textAlign: "center", marginTop: 50 },
 });
