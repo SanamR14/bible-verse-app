@@ -1,5 +1,9 @@
 PODS:
-  - EXConstants (18.0.8):
+  - EXApplication (7.0.7):
+    - ExpoModulesCore
+  - EXConstants (18.0.10):
+    - ExpoModulesCore
+  - EXNotifications (0.32.13):
     - ExpoModulesCore
   - Expo (54.0.2):
     - ExpoModulesCore
@@ -2226,7 +2230,9 @@ PODS:
   - Yoga (0.0.0)
 
 DEPENDENCIES:
+  - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXNotifications (from `../node_modules/expo-notifications/ios`)
   - Expo (from `../node_modules/expo`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
   - ExpoDocumentPicker (from `../node_modules/expo-document-picker/ios`)
@@ -2322,8 +2328,12 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
+  EXApplication:
+    :path: "../node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXNotifications:
+    :path: "../node_modules/expo-notifications/ios"
   Expo:
     :path: "../node_modules/expo"
   ExpoAsset:
@@ -2511,7 +2521,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  EXConstants: 7e4654405af367ff908c863fe77a8a22d60bd37d
+  EXApplication: 296622817d459f46b6c5fe8691f4aac44d2b79e7
+  EXConstants: fd688cef4e401dcf798a021cfb5d87c890c30ba3
+  EXNotifications: a62e1f8e3edd258dc3b155d3caa49f32920f1c6c
   Expo: 9e6ddfbc1f5aefde22029899293c701f1d34c2b1
   ExpoAsset: 84810d6fed8179f04d4a7a4a6b37028bbd726e26
   ExpoDocumentPicker: 2200eefc2817f19315fa18f0147e0b80ece86926

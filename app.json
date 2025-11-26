@@ -44,8 +44,7 @@
         "color": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.bibleverseapp",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.anonymous.bibleverseapp"
     },
     "web": {
       "favicon": "./assets/cir_FYI_TRBLUE.png"
