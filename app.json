@@ -54,6 +54,13 @@
         "projectId": "cdb3315b-c995-4cd8-802b-6ec25ee7874b"
       }
     },
+     "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/<YOUR-EAS-PROJECT-ID>"
+    },
+    "plugins": ["expo-notifications"],
     "owner": "sanamr14"
   }
 }

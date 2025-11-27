@@ -65,7 +65,7 @@ export default function Explore() {
         }}
         textColor="#000000"
       />
-      Coming Soon!
+      <Text>Development in Progress..</Text>
       {/* <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}

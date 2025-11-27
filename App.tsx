@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+// App.tsx
+import React, { useEffect, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
@@ -11,15 +12,14 @@ import {
 } from "./services/notifications";
 import { savePushToken } from "./services/notificationsAPI";
 import { saveNotification } from "./storage/notificationStorage";
-import { Platform } from "react-native";
 
-// Handle notification received
+// When notification arrives (foreground & background)
 Notifications.setNotificationHandler({
-  handleNotification: async (notification) => {
-    saveNotification({
+  handleNotification: async ({ request }) => {
+    await saveNotification({
       id: Date.now().toString(),
-      title: notification.request.content.title,
-      body: notification.request.content.body,
+      title: request.content.title,
+      body: request.content.body,
       date: new Date().toISOString(),
     });
 
@@ -38,20 +38,14 @@ export default function App() {
       if (!rawUser) return;
       const user = JSON.parse(rawUser);
 
-      // Register push token
+      // Get device Expo push token
       const token = await registerForPushNotifications();
 
       if (token) {
         await savePushToken(user.id, token);
       }
-      if (Platform.OS === "android") {
-        Notifications.setNotificationChannelAsync("default", {
-          name: "default",
-          importance: Notifications.AndroidImportance.MAX,
-        });
-      }
 
-      // Schedule daily Bible verse
+      // 7am daily
       await scheduleDailyBibleVerse();
     };
 
