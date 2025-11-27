@@ -2,7 +2,7 @@
   "expo": {
     "name": "FYI",
     "slug": "FYI",
-    "version": "1.0.7",
+    "version": "1.0.9",
     "platforms": [
       "ios",
       "android",
@@ -28,7 +28,7 @@
       }
     },
     "android": {
-      "versionCode": 8,
+      "versionCode": 10,
       "useNextNotificationsApi": true,
       "permissions": [
         "android.permission.RECEIVE_BOOT_COMPLETED",

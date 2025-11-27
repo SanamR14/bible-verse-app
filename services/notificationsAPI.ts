@@ -2,11 +2,11 @@ import axios from "axios";
 
 const API = "https://bible-verse-backend-1kvo.onrender.com";
 
-export async function savePushToken(userId: string, token: string) {
+export async function savePushToken(userId: number, token: string) {
   try {
     await axios.post(`${API}/save-token`, { userId, token });
   } catch (err) {
-    console.log("Token save error:", err);
+    console.log("Token save error:", err.message);
   }
 }
 
